@@ -5,6 +5,10 @@ import java.util.List;
 
 public class PlaylistModel {
 
-	List<TrackModel> tracks = new ArrayList<TrackModel>();
+	private List<TrackModel> tracks = new ArrayList<TrackModel>();
+
+	public List<TrackModel> getTracks() {
+		return tracks;
+	}
 	
 }
