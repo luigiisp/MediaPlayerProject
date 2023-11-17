@@ -1,8 +1,10 @@
 # MediaPlayer
   [![NPM](https://img.shields.io/npm/l/react)](https://github.com/luigiisp/MediaPlayerProject/blob/main/LICENSE)
 
-# Sobre o Projeto
-Projeto referente a disciplina de Linguagem de Programação 2, com o objetivo de produzir um tocador de MP3 com sistema de usuários e playlists.
+# About the project
+Project related to the Programming Language 2 discipline, with the objective of producing an MP3 player with a user and playlist system.
 
-# Tecnologias utilizadas
+# Technologies used
 - Java
+- JLayer
+- JavaFX
