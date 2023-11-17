@@ -1,9 +1,8 @@
 package br.ufrn.imd.model;
 
 public class UserModel {
-	private String name;
+	private String fullName;
 	private String password;
-	private String username;
-	private String cpf;
+	private String username; //unique identifier
 	
 }
