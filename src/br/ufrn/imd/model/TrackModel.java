@@ -1,9 +1,12 @@
 package br.ufrn.imd.model;
 
+import java.util.UUID;
+
 public class TrackModel {
 	
 	private String name;
 	private String artista;
+	private UUID uuid = UUID.randomUUID();
 	
 	public String getName() {
 		return name;
