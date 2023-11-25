@@ -1,17 +1,16 @@
 package br.ufrn.imd.model;
 
-import java.util.UUID;
-
 public class TrackModel {
 
 	private String name;
-	private String artista;
-	private UUID uuid;
-
-	public TrackModel(String name, String artista) {
+	private String directory;
+	
+	public TrackModel() {
+	}
+	
+	public TrackModel(String name, String directory) {
 		this.name = name;
-		this.artista = artista;
-		this.uuid = UUID.randomUUID();
+		this.directory = directory;
 	}
 
 	public String getName() {
@@ -22,15 +21,12 @@ public class TrackModel {
 		this.name = name;
 	}
 
-	public String getArtista() {
-		return artista;
+	public String getDirectory() {
+		return directory;
 	}
 
-	public void setArtista(String artista) {
-		this.artista = artista;
+	public void setDirectory(String directory) {
+		this.directory = directory;
 	}
 
-	public UUID getUuid() {
-		return uuid;
-	}
 }
