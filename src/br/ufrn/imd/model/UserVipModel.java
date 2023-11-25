@@ -10,5 +10,4 @@ public class UserVipModel extends UserModel {
 	public List<PlaylistModel> getPlaylists() {
 		return playlists;
 	}
-	
 }

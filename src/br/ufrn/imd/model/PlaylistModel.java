@@ -9,8 +9,11 @@ public class PlaylistModel {
 	private UUID uuid = UUID.randomUUID();
 	private List<TrackModel> tracks = new ArrayList<TrackModel>();
 
+	public PlaylistModel() {
+	}
+
 	public List<TrackModel> getTracks() {
 		return tracks;
 	}
-	
+
 }
