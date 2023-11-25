@@ -2,6 +2,7 @@ package br.ufrn.imd.model;
 
 public class PlayerModel {
 	QueueModel queue = new QueueModel();
+	private int trackIndex = 0;
 
 	public PlayerModel() {
 	}
@@ -19,19 +20,11 @@ public class PlayerModel {
 		this.queue = queue;
 	}
 
-	public void playTrack() {
+	public int getTrackIndex() {
+		return trackIndex;
 	}
 
-	public void pauseTrack() {
+	public void setTrackIndex(int trackIndex) {
+		this.trackIndex = trackIndex;
 	}
-
-	public void nextTrack() {
-	}
-
-	public void backTrack() {
-	}
-
-	public void loopTrack() {
-	}
-
 }
