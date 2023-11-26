@@ -10,8 +10,16 @@ import java.util.List;
 import br.ufrn.imd.model.TrackModel;
 
 public class TrackController {
-	List<TrackModel> tracks = new ArrayList<>();
 	String path;
+	List<TrackModel> tracks = new ArrayList<>();
+
+	public TrackController() {
+	}
+
+	public TrackController(String path) {
+		super();
+		this.path = path + ".txt";
+	}
 
 	public List<TrackModel> getTracks() {
 		return tracks;
@@ -29,7 +37,7 @@ public class TrackController {
 		BufferedReader br = null;
 		TrackModel newTrack = new TrackModel();
 		try {
-			br = new BufferedReader(new FileReader(this.path));
+			br = new BufferedReader(new FileReader(getPath()));
 			String line = br.readLine();
 
 			while (line != null) {
@@ -45,18 +53,29 @@ public class TrackController {
 		}
 	}
 
-	public void addListTracks(TrackModel track) {
+	public void updateTracks() {
 		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter(path, true));
-			bw.newLine();
-			bw.write(track.getName());
-			bw.newLine();
-			bw.write(track.getDirectory());
+			bw = new BufferedWriter(new FileWriter(getPath()));
+			for (TrackModel t : tracks) {
+				bw.write(t.getName());
+				bw.newLine();
+				bw.write(t.getDirectory());
+				bw.newLine();
+			}
 			bw.close();
-			getTracks().add(track);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void addListTracks(TrackModel track) {
+		getTracks().add(track);
+		updateTracks();
+	}
+
+	public void removeTrack(TrackModel track) {
+		getTracks().remove(track);
+		updateTracks();
 	}
 }
