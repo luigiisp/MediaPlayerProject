@@ -1,16 +1,14 @@
 package br.ufrn.imd.application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import br.ufrn.imd.controller.TrackController;
 
 public class Program {
 
 	public static void main(String[] args) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(""));
-			br.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		String pathProject = System.getProperty("user.dir");
+
+		TrackController trackController = new TrackController(pathProject + "//musicas");
+
+		System.out.println(trackController.getPath());
 	}
 }
