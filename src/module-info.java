@@ -5,4 +5,5 @@
  * 
  */
 module MediaPlayerProject {
+	requires jlayer;
 }

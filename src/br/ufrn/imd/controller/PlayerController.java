@@ -11,34 +11,36 @@ public class PlayerController {
 		super();
 		this.player = player;
 	}
-	
+
 	private TrackModel getCurrentTrack() {
-		return player.getQueue().getTracks().get(player.getTrackIndex());
+		return player.getQueueController().getQueue().getTracks().get(player.getTrackIndex());
 	}
-	
+
 	public void playTrack() {
-		//jlayer play command
+		// jlayer play command
 		System.out.println("Playing " + getCurrentTrack().getName());
 	}
 
 	public void unpauseTrack() {
-		//jlayer unpause command
+		// jlayer unpause command
 		System.out.println("Unpaused current track");
 	}
-	
+
 	public void pauseTrack() {
-		//jlayer command
+		// jlayer command
 		System.out.println("Paused current track");
 	}
 
 	public void skipTrack() {
-		player.setTrackIndex(player.getTrackIndex() + 1);;
+		player.setTrackIndex(player.getTrackIndex() + 1);
+		;
 		playTrack();
 		System.out.println("Skipped to the next track");
 	}
 
 	public void backTrack() {
-		player.setTrackIndex(player.getTrackIndex() - 1);;
+		player.setTrackIndex(player.getTrackIndex() - 1);
+		;
 		playTrack();
 		System.out.println("Going back to previous track");
 	}

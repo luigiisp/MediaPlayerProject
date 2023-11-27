@@ -14,6 +14,14 @@ public class QueueController {
 		this.queue = queue;
 	}
 
+	public QueueModel getQueue() {
+		return queue;
+	}
+
+	public void setQueue(QueueModel queue) {
+		this.queue = queue;
+	}
+
 	public void addTrack(TrackModel track) {
 		queue.getTracks().add(track);
 	}

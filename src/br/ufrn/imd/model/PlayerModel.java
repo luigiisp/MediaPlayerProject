@@ -1,7 +1,9 @@
 package br.ufrn.imd.model;
 
+import br.ufrn.imd.controller.QueueController;
+
 public class PlayerModel {
-	QueueModel queue = new QueueModel();
+	QueueController queueController;
 	private int trackIndex = 0;
 
 	public PlayerModel() {
@@ -9,15 +11,15 @@ public class PlayerModel {
 
 	public PlayerModel(QueueModel queue) {
 		super();
-		this.queue = queue;
+		this.queueController = new QueueController(queue);
 	}
 
-	public QueueModel getQueue() {
-		return queue;
+	public QueueController getQueueController() {
+		return queueController;
 	}
 
-	public void setQueue(QueueModel queue) {
-		this.queue = queue;
+	public void setQueueController(QueueController queueController) {
+		this.queueController = queueController;
 	}
 
 	public int getTrackIndex() {
