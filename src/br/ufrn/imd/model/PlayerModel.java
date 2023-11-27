@@ -18,6 +18,10 @@ public class PlayerModel {
 		return queueController;
 	}
 
+	public QueueModel getQueue() {
+		return getQueueController().getQueue();
+	}
+	
 	public void setQueueController(QueueController queueController) {
 		this.queueController = queueController;
 	}
