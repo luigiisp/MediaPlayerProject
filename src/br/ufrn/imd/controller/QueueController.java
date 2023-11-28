@@ -52,6 +52,7 @@ public class QueueController {
 		Collections.shuffle(queue.getTracks());
 	}
 	
+	/*
 	public void skipTrack() {
 		queue.setTrackIndex(queue.getTrackIndex() + 1);
 		System.out.println("Skipped to the next track");
@@ -65,4 +66,5 @@ public class QueueController {
 	public TrackModel getCurrentTrack() {
 		return queue.getTracks().get(queue.getTrackIndex());
 	}
+	*/
 }
