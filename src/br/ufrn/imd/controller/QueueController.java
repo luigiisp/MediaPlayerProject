@@ -26,16 +26,16 @@ public class QueueController {
 		queue.getTracks().add(track);
 	}
 
+	public void removeTrack(TrackModel track) {
+		queue.getTracks().remove(track);
+	}
+	
 	public void listTracks() {
 		for (TrackModel track : queue.getTracks()) {
 			System.out.println(track.getName());
 		}
 	}
-
-	public void removeTrack(TrackModel track) {
-		queue.getTracks().remove(track);
-	}
-
+	
 	public void addPlaylist(PlaylistModel playlist) {
 		for (TrackModel track : playlist.getTracks()) {
 			queue.getTracks().add(track);
