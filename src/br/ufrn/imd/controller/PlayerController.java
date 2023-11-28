@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import br.ufrn.imd.model.PlayerModel;
-import br.ufrn.imd.model.TrackModel;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -17,23 +16,19 @@ public class PlayerController {
 		this.player = player;
 	}
 
-	private TrackModel getCurrentTrack() {
-		return player.getQueueController().getQueue().getTracks().get(player.getTrackIndex());
-	}
-
 	public void playTrack() {
-		Player player = null;
+		Player trackPlayer = null;
 		try {
-			FileInputStream fis = new FileInputStream(getCurrentTrack().getDirectory());
-			player = new Player(fis);
-			player.play();
+			FileInputStream fis = new FileInputStream(player.getQueueController().getCurrentTrack().getDirectory());
+			trackPlayer = new Player(fis);
+			trackPlayer.play();
 		} catch (FileNotFoundException | JavaLayerException e) {
 			e.printStackTrace();
 		} finally {
-			player.close();
+			trackPlayer.close();
 		}
 		
-		System.out.println("Playing " + getCurrentTrack().getName());
+		System.out.println("Playing " + player.getQueueController().getCurrentTrack().getName());
 	}
 
 	public void unpauseTrack() {
@@ -47,15 +42,13 @@ public class PlayerController {
 	}
 
 	public void skipTrack() {
-		player.setTrackIndex(player.getTrackIndex() + 1);
-		;
+		player.getQueueController().skipTrack();
 		playTrack();
 		System.out.println("Skipped to the next track");
 	}
 
 	public void backTrack() {
-		player.setTrackIndex(player.getTrackIndex() - 1);
-		;
+		player.getQueueController().backTrack();
 		playTrack();
 		System.out.println("Going back to previous track");
 	}
