@@ -7,26 +7,33 @@ import java.util.UUID;
 public class PlaylistModel {
 
 	private String title;
-	private UUID uuid = UUID.randomUUID();
+	private String directory;
 	private List<TrackModel> tracks = new ArrayList<TrackModel>();
 
 	public PlaylistModel() {
 	}
-	
+
+	public PlaylistModel(String directory) {
+		this.directory = directory + ".txt";
+	}
+
 	public String getTitle() {
 		return title;
-	}
-	
-	public UUID getUuid() {
-		return uuid;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	public String getDirectory() {
+		return directory;
+	}
+
+	public void setDirectory(String directory) {
+		this.directory = directory;
+	}
+
 	public List<TrackModel> getTracks() {
 		return tracks;
 	}
-
 }

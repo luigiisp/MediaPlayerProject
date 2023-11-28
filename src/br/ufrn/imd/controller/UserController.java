@@ -12,7 +12,8 @@ import br.ufrn.imd.model.UserVipModel;
 
 public class UserController {
 	String path;
-	List<UserModel> users = new ArrayList<>();
+	List<UserModel> usersCommon = new ArrayList<>();
+	List<UserVipModel> usersVip = new ArrayList<>();
 
 	public UserController() {
 	}
@@ -22,8 +23,12 @@ public class UserController {
 		this.path = path + ".txt";
 	}
 
-	public List<UserModel> getUsers() {
-		return users;
+	public List<UserModel> getUsersCommon() {
+		return usersCommon;
+	}
+
+	public List<UserVipModel> getUsersVip() {
+		return usersVip;
 	}
 
 	public String getPath() {
@@ -51,9 +56,9 @@ public class UserController {
 				String userType = line;
 				line = br.readLine();
 				if (userType.toUpperCase() == "COMMON") {
-					users.add(new UserModel(name, password, username));
+					usersCommon.add(new UserModel(name, password, username));
 				} else if (userType.toUpperCase() == "VIP") {
-					users.add(new UserVipModel(name, password, username));
+					usersVip.add(new UserVipModel(name, password, username));
 				}
 			}
 			br.close();
@@ -67,18 +72,24 @@ public class UserController {
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter(getPath()));
-			for (UserModel u : users) {
+			for (UserModel u : usersCommon) {
 				bw.write(u.getFullName());
 				bw.newLine();
 				bw.write(u.getUsername());
 				bw.newLine();
 				bw.write(u.getPassword());
 				bw.newLine();
-				if (u instanceof UserVipModel) {
-					bw.write("VIP");
-				} else {
-					bw.write("COMMON");
-				}
+				bw.write("COMMON");
+				bw.newLine();
+			}
+			for (UserModel u : usersVip) {
+				bw.write(u.getFullName());
+				bw.newLine();
+				bw.write(u.getUsername());
+				bw.newLine();
+				bw.write(u.getPassword());
+				bw.newLine();
+				bw.write("VIP");
 				bw.newLine();
 			}
 			bw.close();
@@ -87,13 +98,23 @@ public class UserController {
 		}
 	}
 
-	public void addUser(UserModel user) {
-		getUsers().add(user);
+	public void addUserCommon(UserModel user) {
+		getUsersCommon().add(user);
 		updateUsersFile();
 	}
 
-	public void removeUser(UserModel user) {
-		getUsers().remove(user);
+	public void removeUserCommon(UserModel user) {
+		getUsersCommon().remove(user);
+		updateUsersFile();
+	}
+
+	public void addUserVip(UserVipModel user) {
+		getUsersVip().add(user);
+		updateUsersFile();
+	}
+
+	public void removeUserVip(UserVipModel user) {
+		getUsersVip().remove(user);
 		updateUsersFile();
 	}
 }
