@@ -1,7 +1,12 @@
 package br.ufrn.imd.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import br.ufrn.imd.model.PlayerModel;
 import br.ufrn.imd.model.TrackModel;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 public class PlayerController {
 
@@ -17,7 +22,17 @@ public class PlayerController {
 	}
 
 	public void playTrack() {
-		// jlayer play command
+		Player player = null;
+		try {
+			FileInputStream fis = new FileInputStream(getCurrentTrack().getDirectory());
+			player = new Player(fis);
+			player.play();
+		} catch (FileNotFoundException | JavaLayerException e) {
+			e.printStackTrace();
+		} finally {
+			player.close();
+		}
+		
 		System.out.println("Playing " + getCurrentTrack().getName());
 	}
 

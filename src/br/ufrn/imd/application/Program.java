@@ -17,7 +17,7 @@ public class Program {
 			reader.close();
 		} catch (Exception e) {
 		}
-		TrackController trackController = new TrackController(projectPath + "//musicas");
+		TrackController trackController = new TrackController(projectPath + "\\musicas");
 
 		System.out.println(trackController.getPath());
 	}
