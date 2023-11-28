@@ -10,14 +10,14 @@ public class Program {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader reader = null;
-		String pathProject = System.getProperty("user.dir");
+		String projectPath = System.getProperty("user.dir");
 		try {
-			reader = new BufferedReader(new FileReader(pathProject + "diretorio.txt"));
+			reader = new BufferedReader(new FileReader(projectPath + "diretorio.txt"));
 
 			reader.close();
 		} catch (Exception e) {
 		}
-		TrackController trackController = new TrackController(pathProject + "//musicas");
+		TrackController trackController = new TrackController(projectPath + "//musicas");
 
 		System.out.println(trackController.getPath());
 	}
