@@ -6,6 +6,16 @@ public class UserModel {
 	private String password;
 	private String username; // unique identifier
 
+	public UserModel() {
+	}
+
+	public UserModel(String fullName, String password, String username) {
+		super();
+		this.fullName = fullName;
+		this.password = password;
+		this.username = username;
+	}
+
 	public String getFullName() {
 		return fullName;
 	}
