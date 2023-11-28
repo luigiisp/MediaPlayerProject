@@ -6,5 +6,5 @@ Project related to the Programming Language 2 discipline, aiming to build a full
 
 # Technologies used
 - Java
-- JLayer
+- JLayer [![](https://jitpack.io/v/umjammer/jlayer.svg)](https://jitpack.io/#umjammer/jlayer)
 - JavaFX
