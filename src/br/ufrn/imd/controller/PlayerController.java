@@ -10,7 +10,7 @@ import javazoom.jl.player.Player;
 
 public class PlayerController {
 	private int trackIndex = 0;
-	PlayerModel player = new PlayerModel();
+	private PlayerModel player = new PlayerModel();
 	
 	public PlayerController(PlayerModel player) {
 		super();
@@ -50,27 +50,12 @@ public class PlayerController {
 	}
 
 	public void unpauseTrack() {
-		// jlayer unpause command
+		
 		System.out.println("Unpaused current track");
 	}
 
 	public void pauseTrack() {
 		// jlayer command
 		System.out.println("Paused current track");
-	}
-
-	public void skipTrack() {
-		player.getQueueController().skipTrack();
-		playTrack();
-		System.out.println("Skipped to the next track");
-	}
-
-	public void backTrack() {
-		player.getQueueController().backTrack();
-		playTrack();
-		System.out.println("Going back to previous track");
-	}
-
-	public void loopTrack() {
 	}
 }
