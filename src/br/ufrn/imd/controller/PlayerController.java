@@ -10,7 +10,9 @@ import javazoom.jl.player.Player;
 
 public class PlayerController {
 	private int trackIndex = 0;
-	PlayerModel player = new PlayerModel();
+	private int currentFrame = 0;
+	private boolean paused = false;
+	private PlayerModel player = new PlayerModel();
 	
 	public PlayerController(PlayerModel player) {
 		super();
@@ -23,16 +25,18 @@ public class PlayerController {
 	
 	public void playQueue() {
 		Player trackPlayer = null;
-		while(!player.getQueue().getTracks().isEmpty()) {
+		while(!player.getQueue().getTracks().isEmpty() && paused == false) {
 			try {
 				FileInputStream fis = new FileInputStream(getCurrentTrack().getDirectory());
 				trackPlayer = new Player(fis);
-				trackPlayer.play();
 				System.out.println("Playing " + getCurrentTrack().getName());
+				trackPlayer.play(currentFrame);
+				currentFrame = 0;
+				
 			} catch (FileNotFoundException | JavaLayerException e) {
 				e.printStackTrace();
 			}
-			
+			//track plays until it ends
 			while(trackPlayer.isComplete() == false) {
 				try {
 					Thread.sleep(100);
@@ -40,9 +44,8 @@ public class PlayerController {
 					e.printStackTrace();
 				}
 			}
-			
+			player.getQueueController().removeTrack(getCurrentTrack());
 			trackIndex++;
-			
 		}
 		trackIndex = 0;
 		
@@ -50,27 +53,15 @@ public class PlayerController {
 	}
 
 	public void unpauseTrack() {
-		// jlayer unpause command
+		playQueue();
+		paused = false;
 		System.out.println("Unpaused current track");
 	}
 
-	public void pauseTrack() {
-		// jlayer command
+	public void pauseTrack(Player trackPlayer) {
+		currentFrame = trackPlayer.getPosition();
+		trackPlayer.close();
+		paused = true;
 		System.out.println("Paused current track");
-	}
-
-	public void skipTrack() {
-		player.getQueueController().skipTrack();
-		playTrack();
-		System.out.println("Skipped to the next track");
-	}
-
-	public void backTrack() {
-		player.getQueueController().backTrack();
-		playTrack();
-		System.out.println("Going back to previous track");
-	}
-
-	public void loopTrack() {
 	}
 }
