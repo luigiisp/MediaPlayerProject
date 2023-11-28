@@ -4,7 +4,6 @@ import br.ufrn.imd.controller.QueueController;
 
 public class PlayerModel {
 	QueueController queueController;
-	private int trackIndex = 0;
 
 	public PlayerModel() {
 	}
@@ -24,13 +23,5 @@ public class PlayerModel {
 	
 	public void setQueueController(QueueController queueController) {
 		this.queueController = queueController;
-	}
-
-	public int getTrackIndex() {
-		return trackIndex;
-	}
-
-	public void setTrackIndex(int trackIndex) {
-		this.trackIndex = trackIndex;
 	}
 }
