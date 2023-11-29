@@ -15,7 +15,6 @@ import br.ufrn.imd.model.UserVipModel;
 
 public class PlaylistController {
 	String path;
-	static int x = 0;
 	List<PlaylistModel> playlists = new ArrayList<>();
 
 	public PlaylistController() {
@@ -76,8 +75,8 @@ public class PlaylistController {
 		File folder = new File(path);
 		for (UserVipModel u : users.getUsersVip()) {
 			for (PlaylistModel p : u.getPlaylists()) {
-				File file = new File(folder.getAbsolutePath() + File.separator + "playlist" + Integer.toString(x)+".txt");
-				x++;
+				File file = new File(
+						folder.getAbsolutePath() + File.separator + p.getTitle().replace(" ", "") + ".txt");
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
 					writer.write(u.getFullName());
@@ -107,5 +106,14 @@ public class PlaylistController {
 
 	public void removeTrack(TrackModel track, PlaylistModel playlist) {
 		playlist.getTracks().remove(track);
+	}
+
+	public PlaylistModel findByTitle(String title) {
+		for (PlaylistModel playlist : getPlaylists()) {
+			if (playlist.getTitle().equals(title)) {
+				return playlist;
+			}
+		}
+		return null;
 	}
 }
