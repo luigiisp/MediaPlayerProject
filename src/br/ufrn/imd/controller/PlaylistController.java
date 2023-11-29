@@ -41,6 +41,7 @@ public class PlaylistController {
 		this.path = path;
 	}
 
+	//consider removing fullname from playlisttxt
 	public void updatePlaylistsList() {
 		File folder = new File(path);
 		File[] playlistsFiles = folder.listFiles();
@@ -49,6 +50,7 @@ public class PlaylistController {
 				if (file.isFile() && file.getName().endsWith(".txt")) {
 					PlaylistModel playlistTemp = new PlaylistModel(file.getAbsolutePath());
 					try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+						//*
 						String playlistOwnerFullname = reader.readLine();
 						String playlistOwnerUsername = reader.readLine();
 						String line = reader.readLine();
