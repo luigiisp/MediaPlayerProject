@@ -8,31 +8,46 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Program {
+import br.ufrn.imd.controller.TrackController;
+import br.ufrn.imd.controller.UserController;
 
+public class Program {
+	
+	static String PROJECTPATH = System.getProperty("user.dir");
+	static String DIRETORIOSTXTPATH = PROJECTPATH + "\\diretorios.txt";
 	static String usersFile, playlistsFolder, tracksFile;
 	static Scanner sc = new Scanner(System.in);
-	static String projectPath = System.getProperty("user.dir");
 
 	public static void main(String[] args) {
 		try {
 
-			BufferedReader reader = new BufferedReader(new FileReader(projectPath + "\\diretorios.txt"));
+			BufferedReader reader = null;
 			BufferedWriter writer = null;
 			String line = null;
 			File folder = null;
 
+			// if diretorios.txt has an empty line, generate files and overwrite
+			reader = new BufferedReader(new FileReader(DIRETORIOSTXTPATH));
+
+			boolean generatedFiles = false;
 			for (int i = 0; i < 3; i++) {
 				line = reader.readLine();
+
 				if (line == null || line.isBlank()) {
 					generateFilesDir();
-					
+					generatedFiles = true;
 					break;
-				}			
+				}
 			}
+			// known issue: if diretorios.txt has a line with an nonexisting directory
+
+			readDirFile();
+			
+			UserController userController = new UserController(usersFile);
+			userController.updateUsersList();
+			TrackController trackController = new TrackController(tracksFile)
 
 			
-			reader.close();
 			
 			/*
 			 * UserController userController = new UserController(usersFile);
@@ -42,6 +57,8 @@ public class Program {
 			 * PlayerModel player = new PlayerModel(new QueueModel()); PlayerController
 			 * playerController = new PlayerController(player);
 			 */
+
+			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -49,11 +66,28 @@ public class Program {
 		}
 	}
 
-	// generates files directory inside project main directory
-	private static void generateFilesDir() throws IOException {
+	private static void readDirFile() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(DIRETORIOSTXTPATH));
+		usersFile = reader.readLine();
+		playlistsFolder = reader.readLine();
+		tracksFile = reader.readLine();
+	}
+	
+	private static void updateDirFile() throws IOException {
 		BufferedWriter writer = null;
 
-		File folder = new File(projectPath + File.separator + "files");
+		writer = new BufferedWriter(new FileWriter(DIRETORIOSTXTPATH));
+		writer.write(usersFile);
+		writer.newLine();
+		writer.write(playlistsFolder);
+		writer.newLine();
+		writer.write(tracksFile);
+		writer.close();
+	}
+
+	// generates files directory inside project main directory
+	private static void generateFilesDir() throws IOException {
+		File folder = new File(PROJECTPATH + File.separator + "files");
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
@@ -72,16 +106,8 @@ public class Program {
 
 		folder = new File(filesFolderPath + File.separator + "tracks.txt");
 		folder.createNewFile();
-
-		writer = new BufferedWriter(new FileWriter(projectPath + "\\diretorios.txt"));
 		tracksFile = folder.getAbsolutePath();
-		writer.write(usersFile);
-		writer.newLine();
-		writer.write(playlistsFolder);
-		writer.newLine();
-		writer.write(tracksFile);
-		writer.close();
 
+		updateDirFile();
 	}
-
 }
