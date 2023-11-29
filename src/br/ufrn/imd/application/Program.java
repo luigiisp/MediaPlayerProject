@@ -12,8 +12,6 @@ import br.ufrn.imd.controller.PlayerController;
 import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
-import br.ufrn.imd.model.PlayerModel;
-import br.ufrn.imd.model.QueueModel;
 
 public class Program {
 
@@ -52,12 +50,14 @@ public class Program {
 			TrackController trackController = new TrackController(tracksFile);
 			trackController.updateTracksList();
 
+			PlayerController playerController = new PlayerController();
 			PlaylistController playlistController = new PlaylistController(playlistsFolder, userController,
 					trackController);
-
-			PlayerModel player = new PlayerModel(new QueueModel());
-			PlayerController playerController = new PlayerController(player);
-
+      
+      System.out.println(trackController.getTracks().get(0).getName());			
+			playerController.getPlayer().getQueueController().addTrack(trackController.getTracks().get(0));
+			playerController.playQueue();
+      
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
