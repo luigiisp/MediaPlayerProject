@@ -9,6 +9,10 @@ import br.ufrn.imd.model.TrackModel;
 public class QueueController {
 	QueueModel queue = new QueueModel();
 
+	public QueueController() {
+		super();
+	}
+	
 	public QueueController(QueueModel queue) {
 		super();
 		this.queue = queue;

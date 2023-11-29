@@ -15,9 +15,17 @@ public class PlayerController {
 	private PlayerModel player = new PlayerModel();
 	private Player trackPlayer = null;
 	
+	public PlayerController() {
+		super();
+	}
+	
 	public PlayerController(PlayerModel player) {
 		super();
 		this.player = player;
+	}
+	
+	public PlayerModel getPlayer() {
+		return player;
 	}
 
 	public TrackModel getCurrentTrack() {
@@ -37,13 +45,7 @@ public class PlayerController {
 				e.printStackTrace();
 			}
 			//track plays until it ends
-			while(trackPlayer.isComplete() == false) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+			
 			player.getQueueController().removeTrack(getCurrentTrack());
 			trackIndex++;
 		}

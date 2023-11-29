@@ -3,7 +3,7 @@ package br.ufrn.imd.model;
 import br.ufrn.imd.controller.QueueController;
 
 public class PlayerModel {
-	QueueController queueController;
+	private QueueController queueController = new QueueController();
 
 	public PlayerModel() {
 	}
