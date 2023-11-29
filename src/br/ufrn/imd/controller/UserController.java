@@ -39,7 +39,6 @@ public class UserController {
 		this.path = path;
 	}
 
-	// Updates tracks list
 	public void updateUsersList() {
 		BufferedReader br = null;
 		try {
@@ -67,7 +66,6 @@ public class UserController {
 		}
 	}
 
-	// Updates tracks file content
 	public void updateUsersFile() {
 		BufferedWriter bw = null;
 		try {
@@ -127,7 +125,7 @@ public class UserController {
 		return null;
 	}
 
-	public UserModel findUserVipByName(String name) {
+	public UserVipModel findUserVipByName(String name) {
 		for (UserVipModel user : getUsersVip()) {
 			if (user.getFullName().equals(name)) {
 				return user;
