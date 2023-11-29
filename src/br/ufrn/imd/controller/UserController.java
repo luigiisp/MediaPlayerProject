@@ -116,21 +116,27 @@ public class UserController {
 		updateUsersFile();
 	}
 
-	public UserModel findUserCommonByName(String name) {
+	public UserModel findUserCommonByUsername(String username) {
 		for (UserModel user : getUsersCommon()) {
-			if (user.getFullName().equals(name)) {
+			if (user.getUsername().equals(username)) {
 				return user;
 			}
 		}
 		return null;
 	}
 
-	public UserVipModel findUserVipByName(String name) {
+	public UserVipModel findUserVipByUsername(String username) {
 		for (UserVipModel user : getUsersVip()) {
-			if (user.getFullName().equals(name)) {
+			if (user.getUsername().equals(username)) {
 				return user;
 			}
 		}
 		return null;
 	}
+
+	public UserModel findUserByUsername(String username) {
+		return (findUserCommonByUsername(username) != null ? findUserCommonByUsername(username)
+				: findUserVipByUsername(username));
+	}
+
 }

@@ -53,11 +53,11 @@ public class Program {
 			PlayerController playerController = new PlayerController();
 			PlaylistController playlistController = new PlaylistController(playlistsFolder, userController,
 					trackController);
-      
-      System.out.println(trackController.getTracks().get(0).getName());			
+
+			System.out.println(trackController.getTracks().get(0).getName());
 			playerController.getPlayer().getQueueController().addTrack(trackController.getTracks().get(0));
 			playerController.playQueue();
-      
+
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
