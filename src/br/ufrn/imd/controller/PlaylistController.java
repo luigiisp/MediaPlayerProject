@@ -49,8 +49,8 @@ public class PlaylistController {
 				if (file.isFile() && file.getName().endsWith(".txt")) {
 					PlaylistModel playlistTemp = new PlaylistModel(file.getAbsolutePath());
 					try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-						String nameUser = reader.readLine();
-						String usernameUser = reader.readLine();
+						String playlistOwnerFullname = reader.readLine();
+						String playlistOwnerUsername = reader.readLine();
 						String line = reader.readLine();
 						while (line != null) {
 							String trackName = line;
@@ -59,10 +59,10 @@ public class PlaylistController {
 							}
 							line = reader.readLine();
 						}
-						if (userController.findUserVipByName(nameUser) != null
-								&& userController.findUserVipByName(nameUser).getFullName() == nameUser
-								&& userController.findUserVipByName(usernameUser).getUsername() == usernameUser) {
-							userController.findUserVipByName(nameUser).getPlaylists().add(playlistTemp);
+						UserVipModel playlistOwner = userController.findUserVipByUsername(playlistOwnerUsername);
+						if (playlistOwner != null) {
+							playlistOwner.getPlaylists()
+									.add(playlistTemp);
 						}
 
 					} catch (IOException e) {
