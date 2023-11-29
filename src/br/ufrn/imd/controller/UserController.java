@@ -20,7 +20,7 @@ public class UserController {
 
 	public UserController(String path) {
 		super();
-		this.path = path + ".txt";
+		this.path = path;
 	}
 
 	public List<UserModel> getUsersCommon() {

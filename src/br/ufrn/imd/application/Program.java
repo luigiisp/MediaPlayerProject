@@ -8,68 +8,80 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import br.ufrn.imd.controller.PlayerController;
-import br.ufrn.imd.controller.TrackController;
-import br.ufrn.imd.controller.UserController;
-import br.ufrn.imd.model.PlayerModel;
-import br.ufrn.imd.model.QueueModel;
-
 public class Program {
 
-	public static void main(String[] args) throws IOException {
-		String usersFolder, playlistsFolder, tracksFolder;
-		Scanner sc = new Scanner(System.in);
-		BufferedReader reader = null;
-		BufferedWriter writer = null;
-		String projectPath = System.getProperty("user.dir");
+	static String usersFile, playlistsFolder, tracksFile;
+	static Scanner sc = new Scanner(System.in);
+	static String projectPath = System.getProperty("user.dir");
+
+	public static void main(String[] args) {
 		try {
-			reader = new BufferedReader(new FileReader(projectPath + "\\diretorio.txt"));
-			String line = reader.readLine();
-			if (line == null) {
-				File folder = new File(projectPath + File.separator + "files");
-				folder.mkdir();
 
-				String pathTemp = folder.getAbsolutePath();
+			BufferedReader reader = new BufferedReader(new FileReader(projectPath + "\\diretorios.txt"));
+			BufferedWriter writer = null;
+			String line = null;
+			File folder = null;
 
-				folder = new File(pathTemp + File.separator + "users");
-				folder.mkdir();
-				usersFolder = folder.getAbsolutePath();
-
-				folder = new File(pathTemp + File.separator + "playlists");
-				folder.mkdir();
-				playlistsFolder = folder.getAbsolutePath();
-
-				folder = new File(pathTemp + File.separator + "tracks");
-				folder.mkdir();
-
-				reader.close();
-
-				writer = new BufferedWriter(new FileWriter(projectPath + "\\diretorio.txt"));
-				tracksFolder = folder.getAbsolutePath();
-				writer.write(usersFolder);
-				writer.newLine();
-				writer.write(playlistsFolder);
-				writer.newLine();
-				writer.write(tracksFolder);
-				writer.close();
-			} else {
-				usersFolder = line;
-				playlistsFolder = reader.readLine();
-				tracksFolder = reader.readLine();
+			for (int i = 0; i < 3; i++) {
+				line = reader.readLine();
+				if (line == null || line.isBlank()) {
+					generateFilesDir();
+					
+					break;
+				}			
 			}
+
+			
 			reader.close();
-			UserController userController = new UserController(usersFolder + "usuarios");
-			userController.updateUsersList();
-			TrackController trackController = new TrackController(tracksFolder + "musicas");
-			trackController.updateTracksList();
-
-			PlayerModel player = new PlayerModel(new QueueModel());
-			PlayerController playerController = new PlayerController(player);
-
+			
+			/*
+			 * UserController userController = new UserController(usersFile);
+			 * userController.updateUsersList(); TrackController trackController = new
+			 * TrackController(tracksFile); trackController.updateTracksList();
+			 * 
+			 * PlayerModel player = new PlayerModel(new QueueModel()); PlayerController
+			 * playerController = new PlayerController(player);
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			sc.close();
 		}
 	}
+
+	// generates files directory inside project main directory
+	private static void generateFilesDir() throws IOException {
+		BufferedWriter writer = null;
+
+		File folder = new File(projectPath + File.separator + "files");
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+
+		String filesFolderPath = folder.getAbsolutePath();
+
+		folder = new File(filesFolderPath + File.separator + "playlists");
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+		playlistsFolder = folder.getAbsolutePath();
+
+		folder = new File(filesFolderPath + File.separator + "users.txt");
+		folder.createNewFile();
+		usersFile = folder.getAbsolutePath();
+
+		folder = new File(filesFolderPath + File.separator + "tracks.txt");
+		folder.createNewFile();
+
+		writer = new BufferedWriter(new FileWriter(projectPath + "\\diretorios.txt"));
+		tracksFile = folder.getAbsolutePath();
+		writer.write(usersFile);
+		writer.newLine();
+		writer.write(playlistsFolder);
+		writer.newLine();
+		writer.write(tracksFile);
+		writer.close();
+
+	}
+
 }
