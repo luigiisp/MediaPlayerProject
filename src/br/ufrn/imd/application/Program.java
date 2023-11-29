@@ -8,8 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import br.ufrn.imd.controller.PlayerController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
+import br.ufrn.imd.model.PlayerModel;
+import br.ufrn.imd.model.QueueModel;
 
 public class Program {
 	
@@ -45,19 +48,12 @@ public class Program {
 			
 			UserController userController = new UserController(usersFile);
 			userController.updateUsersList();
-			TrackController trackController = new TrackController(tracksFile)
-
+			TrackController trackController = new TrackController(tracksFile);
+			trackController.updateTracksList();
 			
+			PlayerModel player = new PlayerModel(new QueueModel());
+			PlayerController playerController = new PlayerController(player);
 			
-			/*
-			 * UserController userController = new UserController(usersFile);
-			 * userController.updateUsersList(); TrackController trackController = new
-			 * TrackController(tracksFile); trackController.updateTracksList();
-			 * 
-			 * PlayerModel player = new PlayerModel(new QueueModel()); PlayerController
-			 * playerController = new PlayerController(player);
-			 */
-
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
