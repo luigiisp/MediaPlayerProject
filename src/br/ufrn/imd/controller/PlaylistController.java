@@ -15,15 +15,18 @@ import br.ufrn.imd.model.UserVipModel;
 
 public class PlaylistController {
 	String path;
-	static int x = 0;
+	UserController userController;
+	TrackController trackController;
 	List<PlaylistModel> playlists = new ArrayList<>();
 
 	public PlaylistController() {
 	}
 
-	public PlaylistController(String path) {
+	public PlaylistController(String path, UserController userController, TrackController trackController) {
 		super();
 		this.path = path;
+		this.userController = userController;
+		this.trackController = trackController;
 	}
 
 	public List<PlaylistModel> getPlaylists() {
@@ -38,7 +41,7 @@ public class PlaylistController {
 		this.path = path;
 	}
 
-	public void updatePlaylistsList(UserController userController, TrackController trackController) {
+	public void updatePlaylistsList() {
 		File folder = new File(path);
 		File[] playlistsFiles = folder.listFiles();
 		if (playlistsFiles != null) {
@@ -51,22 +54,21 @@ public class PlaylistController {
 						String line = reader.readLine();
 						while (line != null) {
 							String trackName = line;
-							for (TrackModel track : trackController.getTracks()) {
-								if (track.getName() == trackName) {
-									playlistTemp.getTracks().add(new TrackModel(trackName, track.getDirectory()));
-								}
+							if (trackController.findByName(trackName) != null) {
+								addTrack(trackController.findByName(trackName), playlistTemp);
 							}
 							line = reader.readLine();
 						}
-						for (UserVipModel u : userController.getUsersVip()) {
-							if (u.getFullName() == nameUser && u.getUsername() == usernameUser) {
-								u.getPlaylists().add(playlistTemp);
-							}
+						if (userController.findUserVipByName(nameUser) != null
+								&& userController.findUserVipByName(nameUser).getFullName() == nameUser
+								&& userController.findUserVipByName(usernameUser).getUsername() == usernameUser) {
+							userController.findUserVipByName(nameUser).getPlaylists().add(playlistTemp);
 						}
+
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					playlists.add(playlistTemp);
+					addPlaylist(playlistTemp);
 				}
 			}
 		}
@@ -76,8 +78,8 @@ public class PlaylistController {
 		File folder = new File(path);
 		for (UserVipModel u : users.getUsersVip()) {
 			for (PlaylistModel p : u.getPlaylists()) {
-				File file = new File(folder.getAbsolutePath() + File.separator + "playlist" + Integer.toString(x)+".txt");
-				x++;
+				File file = new File(
+						folder.getAbsolutePath() + File.separator + p.getTitle().replace(" ", "") + ".txt");
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
 					writer.write(u.getFullName());
@@ -107,5 +109,22 @@ public class PlaylistController {
 
 	public void removeTrack(TrackModel track, PlaylistModel playlist) {
 		playlist.getTracks().remove(track);
+	}
+
+	public void addPlaylist(PlaylistModel playlist) {
+		playlists.add(playlist);
+	}
+
+	public void removePlaylist(PlaylistModel playlist) {
+		playlists.remove(playlist);
+	}
+
+	public PlaylistModel findByTitle(String title) {
+		for (PlaylistModel playlist : getPlaylists()) {
+			if (playlist.getTitle().equals(title)) {
+				return playlist;
+			}
+		}
+		return null;
 	}
 }

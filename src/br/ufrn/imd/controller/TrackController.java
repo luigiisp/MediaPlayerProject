@@ -33,7 +33,7 @@ public class TrackController {
 		this.path = path;
 	}
 
-	//Updates tracks list
+	// Updates tracks list
 	public void updateTracksList() {
 		BufferedReader br = null;
 		TrackModel newTrack = new TrackModel();
@@ -54,7 +54,7 @@ public class TrackController {
 		}
 	}
 
-	//Updates tracks file content
+	// Updates tracks file content
 	public void updateTracksFile() {
 		BufferedWriter bw = null;
 		try {
@@ -79,5 +79,14 @@ public class TrackController {
 	public void removeTrack(TrackModel track) {
 		getTracks().remove(track);
 		updateTracksFile();
+	}
+
+	public TrackModel findByName(String name) {
+		for (TrackModel track : getTracks()) {
+			if (track.getName().equals(name)) {
+				return track;
+			}
+		}
+		return null;
 	}
 }

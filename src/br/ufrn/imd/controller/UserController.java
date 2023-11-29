@@ -39,7 +39,6 @@ public class UserController {
 		this.path = path;
 	}
 
-	// Updates tracks list
 	public void updateUsersList() {
 		BufferedReader br = null;
 		try {
@@ -67,12 +66,11 @@ public class UserController {
 		}
 	}
 
-	// Updates tracks file content
 	public void updateUsersFile() {
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter(getPath()));
-			for (UserModel u : usersCommon) {
+			for (UserModel u : getUsersCommon()) {
 				bw.write(u.getFullName());
 				bw.newLine();
 				bw.write(u.getUsername());
@@ -82,7 +80,7 @@ public class UserController {
 				bw.write("COMMON");
 				bw.newLine();
 			}
-			for (UserModel u : usersVip) {
+			for (UserModel u : getUsersVip()) {
 				bw.write(u.getFullName());
 				bw.newLine();
 				bw.write(u.getUsername());
@@ -116,5 +114,23 @@ public class UserController {
 	public void removeUserVip(UserVipModel user) {
 		getUsersVip().remove(user);
 		updateUsersFile();
+	}
+
+	public UserModel findUserCommonByName(String name) {
+		for (UserModel user : getUsersCommon()) {
+			if (user.getFullName().equals(name)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	public UserVipModel findUserVipByName(String name) {
+		for (UserVipModel user : getUsersVip()) {
+			if (user.getFullName().equals(name)) {
+				return user;
+			}
+		}
+		return null;
 	}
 }
