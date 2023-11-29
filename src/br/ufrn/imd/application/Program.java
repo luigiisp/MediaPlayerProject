@@ -15,61 +15,95 @@ import br.ufrn.imd.model.PlayerModel;
 import br.ufrn.imd.model.QueueModel;
 
 public class Program {
+	
+	static String PROJECTPATH = System.getProperty("user.dir");
+	static String DIRETORIOSTXTPATH = PROJECTPATH + "\\diretorios.txt";
+	static String usersFile, playlistsFolder, tracksFile;
+	static Scanner sc = new Scanner(System.in);
 
-	public static void main(String[] args) throws IOException {
-		String usersFolder, playlistsFolder, tracksFolder;
-		Scanner sc = new Scanner(System.in);
-		BufferedReader reader = null;
-		BufferedWriter writer = null;
-		String projectPath = System.getProperty("user.dir");
+	public static void main(String[] args) {
 		try {
-			reader = new BufferedReader(new FileReader(projectPath + "\\diretorio.txt"));
-			String line = reader.readLine();
-			if (line == null) {
-				File folder = new File(projectPath + File.separator + "files");
-				folder.mkdir();
 
-				String pathTemp = folder.getAbsolutePath();
+			BufferedReader reader = null;
+			BufferedWriter writer = null;
+			String line = null;
+			File folder = null;
 
-				folder = new File(pathTemp + File.separator + "users");
-				folder.mkdir();
-				usersFolder = folder.getAbsolutePath();
+			// if diretorios.txt has an empty line, generate files and overwrite
+			reader = new BufferedReader(new FileReader(DIRETORIOSTXTPATH));
 
-				folder = new File(pathTemp + File.separator + "playlists");
-				folder.mkdir();
-				playlistsFolder = folder.getAbsolutePath();
+			boolean generatedFiles = false;
+			for (int i = 0; i < 3; i++) {
+				line = reader.readLine();
 
-				folder = new File(pathTemp + File.separator + "tracks");
-				folder.mkdir();
-
-				reader.close();
-
-				writer = new BufferedWriter(new FileWriter(projectPath + "\\diretorio.txt"));
-				tracksFolder = folder.getAbsolutePath();
-				writer.write(usersFolder);
-				writer.newLine();
-				writer.write(playlistsFolder);
-				writer.newLine();
-				writer.write(tracksFolder);
-				writer.close();
-			} else {
-				usersFolder = line;
-				playlistsFolder = reader.readLine();
-				tracksFolder = reader.readLine();
+				if (line == null || line.isBlank()) {
+					generateFilesDir();
+					generatedFiles = true;
+					break;
+				}
 			}
-			reader.close();
-			UserController userController = new UserController(usersFolder + "usuarios");
-			userController.updateUsersList();
-			TrackController trackController = new TrackController(tracksFolder + "musicas");
-			trackController.updateTracksList();
+			// known issue: if diretorios.txt has a line with an nonexisting directory
 
+			readDirFile();
+			
+			UserController userController = new UserController(usersFile);
+			userController.updateUsersList();
+			TrackController trackController = new TrackController(tracksFile);
+			trackController.updateTracksList();
+			
 			PlayerModel player = new PlayerModel(new QueueModel());
 			PlayerController playerController = new PlayerController(player);
-
+			
+			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			sc.close();
 		}
+	}
+
+	private static void readDirFile() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(DIRETORIOSTXTPATH));
+		usersFile = reader.readLine();
+		playlistsFolder = reader.readLine();
+		tracksFile = reader.readLine();
+	}
+	
+	private static void updateDirFile() throws IOException {
+		BufferedWriter writer = null;
+
+		writer = new BufferedWriter(new FileWriter(DIRETORIOSTXTPATH));
+		writer.write(usersFile);
+		writer.newLine();
+		writer.write(playlistsFolder);
+		writer.newLine();
+		writer.write(tracksFile);
+		writer.close();
+	}
+
+	// generates files directory inside project main directory
+	private static void generateFilesDir() throws IOException {
+		File folder = new File(PROJECTPATH + File.separator + "files");
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+
+		String filesFolderPath = folder.getAbsolutePath();
+
+		folder = new File(filesFolderPath + File.separator + "playlists");
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+		playlistsFolder = folder.getAbsolutePath();
+
+		folder = new File(filesFolderPath + File.separator + "users.txt");
+		folder.createNewFile();
+		usersFile = folder.getAbsolutePath();
+
+		folder = new File(filesFolderPath + File.separator + "tracks.txt");
+		folder.createNewFile();
+		tracksFile = folder.getAbsolutePath();
+
+		updateDirFile();
 	}
 }

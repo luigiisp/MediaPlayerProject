@@ -1,3 +1,0 @@
-D:\Desktop\ws-lp2\MediaPlayerProject\files\users
-D:\Desktop\ws-lp2\MediaPlayerProject\files\playlists
-D:\Desktop\ws-lp2\MediaPlayerProject\files\tracks

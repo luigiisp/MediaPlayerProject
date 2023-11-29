@@ -18,7 +18,7 @@ public class TrackController {
 
 	public TrackController(String path) {
 		super();
-		this.path = path + ".txt";
+		this.path = path;
 	}
 
 	public List<TrackModel> getTracks() {
