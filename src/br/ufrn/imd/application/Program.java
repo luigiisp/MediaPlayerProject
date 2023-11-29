@@ -23,12 +23,12 @@ public class Program {
 		BufferedWriter writer = null;
 		String projectPath = System.getProperty("user.dir");
 		try {
-			reader = new BufferedReader(new FileReader(projectPath + "diretorio.txt"));
-			writer = new BufferedWriter(new FileWriter(projectPath + "diretorio.txt"));
+			reader = new BufferedReader(new FileReader(projectPath + "\\diretorio.txt"));
 			String line = reader.readLine();
 			if (line == null) {
 				File folder = new File(projectPath + File.separator + "files");
 				folder.mkdir();
+
 				String pathTemp = folder.getAbsolutePath();
 
 				folder = new File(pathTemp + File.separator + "users");
@@ -41,18 +41,23 @@ public class Program {
 
 				folder = new File(pathTemp + File.separator + "tracks");
 				folder.mkdir();
+
+				reader.close();
+
+				writer = new BufferedWriter(new FileWriter(projectPath + "\\diretorio.txt"));
 				tracksFolder = folder.getAbsolutePath();
 				writer.write(usersFolder);
 				writer.newLine();
 				writer.write(playlistsFolder);
 				writer.newLine();
 				writer.write(tracksFolder);
-
+				writer.close();
 			} else {
 				usersFolder = line;
 				playlistsFolder = reader.readLine();
 				tracksFolder = reader.readLine();
 			}
+			reader.close();
 			UserController userController = new UserController(usersFolder + "usuarios");
 			userController.updateUsersList();
 			TrackController trackController = new TrackController(tracksFolder + "musicas");
@@ -64,8 +69,6 @@ public class Program {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			writer.close();
-			reader.close();
 			sc.close();
 		}
 	}
