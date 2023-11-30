@@ -56,8 +56,8 @@ public class PlaylistController {
 						String line = reader.readLine();
 						while (line != null) {
 							String trackName = line;
-							if (trackController.findByName(trackName) != null) {
-								addTrack(trackController.findByName(trackName), playlistTemp);
+							if (trackController.getTrackByName(trackName) != null) {
+								addTrack(trackController.getTrackByName(trackName), playlistTemp);
 							}
 							line = reader.readLine();
 						}

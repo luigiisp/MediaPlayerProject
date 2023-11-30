@@ -81,7 +81,7 @@ public class TrackController {
 		updateTracksFile();
 	}
 
-	public TrackModel findByName(String name) {
+	public TrackModel getTrackByName(String name) {
 		for (TrackModel track : getTracks()) {
 			if (track.getName().equals(name)) {
 				return track;

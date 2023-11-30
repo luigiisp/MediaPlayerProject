@@ -1,17 +1,27 @@
 package br.ufrn.imd.controller;
 
+import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
 
 public class MediaPlayerController {
-	UserModel loggedUser = null;
-	TrackController trackController = new TrackController();
-	QueueController queueController = new QueueController();
-	PlaylistController playlistController = new PlaylistController();
-	UserController userController = new UserController();
+	private UserModel loggedUser = null;
+	private QueueController queueController = new QueueController();
+	private TrackController trackController = null;
+	private UserController userController = null;
+	private PlaylistController playlistController = null;
+	private PlayerController playerController = new PlayerController(queueController);
 
-	public MediaPlayerController() {
+	public MediaPlayerController(TrackController trackController, PlaylistController playlistController,
+			UserController userController) {
 		super();
+		this.trackController = trackController;
+		this.playlistController = playlistController;
+		this.userController = userController;
+	}
+	
+	public UserModel getLoggedUser() {
+		return loggedUser;
 	}
 
 	public void register(String fullName, String username, String password, boolean vipUser) {
@@ -45,4 +55,26 @@ public class MediaPlayerController {
 
 		loggedUser = user;
 	}
+	
+	public void searchTrackByName(String searched) {
+		System.out.println("Tracks found: ");
+		for(TrackModel track : trackController.getTracks()) {
+			if(track.getName().contains(searched)) {
+				System.out.println("- " + track.getName());
+			}
+		}
+	}
+	
+	public void addTrackToQueue(String trackName) {
+		TrackModel track = trackController.getTrackByName(trackName);
+		if(track == null) {
+			System.out.println("Track not found");
+		}
+		queueController.addTrack(track);
+	}
+	
+	public void play() {
+		playerController.playQueue();
+	}
+	
 }

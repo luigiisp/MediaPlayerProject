@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.controller.PlayerController;
 import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
@@ -49,15 +50,17 @@ public class Program {
 			userController.updateUsersList();
 			TrackController trackController = new TrackController(tracksFile);
 			trackController.updateTracksList();
-
 			PlayerController playerController = new PlayerController();
 			PlaylistController playlistController = new PlaylistController(playlistsFolder, userController,
 					trackController);
-
-			System.out.println(trackController.getTracks().get(0).getName());
-			playerController.getPlayer().getQueueController().addTrack(trackController.getTracks().get(0));
-			playerController.playQueue();
-
+			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController, userController);
+			
+			//Execution
+			
+			mediaPlayerController.addTrackToQueue("Treasure");
+			mediaPlayerController.play();
+			
+			
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();

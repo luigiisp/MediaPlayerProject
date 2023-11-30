@@ -24,6 +24,11 @@ public class PlayerController {
 		this.player = player;
 	}
 	
+	public PlayerController(QueueController queueController) {
+		super();
+		this.player.setQueueController(queueController);
+	}
+	
 	public PlayerModel getPlayer() {
 		return player;
 	}
@@ -38,7 +43,7 @@ public class PlayerController {
 				FileInputStream fis = new FileInputStream(getCurrentTrack().getDirectory());
 				trackPlayer = new Player(fis);
 				System.out.println("Playing " + getCurrentTrack().getName());
-				trackPlayer.play(currentFrame);
+				trackPlayer.play();
 				currentFrame = 0;
 				
 			} catch (FileNotFoundException | JavaLayerException e) {
