@@ -15,8 +15,8 @@ import br.ufrn.imd.model.UserVipModel;
 
 public class PlaylistController {
 	String path;
-	UserController userController;
-	TrackController trackController;
+	UserController userController = null;
+	TrackController trackController = null;
 	List<PlaylistModel> playlists = new ArrayList<>();
 
 	public PlaylistController() {
@@ -41,16 +41,16 @@ public class PlaylistController {
 		this.path = path;
 	}
 
-	//consider removing fullname from playlisttxt
+	// consider removing fullname from playlisttxt
 	public void updatePlaylistsList() {
 		File folder = new File(path);
 		File[] playlistsFiles = folder.listFiles();
 		if (playlistsFiles != null) {
 			for (File file : playlistsFiles) {
 				if (file.isFile() && file.getName().endsWith(".txt")) {
-					PlaylistModel playlistTemp = new PlaylistModel(file.getAbsolutePath());
+					String[] playlistName = file.getName().split(".");
+					PlaylistModel playlistTemp = new PlaylistModel(playlistName[0], file.getAbsolutePath());
 					try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-						//*
 						String playlistOwnerFullname = reader.readLine();
 						String playlistOwnerUsername = reader.readLine();
 						String line = reader.readLine();
@@ -63,10 +63,8 @@ public class PlaylistController {
 						}
 						UserVipModel playlistOwner = userController.findUserVipByUsername(playlistOwnerUsername);
 						if (playlistOwner != null) {
-							playlistOwner.getPlaylists()
-									.add(playlistTemp);
+							playlistOwner.getPlaylists().add(playlistTemp);
 						}
-
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
