@@ -52,9 +52,7 @@ public class PlayerController {
 			//track plays until it ends
 			
 			player.getQueueController().removeTrack(getCurrentTrack());
-			trackIndex++;
 		}
-		trackIndex = 0;
 		trackPlayer.close();
 	}
 

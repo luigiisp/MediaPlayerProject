@@ -1,5 +1,6 @@
 package br.ufrn.imd.controller;
 
+import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
@@ -77,4 +78,9 @@ public class MediaPlayerController {
 		playerController.playQueue();
 	}
 	
+	public void createPlaylist(String title) {
+		if(loggedUser instanceof UserVipModel) {
+			playlistController.addPlaylist(new PlaylistModel(playlistController.getPath()));
+		}
+	}
 }

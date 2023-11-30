@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import br.ufrn.imd.controller.MediaPlayerController;
-import br.ufrn.imd.controller.PlayerController;
 import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
@@ -50,14 +49,16 @@ public class Program {
 			userController.updateUsersList();
 			TrackController trackController = new TrackController(tracksFile);
 			trackController.updateTracksList();
-			PlayerController playerController = new PlayerController();
 			PlaylistController playlistController = new PlaylistController(playlistsFolder, userController,
 					trackController);
 			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController, userController);
 			
 			//Execution
 			
+			mediaPlayerController.searchTrackByName("r");
+			mediaPlayerController.addTrackToQueue("belligol");
 			mediaPlayerController.addTrackToQueue("Treasure");
+			
 			mediaPlayerController.play();
 			
 			

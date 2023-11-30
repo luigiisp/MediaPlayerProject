@@ -10,8 +10,8 @@ import java.util.List;
 import br.ufrn.imd.model.TrackModel;
 
 public class TrackController {
-	String path;
-	List<TrackModel> tracks = new ArrayList<>();
+	private String path;
+	private List<TrackModel> tracks = new ArrayList<>();
 
 	public TrackController() {
 	}
@@ -36,18 +36,20 @@ public class TrackController {
 	// Updates tracks list
 	public void updateTracksList() {
 		BufferedReader br = null;
-		TrackModel newTrack = new TrackModel();
+		
 		try {
 			br = new BufferedReader(new FileReader(getPath()));
 			String line = br.readLine();
 
 			while (line != null) {
+				TrackModel newTrack = new TrackModel();
 				newTrack.setName(line);
 				line = br.readLine();
 				newTrack.setDirectory(line);
 				tracks.add(newTrack);
 				line = br.readLine();
 			}
+			
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
