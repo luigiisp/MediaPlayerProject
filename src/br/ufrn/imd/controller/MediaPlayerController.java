@@ -1,5 +1,7 @@
 package br.ufrn.imd.controller;
 
+import java.util.List;
+
 import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserModel;
@@ -58,11 +60,10 @@ public class MediaPlayerController {
 	}
 	
 	public void searchTrackByName(String searched) {
-		System.out.println("Tracks found: ");
-		for(TrackModel track : trackController.getTracks()) {
-			if(track.getName().contains(searched)) {
-				System.out.println("- " + track.getName());
-			}
+		List<TrackModel> tracksFound = trackController.getTracksByNameSubstring(searched);
+		System.out.println("Tracks found:");
+		for(TrackModel track : tracksFound) {
+			System.out.println(track.getName());
 		}
 	}
 	
@@ -78,9 +79,13 @@ public class MediaPlayerController {
 		playerController.playQueue();
 	}
 	
+	public void skip() {
+		playerController.skipTrack();
+	}
+	
 	public void createPlaylist(String title) {
 		if(loggedUser instanceof UserVipModel) {
-			playlistController.addPlaylist(new PlaylistModel(title,playlistController.getPath()));
+			playlistController.addPlaylist(new PlaylistModel(title, playlistController.getPath()));
 		}
 	}
 }

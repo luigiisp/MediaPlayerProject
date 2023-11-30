@@ -70,9 +70,9 @@ public class PlayerController {
 	}
 	
 	public void skipTrack() {
-		trackIndex++;
-		trackPlayer.close();
+		player.getQueueController().removeTrack(getCurrentTrack());
 		System.out.println("Skipped track");
+		playQueue();
 	}
 	
 	/*

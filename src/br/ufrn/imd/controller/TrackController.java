@@ -91,4 +91,15 @@ public class TrackController {
 		}
 		return null;
 	}
+	
+	public List<TrackModel> getTracksByNameSubstring(String searched) {
+		List<TrackModel> tracksFound = new ArrayList<TrackModel>();
+		for(TrackModel track : getTracks()) {
+			if(track.getName().contains(searched)) {
+				tracksFound.add(track);
+			}
+		}
+		
+		return tracksFound;
+	}
 }

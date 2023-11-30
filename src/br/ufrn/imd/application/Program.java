@@ -56,13 +56,7 @@ public class Program {
 
 			// Execution
 
-			/*
-			 * mediaPlayerController.searchTrackByName("r");
-			 * mediaPlayerController.addTrackToQueue("belligol");
-			 * mediaPlayerController.addTrackToQueue("Treasure");
-			 * 
-			 * mediaPlayerController.play();
-			 */
+			
 			
 			reader.close();
 		} catch (Exception e) {
