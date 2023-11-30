@@ -10,8 +10,6 @@ import javazoom.jl.player.Player;
 
 public class PlayerController {
 	private int trackIndex = 0;
-	private int currentFrame = 0;
-	private boolean paused = false;
 	private PlayerModel player = new PlayerModel();
 	private Player trackPlayer = null;
 	
@@ -38,13 +36,12 @@ public class PlayerController {
 	}
 	
 	public void playQueue() {
-		while(!player.getQueue().getTracks().isEmpty() && paused == false) {
+		while(!player.getQueue().getTracks().isEmpty()) {
 			try {
 				FileInputStream fis = new FileInputStream(getCurrentTrack().getDirectory());
 				trackPlayer = new Player(fis);
 				System.out.println("Playing " + getCurrentTrack().getName());
 				trackPlayer.play();
-				currentFrame = 0;
 				
 			} catch (FileNotFoundException | JavaLayerException e) {
 				e.printStackTrace();
@@ -56,6 +53,7 @@ public class PlayerController {
 		trackPlayer.close();
 	}
 
+	/*
 	public void unpauseTrack() {
 		playQueue();
 		paused = false;
@@ -68,8 +66,10 @@ public class PlayerController {
 		paused = true;
 		System.out.println("Paused current track");
 	}
+	*/
 	
 	public void skipTrack() {
+		trackPlayer.close();
 		player.getQueueController().removeTrack(getCurrentTrack());
 		System.out.println("Skipped track");
 		playQueue();
