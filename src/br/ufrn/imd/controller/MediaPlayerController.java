@@ -80,7 +80,7 @@ public class MediaPlayerController {
 	
 	public void createPlaylist(String title) {
 		if(loggedUser instanceof UserVipModel) {
-			playlistController.addPlaylist(new PlaylistModel(playlistController.getPath()));
+			playlistController.addPlaylist(new PlaylistModel(title,playlistController.getPath()));
 		}
 	}
 }

@@ -51,16 +51,18 @@ public class Program {
 			trackController.updateTracksList();
 			PlaylistController playlistController = new PlaylistController(playlistsFolder, userController,
 					trackController);
-			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController, userController);
-			
-			//Execution
-			
-			mediaPlayerController.searchTrackByName("r");
-			mediaPlayerController.addTrackToQueue("belligol");
-			mediaPlayerController.addTrackToQueue("Treasure");
-			
-			mediaPlayerController.play();
-			
+			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController,
+					userController);
+
+			// Execution
+
+			/*
+			 * mediaPlayerController.searchTrackByName("r");
+			 * mediaPlayerController.addTrackToQueue("belligol");
+			 * mediaPlayerController.addTrackToQueue("Treasure");
+			 * 
+			 * mediaPlayerController.play();
+			 */
 			
 			reader.close();
 		} catch (Exception e) {
@@ -75,6 +77,7 @@ public class Program {
 		usersFile = reader.readLine();
 		playlistsFolder = reader.readLine();
 		tracksFile = reader.readLine();
+		reader.close();
 	}
 
 	private static void updateDirFile() throws IOException {
