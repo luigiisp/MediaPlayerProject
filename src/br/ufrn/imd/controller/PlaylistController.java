@@ -58,7 +58,7 @@ public class PlaylistController {
 						while (line != null) {
 							String trackName = line;
 							if (trackController.getTrackByName(trackName) != null) {
-								addTrackToPlaylist(trackName, playlistTemp.getTitle());
+								addTrackToPlaylist(playlistOwnerUsername, trackName, playlistTemp.getTitle());
 							}
 							line = reader.readLine();
 						}
@@ -66,7 +66,7 @@ public class PlaylistController {
 						if (playlistOwner != null) {
 							playlistOwner.getPlaylists().add(playlistTemp);
 						}
-						addPlaylist(playlistTemp.getTitle());
+						addPlaylist(playlistOwnerUsername, playlistTemp.getTitle());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
