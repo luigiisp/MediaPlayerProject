@@ -45,7 +45,7 @@ public class MediaPlayerController {
 	}
 
 	public void login(String username, String password) {
-		if(loggedUser != null) {
+		if (loggedUser != null) {
 			System.out.println("You are already logged in. Logoff to change user");
 			return;
 		}
@@ -87,9 +87,16 @@ public class MediaPlayerController {
 	}
 
 	public void createPlaylist(String title) {
-		if (loggedUser instanceof UserVipModel) {
-			playlistController.addPlaylist(title);
-			playlistController.addPlaylistToUser(title, (UserVipModel) loggedUser);
+		if (!(loggedUser instanceof UserVipModel)) {
+			System.out.println("Only vip users can create playlists");
+			return;
 		}
+
+		if (((UserVipModel) loggedUser).getPlaylists().contains(playlistController.findByTitle(title))) {
+			
+		}
+		playlistController.addPlaylist(title);
+		playlistController.addPlaylistToUser(title, (UserVipModel) loggedUser);
+
 	}
 }

@@ -138,5 +138,4 @@ public class UserController {
 		return (findUserCommonByUsername(username) != null ? findUserCommonByUsername(username)
 				: findUserVipByUsername(username));
 	}
-
 }
