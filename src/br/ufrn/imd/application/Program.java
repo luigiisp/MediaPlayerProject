@@ -26,20 +26,16 @@ public class Program {
 		try {
 
 			BufferedReader reader = null;
-			BufferedWriter writer = null;
 			String line = null;
-			File folder = null;
 
 			// if diretorios.txt has an empty line, generate files and overwrite
 			reader = new BufferedReader(new FileReader(DIRETORIOSTXTPATH));
 
-			boolean generatedFiles = false;
 			for (int i = 0; i < 3; i++) {
 				line = reader.readLine();
 
 				if (line == null || line.isBlank()) {
 					generateFilesDir();
-					generatedFiles = true;
 					break;
 				}
 			}
@@ -57,7 +53,10 @@ public class Program {
 			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController,
 					userController);
 			
-			mediaPlayerController.login("luigiinto", userController.findUserByUsername("luigiinto").getPassword());
+			//Execution
+			
+			mediaPlayerController.register("Elson", "elsoka", "lol", true);
+			mediaPlayerController.login("elsoka", "lol");
 			
 			PlaylistModel temp = new PlaylistModel("LewisCapaldi");
 			mediaPlayerController.createPlaylist(temp.getTitle());

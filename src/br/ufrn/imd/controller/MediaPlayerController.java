@@ -2,7 +2,6 @@ package br.ufrn.imd.controller;
 
 import java.util.List;
 
-import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
@@ -34,24 +33,28 @@ public class MediaPlayerController {
 		}
 
 		if (vipUser) {
-			UserVipModel newUser = new UserVipModel(fullName, username, password);
+			UserVipModel newUser = new UserVipModel(fullName, password, username);
 			userController.addUserVip(newUser);
 
 			loggedUser = newUser;
 		} else {
-			UserModel newUser = new UserModel(fullName, username, password);
+			UserModel newUser = new UserModel(fullName, password, username);
 			userController.addUserCommon(newUser);
 			loggedUser = newUser;
 		}
 	}
 
 	public void login(String username, String password) {
+		if(loggedUser != null) {
+			System.out.println("You are already logged in. Logoff to change user");
+			return;
+		}
 		if (userController.findUserByUsername(username) == null) {
 			System.out.println("No user registered with this username");
 			return;
 		}
 		UserModel user = userController.findUserByUsername(username);
-		if (user.getPassword() != password) {
+		if (!user.getPassword().equals(password)) {
 			System.out.println("Wrong password for this username");
 			return;
 		}

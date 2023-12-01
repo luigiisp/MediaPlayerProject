@@ -114,6 +114,7 @@ public class PlaylistController {
 	public void renamePlaylist(String newTitle, String oldTitle) {
 		if (findByTitle(oldTitle) != null) {
 			findByTitle(oldTitle).setTitle(newTitle);
+			updatePlaylistsFolder();
 		}
 	}
 
@@ -124,7 +125,7 @@ public class PlaylistController {
 		}
 	}
 
-	public void removeTrackToPlaylist(String trackName, String playlistName) {
+	public void removeTrackFromPlaylist(String trackName, String playlistName) {
 		if (findByTitle(playlistName) != null && trackController.getTrackByName(trackName) != null) {
 			findByTitle(playlistName).getTracks().remove(trackController.getTrackByName(trackName));
 			updatePlaylistsFolder();
