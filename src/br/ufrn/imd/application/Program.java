@@ -13,7 +13,6 @@ import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
 import br.ufrn.imd.model.PlaylistModel;
-import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserVipModel;
 
 public class Program {
@@ -57,28 +56,24 @@ public class Program {
 			playlistController.updatePlaylistsList();
 			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController,
 					userController);
-
-			// Execution
-			mediaPlayerController.register("Luigi", "1234", "luigiinto", true);
 			
-			String name = sc.next();
-			sc.nextLine();
-			String directory = sc.next();
-			sc.nextLine();
+			mediaPlayerController.login("luigiinto", userController.findUserByUsername("luigiinto").getPassword());
 			
-			trackController.addTrack(new TrackModel(name, directory));
-			mediaPlayerController.createPlaylist("Lewis Capaldi".replace(" ", ""));
+			PlaylistModel temp = new PlaylistModel("LewisCapaldi");
+			mediaPlayerController.createPlaylist(temp.getTitle());
 			
-			for(PlaylistModel p : playlistController.getPlaylists()) {
+			UserVipModel user = (UserVipModel)mediaPlayerController.getLoggedUser();
+			for(PlaylistModel p : user.getPlaylists()) {
 				System.out.println(p.getTitle());
+				System.out.println(p.getDirectory());
 			}
-			
-			playlistController.addTrackToPlaylist(trackController.getTrackByName(name).getName(), playlistController.findByTitle("LewisCapaldi").getTitle());
-			
-			File file = new File(playlistController.getPlaylists().get(0).getDirectory());
-			System.out.println(file.getAbsolutePath());
-			mediaPlayerController.addTrackToQueue(name);
-			
+			System.out.println();
+			System.out.println();
+			for (PlaylistModel p : playlistController.getPlaylists()) {
+				System.out.println(p.getTitle());
+				System.out.println(p.getDirectory());
+			}
+
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();

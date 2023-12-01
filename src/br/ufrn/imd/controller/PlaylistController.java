@@ -41,19 +41,19 @@ public class PlaylistController {
 		this.path = path;
 	}
 
-	// consider removing fullname from playlisttxt
+	// consider removing fullname from playlist.txt
 	public void updatePlaylistsList() {
 		File folder = new File(path);
 		File[] playlistsFiles = folder.listFiles();
 		if (playlistsFiles != null) {
 			for (File file : playlistsFiles) {
 				if (file.isFile() && file.getName().endsWith(".txt")) {
-					String[] playlistName = file.getName().split(".");
-					PlaylistModel playlistTemp = new PlaylistModel(playlistName[0], file.getAbsolutePath());
 					try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 						String playlistOwnerFullname = reader.readLine();
 						String playlistOwnerUsername = reader.readLine();
+						String playlistTitle = reader.readLine();
 						String line = reader.readLine();
+						PlaylistModel playlistTemp = new PlaylistModel(playlistTitle, file.getPath());
 						while (line != null) {
 							String trackName = line;
 							if (trackController.getTrackByName(trackName) != null) {
@@ -65,25 +65,30 @@ public class PlaylistController {
 						if (playlistOwner != null) {
 							playlistOwner.getPlaylists().add(playlistTemp);
 						}
+						addPlaylist(playlistTemp.getTitle());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					addPlaylist(playlistTemp);
 				}
 			}
 		}
 	}
 
 	public void updatePlaylistsFolder() {
+		int x = 0;
 		for (UserVipModel u : userController.getUsersVip()) {
 			for (PlaylistModel p : u.getPlaylists()) {
-				File file = new File(path + File.separator + p.getTitle().replace(" ", "") + ".txt");
-				System.out.println(file.getAbsolutePath());
+				File file = new File(getPath() + File.separator + "playlist" + Integer.toString(x++) + ".txt");
+				p.setDirectory(file.getPath());
+				BufferedWriter writer = null;
 				try {
-					BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
+					writer = new BufferedWriter(
+							new FileWriter(file));
 					writer.write(u.getFullName());
 					writer.newLine();
 					writer.write(u.getUsername());
+					writer.newLine();
+					writer.write(p.getTitle());
 					writer.newLine();
 					for (TrackModel t : p.getTracks()) {
 						writer.write(t.getName());
@@ -93,6 +98,14 @@ public class PlaylistController {
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
+				} finally {
+					try {
+						if (writer != null) {
+							writer.close();
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -118,19 +131,24 @@ public class PlaylistController {
 		}
 	}
 
-	public void addPlaylist(PlaylistModel playlist) {
-		playlists.add(playlist);
-		updatePlaylistsFolder();
+	public void addPlaylist(String title) {
+		if (findByTitle(title) == null) {
+			playlists.add(new PlaylistModel(title));
+			updatePlaylistsFolder();
+		}
 	}
 
-	public void removePlaylist(PlaylistModel playlist) {
-		playlists.remove(playlist);
-		updatePlaylistsFolder();
+	public void removePlaylist(String title) {
+		if (findByTitle(title) != null) {
+			playlists.remove(findByTitle(title));
+			updatePlaylistsFolder();
+		}
 	}
 
 	public PlaylistModel findByTitle(String title) {
 		for (PlaylistModel playlist : getPlaylists()) {
 			if (playlist.getTitle().equals(title)) {
+				System.out.println("Entrou");
 				return playlist;
 			}
 		}

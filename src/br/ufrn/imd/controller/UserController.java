@@ -54,9 +54,9 @@ public class UserController {
 				line = br.readLine();
 				String userType = line;
 				line = br.readLine();
-				if (userType.toUpperCase() == "COMMON") {
+				if (userType.toUpperCase().equals("COMMON")) {
 					usersCommon.add(new UserModel(name, password, username));
-				} else if (userType.toUpperCase() == "VIP") {
+				} else if (userType.toUpperCase().equals("VIP")) {
 					usersVip.add(new UserVipModel(name, password, username));
 				}
 			}

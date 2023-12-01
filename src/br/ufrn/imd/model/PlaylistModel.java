@@ -1,6 +1,5 @@
 package br.ufrn.imd.model;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,11 @@ public class PlaylistModel {
 
 	public PlaylistModel(String title, String directory) {
 		this.title = title;
-		this.directory = directory + File.separator + getTitle().replace(" ", "") + ".txt";
+		this.directory = directory;
+	}
+
+	public PlaylistModel(String title) {
+		this.title = title;
 	}
 
 	public String getTitle() {
