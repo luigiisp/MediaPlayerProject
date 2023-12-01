@@ -83,8 +83,7 @@ public class PlaylistController {
 				p.setDirectory(file.getPath());
 				BufferedWriter writer = null;
 				try {
-					writer = new BufferedWriter(
-							new FileWriter(file));
+					writer = new BufferedWriter(new FileWriter(file));
 					writer.write(u.getFullName());
 					writer.newLine();
 					writer.write(u.getUsername());
@@ -135,7 +134,9 @@ public class PlaylistController {
 
 	public void addPlaylist(String username, String title) {
 		if (findByTitle(username, title) == null) {
-			playlists.add(new PlaylistModel(title));
+			PlaylistModel newPlaylist = new PlaylistModel();
+			userController.findUserVipByUsername(username).getPlaylists().add(newPlaylist);
+			playlists.add(newPlaylist);
 			updatePlaylistsFolder();
 		}
 	}
@@ -164,12 +165,5 @@ public class PlaylistController {
 			}
 		}
 		return null;
-	}
-
-	public void addPlaylistToUser(String title, UserVipModel userVip) {
-		if (findByTitle(userVip.getUsername(), title) != null) {
-			userVip.getPlaylists().add(findByTitle(title));
-			updatePlaylistsFolder();
-		}
 	}
 }
