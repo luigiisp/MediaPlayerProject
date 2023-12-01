@@ -57,7 +57,7 @@ public class PlaylistController {
 						while (line != null) {
 							String trackName = line;
 							if (trackController.getTrackByName(trackName) != null) {
-								addTrack(trackController.getTrackByName(trackName), playlistTemp);
+								addTrackToPlaylist(trackName, playlistTemp.getTitle());
 							}
 							line = reader.readLine();
 						}
@@ -74,12 +74,11 @@ public class PlaylistController {
 		}
 	}
 
-	public void updatePlaylistsFolder(UserController users) {
-		File folder = new File(path);
-		for (UserVipModel u : users.getUsersVip()) {
+	public void updatePlaylistsFolder() {
+		for (UserVipModel u : userController.getUsersVip()) {
 			for (PlaylistModel p : u.getPlaylists()) {
-				File file = new File(
-						folder.getAbsolutePath() + File.separator + p.getTitle().replace(" ", "") + ".txt");
+				File file = new File(path + File.separator + p.getTitle().replace(" ", "") + ".txt");
+				System.out.println(file.getAbsolutePath());
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
 					writer.write(u.getFullName());
@@ -99,24 +98,34 @@ public class PlaylistController {
 		}
 	}
 
-	public void renamePlaylist(String newTitle, PlaylistModel playlist) {
-		playlist.setTitle(newTitle);
+	public void renamePlaylist(String newTitle, String oldTitle) {
+		if (findByTitle(oldTitle) != null) {
+			findByTitle(oldTitle).setTitle(newTitle);
+		}
 	}
 
-	public void addTrack(TrackModel track, PlaylistModel playlist) {
-		playlist.getTracks().add(track);
+	public void addTrackToPlaylist(String trackName, String playlistName) {
+		if (findByTitle(playlistName) != null && trackController.getTrackByName(trackName) != null) {
+			findByTitle(playlistName).getTracks().add(trackController.getTrackByName(trackName));
+			updatePlaylistsFolder();
+		}
 	}
 
-	public void removeTrack(TrackModel track, PlaylistModel playlist) {
-		playlist.getTracks().remove(track);
+	public void removeTrackToPlaylist(String trackName, String playlistName) {
+		if (findByTitle(playlistName) != null && trackController.getTrackByName(trackName) != null) {
+			findByTitle(playlistName).getTracks().remove(trackController.getTrackByName(trackName));
+			updatePlaylistsFolder();
+		}
 	}
 
 	public void addPlaylist(PlaylistModel playlist) {
 		playlists.add(playlist);
+		updatePlaylistsFolder();
 	}
 
 	public void removePlaylist(PlaylistModel playlist) {
 		playlists.remove(playlist);
+		updatePlaylistsFolder();
 	}
 
 	public PlaylistModel findByTitle(String title) {
@@ -126,5 +135,12 @@ public class PlaylistController {
 			}
 		}
 		return null;
+	}
+
+	public void addPlaylistToUser(String title, UserVipModel userVip) {
+		if (findByTitle(title) != null) {
+			userController.findUserVipByUsername(userVip.getUsername()).getPlaylists().add(findByTitle(title));
+			updatePlaylistsFolder();
+		}
 	}
 }

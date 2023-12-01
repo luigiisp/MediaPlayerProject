@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * 
- */
-module MediaPlayerProject {
-	requires jlayer;
-}

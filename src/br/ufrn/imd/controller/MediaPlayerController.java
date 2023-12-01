@@ -22,7 +22,7 @@ public class MediaPlayerController {
 		this.playlistController = playlistController;
 		this.userController = userController;
 	}
-	
+
 	public UserModel getLoggedUser() {
 		return loggedUser;
 	}
@@ -32,17 +32,17 @@ public class MediaPlayerController {
 			System.out.println("Username already registered");
 			return;
 		}
-		
-		if(vipUser) {
+
+		if (vipUser) {
 			UserVipModel newUser = new UserVipModel(fullName, username, password);
 			userController.addUserVip(newUser);
-			
+
 			loggedUser = newUser;
 		} else {
-			UserModel newUser = new UserModel(fullName, username, password); 
+			UserModel newUser = new UserModel(fullName, username, password);
 			userController.addUserCommon(newUser);
 			loggedUser = newUser;
-		}		
+		}
 	}
 
 	public void login(String username, String password) {
@@ -58,34 +58,35 @@ public class MediaPlayerController {
 
 		loggedUser = user;
 	}
-	
+
 	public void searchTrackByName(String searched) {
 		List<TrackModel> tracksFound = trackController.getTracksByNameSubstring(searched);
 		System.out.println("Tracks found:");
-		for(TrackModel track : tracksFound) {
+		for (TrackModel track : tracksFound) {
 			System.out.println(track.getName());
 		}
 	}
-	
+
 	public void addTrackToQueue(String trackName) {
 		TrackModel track = trackController.getTrackByName(trackName);
-		if(track == null) {
+		if (track == null) {
 			System.out.println("Track not found");
 		}
 		queueController.addTrack(track);
 	}
-	
+
 	public void play() {
 		playerController.playQueue();
 	}
-	
+
 	public void skip() {
 		playerController.skipTrack();
 	}
-	
+
 	public void createPlaylist(String title) {
-		if(loggedUser instanceof UserVipModel) {
+		if (loggedUser instanceof UserVipModel) {
 			playlistController.addPlaylist(new PlaylistModel(title, playlistController.getPath()));
+			playlistController.addPlaylistToUser(title, (UserVipModel) loggedUser);
 		}
 	}
 }

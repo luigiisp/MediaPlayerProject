@@ -12,6 +12,9 @@ import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
+import br.ufrn.imd.model.PlaylistModel;
+import br.ufrn.imd.model.TrackModel;
+import br.ufrn.imd.model.UserVipModel;
 
 public class Program {
 
@@ -51,12 +54,30 @@ public class Program {
 			trackController.updateTracksList();
 			PlaylistController playlistController = new PlaylistController(playlistsFolder, userController,
 					trackController);
+			playlistController.updatePlaylistsList();
 			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController,
 					userController);
 
 			// Execution
-
+			mediaPlayerController.register("Luigi", "1234", "luigiinto", true);
 			
+			String name = sc.next();
+			sc.nextLine();
+			String directory = sc.next();
+			sc.nextLine();
+			
+			trackController.addTrack(new TrackModel(name, directory));
+			mediaPlayerController.createPlaylist("Lewis Capaldi".replace(" ", ""));
+			
+			for(PlaylistModel p : playlistController.getPlaylists()) {
+				System.out.println(p.getTitle());
+			}
+			
+			playlistController.addTrackToPlaylist(trackController.getTrackByName(name).getName(), playlistController.findByTitle("LewisCapaldi").getTitle());
+			
+			File file = new File(playlistController.getPlaylists().get(0).getDirectory());
+			System.out.println(file.getAbsolutePath());
+			mediaPlayerController.addTrackToQueue(name);
 			
 			reader.close();
 		} catch (Exception e) {
