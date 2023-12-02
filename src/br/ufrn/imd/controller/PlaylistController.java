@@ -58,15 +58,14 @@ public class PlaylistController {
 						while (line != null) {
 							String trackName = line;
 							if (trackController.getTrackByName(trackName) != null) {
-								addTrackToPlaylist(playlistOwnerUsername, trackName, playlistTemp.getTitle());
+								playlistTemp.getTracks().add(trackController.getTrackByName(trackName));
 							}
 							line = reader.readLine();
 						}
 						UserVipModel playlistOwner = userController.findUserVipByUsername(playlistOwnerUsername);
 						if (playlistOwner != null) {
-							playlistOwner.getPlaylists().add(playlistTemp);
+							addPlaylist(playlistOwnerUsername, playlistTemp);
 						}
-						addPlaylist(playlistOwnerUsername, playlistTemp.getTitle());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -76,6 +75,12 @@ public class PlaylistController {
 	}
 
 	public void updatePlaylistsFolder() {
+		File folder = new File(path);
+		File[] playlistsFiles = folder.listFiles();
+		for (File file : playlistsFiles) {
+			file.delete();
+		}
+
 		int x = 0;
 		for (UserVipModel u : userController.getUsersVip()) {
 			for (PlaylistModel p : u.getPlaylists()) {
@@ -92,8 +97,6 @@ public class PlaylistController {
 					writer.newLine();
 					for (TrackModel t : p.getTracks()) {
 						writer.write(t.getName());
-						writer.newLine();
-						writer.write(t.getDirectory());
 						writer.newLine();
 					}
 				} catch (IOException e) {
@@ -132,11 +135,10 @@ public class PlaylistController {
 		}
 	}
 
-	public void addPlaylist(String username, String title) {
-		if (findByTitle(username, title) == null) {
-			PlaylistModel newPlaylist = new PlaylistModel();
-			userController.findUserVipByUsername(username).getPlaylists().add(newPlaylist);
-			playlists.add(newPlaylist);
+	public void addPlaylist(String username, PlaylistModel playlist) {
+		if (findByTitle(username, playlist.getTitle()) == null) {
+			userController.findUserVipByUsername(username).getPlaylists().add(playlist);
+			playlists.add(playlist);
 			updatePlaylistsFolder();
 		}
 	}
@@ -150,17 +152,24 @@ public class PlaylistController {
 
 	public PlaylistModel findByTitle(String username, String title) {
 		UserVipModel user = null;
-		for(UserModel u : userController.getUsersVip()) {
-			if(u.getUsername().equals(username)) {
+		for (UserModel u : userController.getUsersVip()) {
+			if (u.getUsername().equals(username)) {
 				user = (UserVipModel) u;
 				break;
 			}
 		}
-		if(user == null) {
+		if (user == null) {
 			return null;
 		}
+		PlaylistModel p = null;
 		for (PlaylistModel playlist : user.getPlaylists()) {
 			if (playlist.getTitle().equals(title)) {
+				p = playlist;
+				break;
+			}
+		}
+		for (PlaylistModel playlist : getPlaylists()) {
+			if (playlist.equals(p)) {
 				return playlist;
 			}
 		}

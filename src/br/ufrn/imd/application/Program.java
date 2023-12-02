@@ -13,6 +13,7 @@ import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
 import br.ufrn.imd.model.PlaylistModel;
+import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserVipModel;
 
 public class Program {
@@ -52,27 +53,39 @@ public class Program {
 			playlistController.updatePlaylistsList();
 			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController,
 					userController);
-			
-			//Execution
-			
-			mediaPlayerController.register("Elson", "elsoka", "lol", true);
-			mediaPlayerController.login("elsoka", "lol");
-			
+
+			// Execution
+
+			mediaPlayerController.register("Luigi", "luigiinto", "lol", true);
+			mediaPlayerController.login("luigiinto", "lol");
+
 			PlaylistModel temp = new PlaylistModel("LewisCapaldi");
-			mediaPlayerController.createPlaylist(temp.getTitle());
-			
-			UserVipModel user = (UserVipModel)mediaPlayerController.getLoggedUser();
-			for(PlaylistModel p : user.getPlaylists()) {
-				System.out.println(p.getTitle());
-				System.out.println(p.getDirectory());
+
+			TrackModel track = new TrackModel("SomeoneYouLoved", "D:Desktop/SomeoneYouLoved.mp3");
+
+			// playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(),
+			// track.getName(),temp.getTitle());
+
+			System.out.println(playlistController.getPlaylists().size());
+
+			for (UserVipModel u : userController.getUsersVip()) {
+				for (PlaylistModel p : u.getPlaylists()) {
+					System.out.println(p.getTitle());
+					for (TrackModel t : p.getTracks()) {
+						System.out.println(t.getName());
+					}
+				}
 			}
 			System.out.println();
+			System.out.println("---------");
 			System.out.println();
+
 			for (PlaylistModel p : playlistController.getPlaylists()) {
 				System.out.println(p.getTitle());
-				System.out.println(p.getDirectory());
+				for (TrackModel t : p.getTracks()) {
+					System.out.println(t.getName());
+				}
 			}
-
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -92,11 +92,11 @@ public class MediaPlayerController {
 			return;
 		}
 
-		if (((UserVipModel) loggedUser).getPlaylists().contains(playlistController.findByTitle(title))) {
-			
+		if ((playlistController.findByTitle(loggedUser.getUsername(), title)) != null) {
+			System.out.println("User already have this playlist");
+			return;
 		}
-		playlistController.addPlaylist(title);
-		playlistController.addPlaylistToUser(title, (UserVipModel) loggedUser);
-
+		playlistController.addPlaylist(loggedUser.getUsername(), playlistController
+				.findByTitle(loggedUser.getUsername(), title));
 	}
 }

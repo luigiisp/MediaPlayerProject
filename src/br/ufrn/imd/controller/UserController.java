@@ -39,6 +39,17 @@ public class UserController {
 		this.path = path;
 	}
 
+	public List<UserModel> getAllUsers() {
+		List<UserModel> list = new ArrayList<>();
+		for (UserModel u : usersCommon) {
+			list.add(u);
+		}
+		for (UserVipModel u : usersVip) {
+			list.add(u);
+		}
+		return list;
+	}
+
 	public void updateUsersList() {
 		BufferedReader br = null;
 		try {
