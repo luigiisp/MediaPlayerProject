@@ -62,11 +62,11 @@ public class Program {
 			PlaylistModel temp = new PlaylistModel("Tops");
 			mediaPlayerController.createPlaylist(temp);
 
-			TrackModel track = new TrackModel("Canudinho", "D:Desktop/Canudinho.mp3");
+			TrackModel track = new TrackModel("Canudinho", "C:\\Users\\Elson\\Documents\\belligol.mp3");
 			trackController.addTrack(track);
 			playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(), track.getName(),temp.getTitle());
 
-			track = new TrackModel("SomeoneYouLoved", "D:Desktop/SomeoneYouLoved.mp3");
+			track = new TrackModel("SomeoneYouLoved", "C:\\Users\\Elson\\Documents\\Treasure.mp3");
 			trackController.addTrack(track);
 
 			playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(), track.getName(),
