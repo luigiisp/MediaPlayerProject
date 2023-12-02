@@ -64,7 +64,7 @@ public class TrackController {
 			for (TrackModel t : tracks) {
 				bw.write(t.getName());
 				bw.newLine();
-				bw.write(t.getDirectory());
+				bw.write(t.getDirectory().replace("/", "\\"));
 				bw.newLine();
 			}
 			bw.close();
