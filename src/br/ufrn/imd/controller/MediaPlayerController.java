@@ -27,6 +27,8 @@ public class MediaPlayerController {
 		return loggedUser;
 	}
 
+	//User
+	
 	public void register(String fullName, String username, String password, boolean vipUser) {
 		if (userController.findUserByUsername(username) != null) {
 			System.out.println("Username already registered");
@@ -63,6 +65,8 @@ public class MediaPlayerController {
 		loggedUser = user;
 	}
 
+	//Track
+	
 	public void searchTrackByName(String searched) {
 		List<TrackModel> tracksFound = trackController.getTracksByNameSubstring(searched);
 		System.out.println("Tracks found:");
@@ -110,9 +114,18 @@ public class MediaPlayerController {
 		}
 
 		if ((playlistController.findByTitle(loggedUser.getUsername(), playlist.getTitle())) != null) {
-			System.out.println("User already have this playlist");
+			System.out.println("User already has a playlist with this title");
 			return;
 		}
 		playlistController.addPlaylist(loggedUser.getUsername(), playlist);
+	}
+	
+	public void addTrackToPlaylist(TrackModel track, PlaylistModel playlist) {
+		if(playlist.getTracks().contains(track)) {
+			System.out.println("This playlist already contains this track");
+			return;
+		}
+		playlist.getTracks().add(track);
+		playlistController.updatePlaylistsFolder();
 	}
 }

@@ -12,9 +12,6 @@ import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
-import br.ufrn.imd.model.PlaylistModel;
-import br.ufrn.imd.model.TrackModel;
-import br.ufrn.imd.model.UserVipModel;
 
 public class Program {
 
@@ -56,47 +53,8 @@ public class Program {
 
 			// Execution
 
-			mediaPlayerController.register("Luigi", "luigiinto", "lol", true);
-			mediaPlayerController.login("luigiinto", "lol");
+			mediaPlayerController.register("Elson", "elsoka", "lol", true);
 
-			PlaylistModel temp = new PlaylistModel("Tops");
-			mediaPlayerController.createPlaylist(temp);
-
-			TrackModel track = new TrackModel("Canudinho", "C:\\Users\\Elson\\Documents\\belligol.mp3");
-			trackController.addTrack(track);
-			playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(), track.getName(),temp.getTitle());
-
-			track = new TrackModel("SomeoneYouLoved", "C:\\Users\\Elson\\Documents\\Treasure.mp3");
-			trackController.addTrack(track);
-
-			playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(), track.getName(),
-					temp.getTitle());
-			
-			System.out.println(playlistController.getPlaylists().size());
-
-			for (UserVipModel u : userController.getUsersVip()) {
-				for (PlaylistModel p : u.getPlaylists()) {
-					System.out.println(p.getTitle());
-					for (TrackModel t : p.getTracks()) {
-						System.out.println(t.getName());
-					}
-				}
-			}
-			
-			System.out.println();
-			System.out.println("---------");
-			System.out.println();
-
-			for (PlaylistModel p : playlistController.getPlaylists()) {
-				System.out.println(p.getTitle());
-				for (TrackModel t : p.getTracks()) {
-					System.out.println(t.getName());
-				}
-			}
-			
-			mediaPlayerController.addPlaylistToQueue(playlistController.findByTitle(mediaPlayerController.getLoggedUser().getUsername(), "Tops").getTitle());
-			mediaPlayerController.addTrackToQueue(track.getName());
-			mediaPlayerController.play();
 			
 			reader.close();
 		} catch (Exception e) {
