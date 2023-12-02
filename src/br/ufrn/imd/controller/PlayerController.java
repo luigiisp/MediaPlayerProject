@@ -9,7 +9,7 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 public class PlayerController {
-	private int trackIndex = 0;
+	private int currentTrackIndex = 0;
 	private PlayerModel player = new PlayerModel();
 	private Player trackPlayer = null;
 	
@@ -31,16 +31,17 @@ public class PlayerController {
 		return player;
 	}
 
-	public TrackModel getCurrentTrack() {
+	public TrackModel getTrackByIndex(int trackIndex) {
 		return player.getQueue().getTracks().get(trackIndex);
 	}
 	
 	public void playQueue() {
 		while(!player.getQueue().getTracks().isEmpty()) {
 			try {
-				FileInputStream fis = new FileInputStream(getCurrentTrack().getDirectory());
+				TrackModel currentTrack = getTrackByIndex(currentTrackIndex);
+				FileInputStream fis = new FileInputStream(currentTrack.getDirectory());
 				trackPlayer = new Player(fis);
-				System.out.println("Playing " + getCurrentTrack().getName());
+				System.out.println("Playing " + currentTrack.getName());
 				trackPlayer.play();
 				
 			} catch (FileNotFoundException | JavaLayerException e) {
@@ -48,8 +49,13 @@ public class PlayerController {
 			}
 			//track plays until it ends
 			
-			player.getQueueController().removeTrack(getCurrentTrack());
+			currentTrackIndex++;
+			while(currentTrackIndex > 10) {
+				player.getQueueController().removeTrack(getTrackByIndex(0));
+				currentTrackIndex--;
+			}
 		}
+		currentTrackIndex =  0;
 		trackPlayer.close();
 	}
 
@@ -69,8 +75,9 @@ public class PlayerController {
 	*/
 	
 	public void skipTrack() {
+		//check if there is a track to skip to
 		trackPlayer.close();
-		player.getQueueController().removeTrack(getCurrentTrack());
+		currentTrackIndex++;
 		System.out.println("Skipped track");
 		playQueue();
 	}

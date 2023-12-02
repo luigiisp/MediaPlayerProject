@@ -71,6 +71,8 @@ public class MediaPlayerController {
 		}
 	}
 
+	//Queue
+	
 	public void addTrackToQueue(String trackName) {
 		TrackModel track = trackController.getTrackByName(trackName);
 		if (track == null) {
@@ -87,6 +89,10 @@ public class MediaPlayerController {
 		queueController.addPlaylist(playlist);
 	}
 
+	public void clearQueue() {
+		playerController.getPlayer().getQueueController().clearQueue();
+	}
+	
 	public void play() {
 		playerController.playQueue();
 	}
@@ -94,7 +100,9 @@ public class MediaPlayerController {
 	public void skip() {
 		playerController.skipTrack();
 	}
-
+	
+	//Playlist
+	
 	public void createPlaylist(PlaylistModel playlist) {
 		if (!(loggedUser instanceof UserVipModel)) {
 			System.out.println("Only vip users can create playlists");
