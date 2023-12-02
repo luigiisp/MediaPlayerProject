@@ -82,15 +82,14 @@ public class PlayerController {
 		playQueue();
 	}
 	
-	/*
 	public void backTrack() {
-		
-		int positionOffset = 50000;
-		if(trackPlayer.getPosition() > positionOffset) {
-			
+		if(currentTrackIndex <= 0) {
+			return;
 		}
+		trackPlayer.close();
+		currentTrackIndex--;
+		playQueue();
 	}
-	*/
 	
 	//since player removes finished songs from queue, backtrack won't work. so maybe stop removing from queue and just check songs with index greater than current
 }
