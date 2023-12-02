@@ -36,7 +36,7 @@ public class TrackController {
 	// Updates tracks list
 	public void updateTracksList() {
 		BufferedReader br = null;
-		
+
 		try {
 			br = new BufferedReader(new FileReader(getPath()));
 			String line = br.readLine();
@@ -49,7 +49,7 @@ public class TrackController {
 				tracks.add(newTrack);
 				line = br.readLine();
 			}
-			
+
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,13 +74,17 @@ public class TrackController {
 	}
 
 	public void addTrack(TrackModel track) {
-		getTracks().add(track);
-		updateTracksFile();
+		if (getTrackByName(track.getName()) == null) {
+			getTracks().add(track);
+			updateTracksFile();
+		}
 	}
 
 	public void removeTrack(TrackModel track) {
-		getTracks().remove(track);
-		updateTracksFile();
+		if(getTrackByName(track.getName()) != null) {
+			getTracks().remove(track);
+			updateTracksFile();
+		}
 	}
 
 	public TrackModel getTrackByName(String name) {
@@ -91,15 +95,15 @@ public class TrackController {
 		}
 		return null;
 	}
-	
+
 	public List<TrackModel> getTracksByNameSubstring(String searched) {
 		List<TrackModel> tracksFound = new ArrayList<TrackModel>();
-		for(TrackModel track : getTracks()) {
-			if(track.getName().contains(searched)) {
+		for (TrackModel track : getTracks()) {
+			if (track.getName().contains(searched)) {
 				tracksFound.add(track);
 			}
 		}
-		
+
 		return tracksFound;
 	}
 }
