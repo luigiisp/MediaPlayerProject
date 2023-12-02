@@ -62,10 +62,13 @@ public class Program {
 			PlaylistModel temp = new PlaylistModel("LewisCapaldi");
 
 			TrackModel track = new TrackModel("SomeoneYouLoved", "D:Desktop/SomeoneYouLoved.mp3");
-
-			// playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(),
-			// track.getName(),temp.getTitle());
-
+			trackController.addTrack(track);
+			
+			mediaPlayerController.createPlaylist(temp);
+			
+			playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(), track.getName(),
+					temp.getTitle());
+			
 			System.out.println(playlistController.getPlaylists().size());
 
 			for (UserVipModel u : userController.getUsersVip()) {
