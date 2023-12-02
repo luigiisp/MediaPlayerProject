@@ -59,13 +59,16 @@ public class Program {
 			mediaPlayerController.register("Luigi", "luigiinto", "lol", true);
 			mediaPlayerController.login("luigiinto", "lol");
 
-			PlaylistModel temp = new PlaylistModel("LewisCapaldi");
-
-			TrackModel track = new TrackModel("SomeoneYouLoved", "D:Desktop/SomeoneYouLoved.mp3");
-			trackController.addTrack(track);
-			
+			PlaylistModel temp = new PlaylistModel("Tops");
 			mediaPlayerController.createPlaylist(temp);
-			
+
+			TrackModel track = new TrackModel("Canudinho", "D:Desktop/Canudinho.mp3");
+			trackController.addTrack(track);
+			playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(), track.getName(),temp.getTitle());
+
+			track = new TrackModel("SomeoneYouLoved", "D:Desktop/SomeoneYouLoved.mp3");
+			trackController.addTrack(track);
+
 			playlistController.addTrackToPlaylist(mediaPlayerController.getLoggedUser().getUsername(), track.getName(),
 					temp.getTitle());
 			
@@ -79,6 +82,7 @@ public class Program {
 					}
 				}
 			}
+			
 			System.out.println();
 			System.out.println("---------");
 			System.out.println();
@@ -89,6 +93,11 @@ public class Program {
 					System.out.println(t.getName());
 				}
 			}
+			
+			mediaPlayerController.addPlaylistToQueue(playlistController.findByTitle(mediaPlayerController.getLoggedUser().getUsername(), "Tops").getTitle());
+			mediaPlayerController.addTrackToQueue(track.getName());
+			mediaPlayerController.play();
+			
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();

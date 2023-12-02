@@ -79,6 +79,14 @@ public class MediaPlayerController {
 		queueController.addTrack(track);
 	}
 
+	public void addPlaylistToQueue(String title) {
+		PlaylistModel playlist = playlistController.findByTitle(loggedUser.getUsername(), title);
+		if (playlist == null) {
+			System.out.println("Playlist not found");
+		}
+		queueController.addPlaylist(playlist);
+	}
+
 	public void play() {
 		playerController.playQueue();
 	}
@@ -87,7 +95,7 @@ public class MediaPlayerController {
 		playerController.skipTrack();
 	}
 
-	public void createPlaylist (PlaylistModel playlist) {
+	public void createPlaylist(PlaylistModel playlist) {
 		if (!(loggedUser instanceof UserVipModel)) {
 			System.out.println("Only vip users can create playlists");
 			return;
