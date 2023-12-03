@@ -36,7 +36,7 @@ public class PlayerController {
 	}
 	
 	public void playQueue() {
-		while(!player.getQueue().getTracks().isEmpty()) {
+		while(!player.getQueue().getTracks().isEmpty() && currentTrackIndex < player.getQueue().getTracks().size()) {
 			try {
 				TrackModel currentTrack = getTrackByIndex(currentTrackIndex);
 				FileInputStream fis = new FileInputStream(currentTrack.getDirectory());

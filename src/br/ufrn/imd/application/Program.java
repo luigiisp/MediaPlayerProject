@@ -54,7 +54,10 @@ public class Program {
 			// Execution
 
 			mediaPlayerController.register("Elson", "elsoka", "lol", true);
-
+			mediaPlayerController.login("elsoka", "lol");
+			
+			mediaPlayerController.addTrackToQueue("belligol");
+			mediaPlayerController.play();
 			
 			reader.close();
 		} catch (Exception e) {
