@@ -1,4 +1,4 @@
-package br.ufrn.imd.view;
+package br.ufrn.imd.application;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,15 +12,17 @@ import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class Program {
+public class Program extends Application{
 
 	static String PROJECTPATH = System.getProperty("user.dir");
 	static String DIRETORIOSTXTPATH = PROJECTPATH + "\\diretorios.txt";
 	static String usersFile, playlistsFolder, tracksFile;
 	static Scanner sc = new Scanner(System.in);
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		try {
 
 			BufferedReader reader = null;
@@ -111,5 +113,10 @@ public class Program {
 		tracksFile = folder.getAbsolutePath();
 
 		updateDirFile();
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		
 	}
 }
