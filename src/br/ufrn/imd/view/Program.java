@@ -1,4 +1,4 @@
-package br.ufrn.imd.application;
+package br.ufrn.imd.view;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
