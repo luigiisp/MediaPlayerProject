@@ -45,7 +45,7 @@ public class TrackController {
 				TrackModel newTrack = new TrackModel();
 				newTrack.setName(line);
 				line = br.readLine();
-				newTrack.setDirectory(line);
+				newTrack.setDirectory(line.replace("/", "\\"));
 				tracks.add(newTrack);
 				line = br.readLine();
 			}
@@ -64,7 +64,7 @@ public class TrackController {
 			for (TrackModel t : tracks) {
 				bw.write(t.getName());
 				bw.newLine();
-				bw.write(t.getDirectory());
+				bw.write(t.getDirectory().replace("/", "\\"));
 				bw.newLine();
 			}
 			bw.close();
@@ -81,7 +81,7 @@ public class TrackController {
 	}
 
 	public void removeTrack(TrackModel track) {
-		if(getTrackByName(track.getName()) != null) {
+		if (getTrackByName(track.getName()) != null) {
 			getTracks().remove(track);
 			updateTracksFile();
 		}
