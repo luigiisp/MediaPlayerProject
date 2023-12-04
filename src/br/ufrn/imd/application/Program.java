@@ -30,7 +30,7 @@ public class Program extends Application{
 		
 		Pane root;
 		try {
-			String fxmlFile = "/br/ufrn/imd/view/LoginScreen.fxml";
+			String fxmlFile = "/br/ufrn/imd/view/MainScreen.fxml";
 
 			root = FXMLLoader.load(getClass().getResource(fxmlFile));
 			Scene scene = new Scene(root);

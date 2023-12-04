@@ -83,7 +83,9 @@ public class MediaPlayerController {
 			System.out.println(track.getName());
 		}
 	}
-
+*/
+	
+/*
 	//Queue
 	
 	public void addTrackToQueue(String trackName) {
