@@ -1,35 +1,40 @@
 package br.ufrn.imd.controller;
 
-import java.util.List;
-
-import br.ufrn.imd.model.PlaylistModel;
-import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserModel;
-import br.ufrn.imd.model.UserVipModel;
 
 public class MediaPlayerController {
-	private UserModel loggedUser = null;
-	private QueueController queueController = new QueueController();
-	private TrackController trackController = null;
-	private UserController userController = null;
-	private PlaylistController playlistController = null;
-	private PlayerController playerController = new PlayerController(queueController);
-
-	public MediaPlayerController(TrackController trackController, PlaylistController playlistController,
-			UserController userController) {
-		super();
-		this.trackController = trackController;
-		this.playlistController = playlistController;
-		this.userController = userController;
-	}
+	private static UserModel loggedUser = null;
+	private static QueueController queueController = new QueueController();
+	private static TrackController trackController = null;
+	private static UserController userController = null;
+	private static PlaylistController playlistController = null;
+	private static PlayerController playerController = new PlayerController(queueController);
 
 	public UserModel getLoggedUser() {
 		return loggedUser;
 	}
 
+	public static void setLoggedUser(UserModel user) {
+		loggedUser = user;
+	}
+	
+	public static void setTrackController(TrackController trackC) {
+		trackController = trackC;
+	}
+
+
+	public static void setUserController(UserController userC) {
+		userController = userC;
+	}
+
+	public static void setPlaylistController(PlaylistController playlistC) {
+		playlistController = playlistC;
+	}
+	
+	/*
 	//User
 	
-	public void register(String fullName, String username, String password, boolean vipUser) {
+	public static void register(String fullName, String username, String password, boolean vipUser) {
 		if (userController.findUserByUsername(username) != null) {
 			System.out.println("Username already registered");
 			return;
@@ -46,6 +51,7 @@ public class MediaPlayerController {
 			loggedUser = newUser;
 		}
 	}
+
 
 	public void login(String username, String password) {
 		if (loggedUser != null) {
@@ -129,4 +135,5 @@ public class MediaPlayerController {
 		playlist.getTracks().add(track);
 		playlistController.updatePlaylistsFolder();
 	}
+	*/
 }

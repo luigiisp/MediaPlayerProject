@@ -70,8 +70,10 @@ public class Program extends Application{
 			PlaylistController playlistController = new PlaylistController(playlistsFolder, userController,
 					trackController);
 			playlistController.updatePlaylistsList();
-			MediaPlayerController mediaPlayerController = new MediaPlayerController(trackController, playlistController,
-					userController);
+
+			MediaPlayerController.setTrackController(trackController);
+			MediaPlayerController.setPlaylistController(playlistController);
+			MediaPlayerController.setUserController(userController);
 
 			// Execution
 			launch(args); //start javafx
