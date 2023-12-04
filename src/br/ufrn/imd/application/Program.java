@@ -25,6 +25,23 @@ public class Program extends Application{
 	static String usersFile, playlistsFolder, tracksFile;
 	static Scanner sc = new Scanner(System.in);
 
+	@Override
+	public void start(Stage primaryStage) {
+		
+		Pane root;
+		try {
+			String fxmlFile = "/br/ufrn/imd/view/LoginScreen.fxml";
+
+			root = FXMLLoader.load(getClass().getResource(fxmlFile));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static void main(String[] args){
 		try {
 
@@ -57,13 +74,7 @@ public class Program extends Application{
 					userController);
 
 			// Execution
-			launch(args);
-			
-			mediaPlayerController.register("Elson", "elsoka", "lol", true);
-			mediaPlayerController.login("elsoka", "lol");
-			
-			mediaPlayerController.addTrackToQueue("belligol");
-			mediaPlayerController.play();
+			launch(args); //start javafx
 			
 			reader.close();
 		} catch (Exception e) {
@@ -117,16 +128,5 @@ public class Program extends Application{
 		tracksFile = folder.getAbsolutePath();
 
 		updateDirFile();
-	}
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		
-		Pane root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/FXMLTela.fxml"));
-		
-		Scene scene  = new Scene(root, 300, 200);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		
 	}
 }

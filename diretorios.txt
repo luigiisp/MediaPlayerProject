@@ -1,3 +1,3 @@
-C:\Users\Elson\Downloads\Faculdade\LP2\MediaPlayerProject\files\users.txt
-C:\Users\Elson\Downloads\Faculdade\LP2\MediaPlayerProject\files\playlists
-C:\Users\Elson\Downloads\Faculdade\LP2\MediaPlayerProject\files\tracks.txt
+C:\Users\Elson\eclipse-workspace\JavaFXTest\files\users.txt
+C:\Users\Elson\eclipse-workspace\JavaFXTest\files\playlists
+C:\Users\Elson\eclipse-workspace\JavaFXTest\files\tracks.txt
