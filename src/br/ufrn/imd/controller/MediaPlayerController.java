@@ -1,5 +1,6 @@
 package br.ufrn.imd.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufrn.imd.model.TrackModel;
@@ -80,7 +81,13 @@ public class MediaPlayerController {
 	//Track
 	
 	public static List<TrackModel> searchTrackByName(String searched) {
-		return trackController.getTracksByNameSubstring(searched);
+		List<TrackModel> foundTracks = new ArrayList<TrackModel>();
+		if(searched.isBlank()) {
+			return foundTracks;
+		}
+		
+		foundTracks = trackController.getTracksByNameSubstring(searched);
+		return foundTracks;
 	}
 	
 /*

@@ -9,8 +9,8 @@
    <children>
       <Button fx:id="playButton" layoutX="459.0" layoutY="522.0" mnemonicParsing="false" onAction="#onPlayButtonPressed" prefHeight="82.0" prefWidth="82.0" text="Play" textAlignment="CENTER" />
       <Button layoutX="560.0" layoutY="551.0" mnemonicParsing="false" text="Skip" />
-      <TextField fx:id="searchTextField" layoutX="322.0" layoutY="89.0" prefHeight="25.0" prefWidth="250.0" promptText="Song title" />
-      <Button fx:id="searchButton" layoutX="599.0" layoutY="89.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search" />
-      <ListView fx:id="searchListView" layoutX="322.0" layoutY="114.0" prefHeight="200.0" prefWidth="250.0" />
+      <TextField fx:id="searchTextField" layoutX="345.0" layoutY="50.0" onKeyPressed="#onKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
+      <Button fx:id="searchButton" layoutX="603.0" layoutY="50.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search" />
+      <ListView fx:id="searchListView" layoutX="345.0" layoutY="75.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
    </children>
 </AnchorPane>
