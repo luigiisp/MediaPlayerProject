@@ -76,6 +76,8 @@ public class Program extends Application{
 			MediaPlayerController.setUserController(userController);
 
 			// Execution
+			MediaPlayerController.register("Elson", "elsoka", "lol", false);
+			
 			launch(args); //start javafx
 			
 			reader.close();

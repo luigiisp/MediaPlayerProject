@@ -1,6 +1,7 @@
 package br.ufrn.imd.controller;
 
 import br.ufrn.imd.model.UserModel;
+import br.ufrn.imd.model.UserVipModel;
 
 public class MediaPlayerController {
 	private static UserModel loggedUser = null;
@@ -31,46 +32,48 @@ public class MediaPlayerController {
 		playlistController = playlistC;
 	}
 	
-	/*
+
 	//User
-	
-	public static void register(String fullName, String username, String password, boolean vipUser) {
+
+	public static int register(String fullName, String username, String password, boolean vipUser) {
 		if (userController.findUserByUsername(username) != null) {
-			System.out.println("Username already registered");
-			return;
+			//Username already registered
+			return 1;
 		}
 
 		if (vipUser) {
 			UserVipModel newUser = new UserVipModel(fullName, password, username);
 			userController.addUserVip(newUser);
-
 			loggedUser = newUser;
 		} else {
 			UserModel newUser = new UserModel(fullName, password, username);
 			userController.addUserCommon(newUser);
 			loggedUser = newUser;
 		}
+		return 0;
+		
 	}
 
-
-	public void login(String username, String password) {
+	public static int login(String username, String password) {
 		if (loggedUser != null) {
-			System.out.println("You are already logged in. Logoff to change user");
-			return;
+			//You are already logged in. Logoff to change user
+			return 1;
 		}
 		if (userController.findUserByUsername(username) == null) {
-			System.out.println("No user registered with this username");
-			return;
+			//No user registered with this username
+			return 2;
 		}
 		UserModel user = userController.findUserByUsername(username);
 		if (!user.getPassword().equals(password)) {
-			System.out.println("Wrong password for this username");
-			return;
+			//Wrong password for this username
+			return 3;
 		}
 
 		loggedUser = user;
+		return 0;
 	}
 
+/*
 	//Track
 	
 	public void searchTrackByName(String searched) {
