@@ -1,4 +1,4 @@
-package br.ufrn.imd.controller;
+package br.ufrn.imd.controller.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
