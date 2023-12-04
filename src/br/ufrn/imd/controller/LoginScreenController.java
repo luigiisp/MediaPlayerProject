@@ -21,7 +21,7 @@ public class LoginScreenController {
     private TextField usernameTextField;
 
     @FXML
-    void loginButtonPressed(ActionEvent event) {
+    void onLoginButtonPressed(ActionEvent event) {
     	String username = usernameTextField.getText();
     	String password = passwordTextField.getText();
 
