@@ -1,5 +1,8 @@
 package br.ufrn.imd.controller;
 
+import java.util.List;
+
+import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
 
@@ -73,17 +76,12 @@ public class MediaPlayerController {
 		return 0;
 	}
 
-/*
+
 	//Track
 	
-	public void searchTrackByName(String searched) {
-		List<TrackModel> tracksFound = trackController.getTracksByNameSubstring(searched);
-		System.out.println("Tracks found:");
-		for (TrackModel track : tracksFound) {
-			System.out.println(track.getName());
-		}
+	public static List<TrackModel> searchTrackByName(String searched) {
+		return trackController.getTracksByNameSubstring(searched);
 	}
-*/
 	
 /*
 	//Queue

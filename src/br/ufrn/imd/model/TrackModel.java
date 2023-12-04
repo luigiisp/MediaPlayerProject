@@ -29,4 +29,11 @@ public class TrackModel {
 		this.directory = directory;
 	}
 
+	@Override
+	public String toString() {
+		return this.getName();
+	}
+
+	
+	
 }
