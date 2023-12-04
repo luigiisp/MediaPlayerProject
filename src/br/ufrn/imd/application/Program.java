@@ -13,6 +13,9 @@ import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.controller.TrackController;
 import br.ufrn.imd.controller.UserController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Program extends Application{
@@ -54,7 +57,8 @@ public class Program extends Application{
 					userController);
 
 			// Execution
-
+			launch(args);
+			
 			mediaPlayerController.register("Elson", "elsoka", "lol", true);
 			mediaPlayerController.login("elsoka", "lol");
 			
@@ -117,6 +121,12 @@ public class Program extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		Pane root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/FXMLTela.fxml"));
+		
+		Scene scene  = new Scene(root, 300, 200);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 		
 	}
 }
