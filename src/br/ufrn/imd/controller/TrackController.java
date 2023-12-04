@@ -99,7 +99,7 @@ public class TrackController {
 	public List<TrackModel> getTracksByNameSubstring(String searched) {
 		List<TrackModel> tracksFound = new ArrayList<TrackModel>();
 		for (TrackModel track : getTracks()) {
-			if (track.getName().contains(searched)) {
+			if (track.getName().toLowerCase().contains(searched.toLowerCase())) {
 				tracksFound.add(track);
 			}
 		}
