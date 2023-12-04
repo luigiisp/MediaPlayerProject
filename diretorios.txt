@@ -1,3 +1,1 @@
-C:\Users\Elson\eclipse-workspace\JavaFXTest\files\users.txt
-C:\Users\Elson\eclipse-workspace\JavaFXTest\files\playlists
-C:\Users\Elson\eclipse-workspace\JavaFXTest\files\tracks.txt
+
