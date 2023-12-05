@@ -35,6 +35,7 @@ public class Program extends Application {
 			root = FXMLLoader.load(getClass().getResource(fxmlFile));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("MP3 PLAYER");
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
