@@ -7,14 +7,40 @@ import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.model.TrackModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 public class MainScreenController {
+	
+    @FXML
+    private Button profileButton;
+
+    @FXML
+    void onProfileButtonPressed(ActionEvent event) {
+    	System.out.println("a");
+    	String profileScreenFxmlPath = "/br/ufrn/imd/view/ProfileScreen.fxml";
+    	try {
+	    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(profileScreenFxmlPath));
+	    	Parent root1;
+			root1 = (Parent) fxmlLoader.load();
+	    	Stage stage = new Stage();
+	    	stage.setTitle("Profile information");
+	    	stage.setScene(new Scene(root1));
+	    	stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+    	
+    }
 	
 	@FXML
 	private Button refreshQueueButton;
