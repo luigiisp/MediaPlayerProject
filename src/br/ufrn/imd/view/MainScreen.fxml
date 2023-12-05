@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.gui.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.MainScreenController">
    <children>
       <Button fx:id="playButton" layoutX="459.0" layoutY="522.0" mnemonicParsing="false" onAction="#onPlayButtonPressed" prefHeight="82.0" prefWidth="82.0" text="Play" textAlignment="CENTER" />
       <Button layoutX="560.0" layoutY="551.0" mnemonicParsing="false" text="Skip" />
