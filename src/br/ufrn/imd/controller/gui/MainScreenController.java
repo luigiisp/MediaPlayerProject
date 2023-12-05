@@ -25,7 +25,6 @@ public class MainScreenController {
 
     @FXML
     void onProfileButtonPressed(ActionEvent event) {
-    	System.out.println("a");
     	String profileScreenFxmlPath = "/br/ufrn/imd/view/ProfileScreen.fxml";
     	try {
 	    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(profileScreenFxmlPath));
