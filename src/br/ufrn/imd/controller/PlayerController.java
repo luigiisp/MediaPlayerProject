@@ -41,7 +41,6 @@ public class PlayerController {
 				TrackModel currentTrack = getTrackByIndex(currentTrackIndex);
 				FileInputStream fis = new FileInputStream(currentTrack.getDirectory());
 				trackPlayer = new Player(fis);
-				System.out.println("Playing " + currentTrack.getName());
 				trackPlayer.play();
 				
 			} catch (FileNotFoundException | JavaLayerException e) {
@@ -55,8 +54,9 @@ public class PlayerController {
 				currentTrackIndex--;
 			}
 		}
-		currentTrackIndex =  0;
-		trackPlayer.close();
+		if(trackPlayer != null) {
+			trackPlayer.close();
+		}
 	}
 
 	/*

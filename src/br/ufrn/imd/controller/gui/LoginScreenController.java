@@ -52,6 +52,7 @@ public class LoginScreenController {
 	    		break;
 	    	}
 	}
+	
 	@FXML
     void onRegisterButtonPressed(ActionEvent event) throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/RegisterScreen.fxml"));

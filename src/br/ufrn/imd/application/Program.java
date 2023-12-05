@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class Program extends Application{
+public class Program extends Application {
 
 	static String PROJECTPATH = System.getProperty("user.dir");
 	static String DIRETORIOSTXTPATH = PROJECTPATH + "\\diretorios.txt";
@@ -27,10 +27,10 @@ public class Program extends Application{
 
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 		Pane root;
 		try {
-			String fxmlFile = "/br/ufrn/imd/view/MainScreen.fxml";
+			String fxmlFile = "/br/ufrn/imd/view/LoginScreen.fxml";
 
 			root = FXMLLoader.load(getClass().getResource(fxmlFile));
 			Scene scene = new Scene(root);
@@ -39,10 +39,10 @@ public class Program extends Application{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		try {
 
 			BufferedReader reader = null;
@@ -76,10 +76,9 @@ public class Program extends Application{
 			MediaPlayerController.setUserController(userController);
 
 			// Execution
-			MediaPlayerController.register("Elson", "elsoka", "lol", false);
-			
-			launch(args); //start javafx
-			
+
+			launch(args); // start javafx
+
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();

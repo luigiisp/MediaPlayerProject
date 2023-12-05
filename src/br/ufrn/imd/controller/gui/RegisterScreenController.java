@@ -44,17 +44,20 @@ public class RegisterScreenController {
 		String password = passwordTextField.getText();
 		boolean vipUser = checkBoxVip.isSelected();
 
-		if (fullName == "") {
+		if (fullName.isBlank()) {
 			registerReturnLabel.setStyle("-fx-text-fill: red");
 			registerReturnLabel.setText("Full name is needed");
+			return;
 		}
-		if (username == "") {
+		if (username.isBlank()) {
 			registerReturnLabel.setStyle("-fx-text-fill: red");
 			registerReturnLabel.setText("Username is needed");
+			return;
 		}
-		if (password == "") {
+		if (password.isBlank()) {
 			registerReturnLabel.setStyle("-fx-text-fill: red");
 			registerReturnLabel.setText("Password is needed");
+			return;
 		}
 		switch (MediaPlayerController.register(fullName, username, password, vipUser)) {
 		case 0:
