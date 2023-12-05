@@ -15,7 +15,7 @@ public class MediaPlayerController {
 	private static PlaylistController playlistController = null;
 	private static PlayerController playerController = new PlayerController(queueController);
 
-	public UserModel getLoggedUser() {
+	public static UserModel getLoggedUser() {
 		return loggedUser;
 	}
 
@@ -79,8 +79,11 @@ public class MediaPlayerController {
 		loggedUser = user;
 		return 0;
 	}
-
-
+	
+	public static boolean isUserVip() {
+		return userController.isUserVip(getLoggedUser().getUsername());
+	}
+	
 	//Track
 	
 	public static List<TrackModel> searchTrackByName(String searched) {

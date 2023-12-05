@@ -138,4 +138,11 @@ public class UserController {
 		return (findUserCommonByUsername(username) != null ? findUserCommonByUsername(username)
 				: findUserVipByUsername(username));
 	}
+	
+	public boolean isUserVip(String username) {
+		if(findUserCommonByUsername(username) != null) {
+			return false;
+		}
+		return true;
+	}
 }
