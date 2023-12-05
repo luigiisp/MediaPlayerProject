@@ -3,6 +3,7 @@ package br.ufrn.imd.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
@@ -152,10 +153,10 @@ public class MediaPlayerController {
 		playerController.skipTrack();
 	}
 	
-	/*
+	
 	//Playlist
 	
-	public void createPlaylist(String title) {
+	public static void createPlaylist(String title) {
 		PlaylistModel playlist = new PlaylistModel(title, playlistController.getPath());
 		if (!(loggedUser instanceof UserVipModel)) {
 			System.out.println("Only vip users can create playlists");
@@ -177,5 +178,4 @@ public class MediaPlayerController {
 		playlist.getTracks().add(track);
 		playlistController.updatePlaylistsFolder();
 	}
-	*/
 }
