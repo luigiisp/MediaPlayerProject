@@ -1,8 +1,9 @@
-package br.ufrn.imd.controller;
+package br.ufrn.imd.controller.gui;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.model.TrackModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
