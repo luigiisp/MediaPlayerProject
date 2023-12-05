@@ -16,13 +16,34 @@ import javafx.scene.input.KeyEvent;
 
 public class MainScreenController {
 	
+	@FXML
+	private Button refreshQueueButton;
+	  
+	@FXML
+	private ListView<TrackModel> queueListView;
+	
+    @FXML
+    private Button removeTrackFromQueue;
+	  
+	@FXML
+	void onRefreshQueueButtonPressed(ActionEvent event) {
+		queueListView.getItems().clear();
+		queueListView.getItems().addAll(MediaPlayerController.getTracksInQueue());
+	}
+	
+    @FXML
+    void onRemoveTrackFromQueuePressed(ActionEvent event) {
+    	TrackModel selectedTrack = queueListView.getSelectionModel().getSelectedItem();
+    	MediaPlayerController.removeTrackFromQueue(selectedTrack);
+    }
+	
 	//Player
 	@FXML
 	private Button playButton;
 	
     @FXML
     private Button skipButton;
-	
+    
 	@FXML
 	public void onPlayButtonPressed(ActionEvent event) {
 		MediaPlayerController.play();

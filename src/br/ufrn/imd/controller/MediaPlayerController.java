@@ -36,6 +36,9 @@ public class MediaPlayerController {
 		playlistController = playlistC;
 	}
 	
+	public static List<TrackModel> getTracksInQueue() {
+		return queueController.getQueue().getTracks();
+	}
 
 	//User
 
@@ -96,6 +99,11 @@ public class MediaPlayerController {
 	public static void addTrackToQueue(TrackModel track) {
 		queueController.addTrack(track);
 	}
+	
+	public static void removeTrackFromQueue(TrackModel track) {
+		queueController.removeTrack(track);
+	}
+	
 	/*
 	public void addPlaylistToQueue(String title) {
 		PlaylistModel playlist = playlistController.findByTitle(loggedUser.getUsername(), title);
