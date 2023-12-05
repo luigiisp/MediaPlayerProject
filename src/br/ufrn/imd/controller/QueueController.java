@@ -55,20 +55,4 @@ public class QueueController {
 	public void randomizeQueue() {
 		Collections.shuffle(queue.getTracks());
 	}
-	
-	/*
-	public void skipTrack() {
-		queue.setTrackIndex(queue.getTrackIndex() + 1);
-		System.out.println("Skipped to the next track");
-	}
-
-	public void backTrack() {
-		queue.setTrackIndex(queue.getTrackIndex() - 1);
-		System.out.println("Going back to previous track");
-	}
-	
-	public TrackModel getCurrentTrack() {
-		return queue.getTracks().get(queue.getTrackIndex());
-	}
-	*/
 }

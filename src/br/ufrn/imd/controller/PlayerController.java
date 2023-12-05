@@ -84,7 +84,7 @@ public class PlayerController {
 	}
 	
 	public void backTrack() {
-		if(currentTrackIndex <= 0) {
+		if(trackPlayer == null || currentTrackIndex <= 0) {
 			return;
 		}
 		trackPlayer.close();

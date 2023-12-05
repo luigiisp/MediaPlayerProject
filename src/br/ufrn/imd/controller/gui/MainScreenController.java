@@ -8,6 +8,7 @@ import br.ufrn.imd.model.TrackModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -31,6 +32,9 @@ public class MainScreenController {
     void onSkipButtonPressed(ActionEvent event) {
     	MediaPlayerController.skip();
     }
+    
+    @FXML
+    private Label currentTrackLabel;
 
 	//Search bar
 	@FXML
@@ -56,7 +60,7 @@ public class MainScreenController {
 		} else {
 			searchListView.setOpacity(0);
 		}
-		searchListView.setPrefHeight((foundTracks.size() * LIST_CELL_HEIGHT + 2));		
+		searchListView.setPrefHeight(Math.min(LIST_CELL_HEIGHT*4 + 2, (foundTracks.size() * LIST_CELL_HEIGHT + 2)));		
 	}
 	
 	@FXML
@@ -79,6 +83,6 @@ public class MainScreenController {
     @FXML
     void onAddToQueueButtonPressed(ActionEvent event) {
     	TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
-    	MediaPlayerController.addTrackToQueue(selectedTrack);
+    	MediaPlayerController.addTrackToQueue(selectedTrack);	
     }
 }
