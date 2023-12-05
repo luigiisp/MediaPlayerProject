@@ -90,17 +90,13 @@ public class MediaPlayerController {
 		return foundTracks;
 	}
 	
-/*
+
 	//Queue
 	
-	public void addTrackToQueue(String trackName) {
-		TrackModel track = trackController.getTrackByName(trackName);
-		if (track == null) {
-			System.out.println("Track not found");
-		}
+	public static void addTrackToQueue(TrackModel track) {
 		queueController.addTrack(track);
 	}
-
+	/*
 	public void addPlaylistToQueue(String title) {
 		PlaylistModel playlist = playlistController.findByTitle(loggedUser.getUsername(), title);
 		if (playlist == null) {
@@ -112,15 +108,16 @@ public class MediaPlayerController {
 	public void clearQueue() {
 		playerController.getPlayer().getQueueController().clearQueue();
 	}
-	
-	public void play() {
+	*/
+	public static void play() {
 		playerController.playQueue();
 	}
 
-	public void skip() {
+	public static void skip() {
 		playerController.skipTrack();
 	}
 	
+	/*
 	//Playlist
 	
 	public void createPlaylist(String title) {

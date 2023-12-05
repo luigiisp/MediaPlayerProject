@@ -13,24 +13,36 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class MainScreenController {
+	
+	//Player
 	@FXML
 	private Button playButton;
+	
+    @FXML
+    private Button skipButton;
+	
+	@FXML
+	public void onPlayButtonPressed(ActionEvent event) {
+		MediaPlayerController.play();
+	}
+	
+    @FXML
+    void onSkipButtonPressed(ActionEvent event) {
+    	MediaPlayerController.skip();
+    }
+
+	//Search bar
 	@FXML
 	private TextField searchTextField;
 	@FXML
 	private Button searchButton;
     @FXML
     private ListView<TrackModel> searchListView;
-	
-	@FXML
-	public void onPlayButtonPressed(ActionEvent event) {
-		
-	}
-
-	//Search bar
+    @FXML
+    private Button AddToQueueButton;
 	
 	public void searchTrack() {
-		final int LIST_CELL_HEIGHT = 25;
+		final int LIST_CELL_HEIGHT = 24;
 		
 		searchListView.getItems().clear();
 		
@@ -43,18 +55,29 @@ public class MainScreenController {
 		} else {
 			searchListView.setOpacity(0);
 		}
-		searchListView.setPrefHeight(foundTracks.size() * LIST_CELL_HEIGHT);		
+		searchListView.setPrefHeight((foundTracks.size() * LIST_CELL_HEIGHT + 2));		
 	}
 	
 	@FXML
-	public void onSearchButtonPressed(ActionEvent event) {
+	void onSearchButtonPressed(ActionEvent event) {
 		searchTrack();
 	}
 	
 	@FXML
-    void onKeyPressed(KeyEvent event) {
+    void onSearchBarKeyPressed(KeyEvent event) {
 		if(event.getCode().equals(KeyCode.ENTER)) {
 			searchTrack();
+			return;
 		}
+		if(event.getCode().equals(KeyCode.ESCAPE)) {
+			searchListView.getItems().clear();
+			searchListView.setOpacity(0);
+		}
+    }
+	
+    @FXML
+    void onAddToQueueButtonPressed(ActionEvent event) {
+    	TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
+    	MediaPlayerController.addTrackToQueue(selectedTrack);
     }
 }
