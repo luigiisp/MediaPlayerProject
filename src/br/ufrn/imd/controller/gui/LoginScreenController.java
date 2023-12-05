@@ -29,7 +29,7 @@ public class LoginScreenController {
 	private TextField passwordTextField;
 
 	@FXML
-	   void onLoginButtonPressed(ActionEvent event) {
+	   void onLoginButtonPressed(ActionEvent event) throws IOException {
 	    	String username = usernameTextField.getText();
 	    	String password = passwordTextField.getText();
 
@@ -37,6 +37,11 @@ public class LoginScreenController {
 	    	case 0:
 	    		loginReturnLabel.setStyle("-fx-text-fill: green");
 	    		loginReturnLabel.setText("Success. You are logged in.");
+	    		Parent root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/MainScreen.fxml"));
+	        	Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+	        	Scene scene = new Scene(root);
+	        	stage.setScene(scene);
+	        	stage.show();
 	    		break;
 	    	case 1:
 	    		loginReturnLabel.setStyle("-fx-text-fill: black");
