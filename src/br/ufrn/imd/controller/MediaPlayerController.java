@@ -40,8 +40,6 @@ public class MediaPlayerController {
 		return queueController.getQueue().getTracks();
 	}
 	
-	//User
-	
 	public static QueueController getQueueController() {
 		return queueController;
 	}

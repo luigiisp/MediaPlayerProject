@@ -1,5 +1,6 @@
 package br.ufrn.imd.controller.gui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class MainScreenController {
@@ -25,6 +28,7 @@ public class MainScreenController {
 
     @FXML
     void onProfileButtonPressed(ActionEvent event) {
+    	System.out.println("a");
     	String profileScreenFxmlPath = "/br/ufrn/imd/view/ProfileScreen.fxml";
     	try {
 	    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(profileScreenFxmlPath));
@@ -63,20 +67,60 @@ public class MainScreenController {
     }
 	
 	//Player
+	private int currentTrackIndex = 0;
+	private Media media;
+	private MediaPlayer mediaPlayer;
+    
 	@FXML
 	private Button playButton;
 	
     @FXML
     private Button skipButton;
     
+    public TrackModel getTrackByIndex(int trackIndex) {
+		return MediaPlayerController.getQueueController().getQueue().getTracks().get(trackIndex);
+	}
+    
+    
+    final int STOPPED = 0;
+	final int PLAYING = 1;
+	final int PAUSED = 2;
+    int playerStatus = STOPPED;
 	@FXML
 	public void onPlayButtonPressed(ActionEvent event) {
-		MediaPlayerController.play();
+
+		if(playerStatus == STOPPED) {
+			if(MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1 < currentTrackIndex) {
+				return;
+			}
+			TrackModel currentTrack = getTrackByIndex(currentTrackIndex);
+			File file = new File(currentTrack.getDirectory());
+
+			media = new Media(file.toURI().toString());
+			mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
+			playButton.setText("Pause");
+			
+			playerStatus = PLAYING;
+		} else if(playerStatus == PLAYING){
+			mediaPlayer.pause();
+			playerStatus = PAUSED;
+			playButton.setText("Play");
+		} else if(playerStatus == PAUSED) {
+			mediaPlayer.play();
+			playerStatus = PLAYING;
+			playButton.setText("Pause");
+		}
 	}
 	
     @FXML
     void onSkipButtonPressed(ActionEvent event) {
-    	MediaPlayerController.skip();
+    	if (mediaPlayer == null || currentTrackIndex >= MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1) {
+			return;
+		}
+		mediaPlayer.stop();
+		currentTrackIndex++;
+		mediaPlayer.play();
     }
     
     @FXML

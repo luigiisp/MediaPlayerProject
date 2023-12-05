@@ -1,14 +1,11 @@
 package br.ufrn.imd.controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import br.ufrn.imd.model.PlayerModel;
 import br.ufrn.imd.model.TrackModel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
 
 public class PlayerController {
 	private int currentTrackIndex = 0;
