@@ -54,7 +54,6 @@ public class PlayerController {
 				currentTrackIndex--;
 			}
 		}
-		currentTrackIndex =  0;
 		if(trackPlayer != null) {
 			trackPlayer.close();
 		}
