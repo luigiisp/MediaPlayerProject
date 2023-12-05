@@ -1,0 +1,3 @@
+C:\Users\Elson\Documents\GitHub\MediaPlayerProject\files\users.txt
+C:\Users\Elson\Documents\GitHub\MediaPlayerProject\files\playlists
+C:\Users\Elson\Documents\GitHub\MediaPlayerProject\files\tracks.txt

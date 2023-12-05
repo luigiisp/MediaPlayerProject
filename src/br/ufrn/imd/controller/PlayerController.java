@@ -75,10 +75,11 @@ public class PlayerController {
 	*/
 	
 	public void skipTrack() {
-		//check if there is a track to skip to
+		if(trackPlayer == null || currentTrackIndex >= player.getQueue().getTracks().size() - 1) {
+			return;
+		}
 		trackPlayer.close();
 		currentTrackIndex++;
-		System.out.println("Skipped track");
 		playQueue();
 	}
 	
