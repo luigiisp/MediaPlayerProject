@@ -156,7 +156,7 @@ public class MainScreenController implements Initializable {
 	
 	@FXML
 	void onSkipButtonPressed(ActionEvent event) {
-		MediaPlayerController.skip();
+		onTrackEnded();
 	}
 
 	@FXML

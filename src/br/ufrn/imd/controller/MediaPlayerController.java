@@ -14,7 +14,6 @@ public class MediaPlayerController {
 	private static TrackController trackController = null;
 	private static UserController userController = null;
 	private static PlaylistController playlistController = null;
-	private static PlayerController playerController = new PlayerController(queueController);
 
 	public static UserModel getLoggedUser() {
 		return loggedUser;
@@ -55,10 +54,6 @@ public class MediaPlayerController {
 
 	public static PlaylistController getPlaylistController() {
 		return playlistController;
-	}
-
-	public static PlayerController getPlayerController() {
-		return playerController;
 	}
 
 	public static int register(String fullName, String username, String password, boolean vipUser) {
@@ -139,19 +134,7 @@ public class MediaPlayerController {
 		playerController.getPlayer().getQueueController().clearQueue();
 	}
 	*/
-	public static void play() {
-		playerController.playQueue();
-	}
-	
-	public static void pause() {
-		playerController.pauseTrack();
-	}
-	
-	public static void skip() {
-		playerController.skipTrack();
-	}
-	
-	
+
 	//Playlist
 	
 	public static void createPlaylist(String title) {
