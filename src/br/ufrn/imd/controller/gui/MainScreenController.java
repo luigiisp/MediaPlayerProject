@@ -244,7 +244,9 @@ public class MainScreenController implements Initializable {
 	}
 
 	void onTrackEnded() {
-
+		if(mediaPlayer == null) {
+			return;
+		}
 		mediaPlayer.stop();
 		playerStatus = STOPPED;
 		currentTrackLabel.setText("");
@@ -267,8 +269,24 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
-	void onBackButtonPressed(ActionEvent event) {
-		//
+	void backTrack(ActionEvent event) {
+		if(mediaPlayer == null) {
+			return;
+		}
+		mediaPlayer.stop();
+		playerStatus = STOPPED;
+		currentTrackLabel.setText("");
+		if (currentTrackIndex == 0) {
+			//no track to go back to
+			currentTrackIndex = 0;
+		} else {
+			// there are remaining tracks
+			currentTrackIndex--;
+		}
+		if (progress) {
+			cancelTimer();
+		}
+		playQueue();
 	}
 
 	// Search bar
