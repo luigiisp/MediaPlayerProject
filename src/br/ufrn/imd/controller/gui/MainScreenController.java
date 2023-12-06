@@ -1,15 +1,23 @@
 package br.ufrn.imd.controller.gui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserVipModel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +27,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -40,9 +50,14 @@ public class MainScreenController implements Initializable {
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			playlistsListView.getItems().clear();
 			playlistsListView.getItems().addAll(user.getPlaylists());
-		} else {
-
 		}
+		volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+			}
+		});
 	}
 
 	@FXML
@@ -81,6 +96,79 @@ public class MainScreenController implements Initializable {
 		queueListView.getItems().remove(selectedTrack);
 	}
 
+	@FXML
+	private Slider volumeSlider;
+
+	@FXML
+	private ProgressBar trackProgressBar;
+	Timer timer;
+	TimerTask task;
+
+	private boolean progress;
+
+	public void beginTimer() {
+
+		timer = new Timer();
+
+		task = new TimerTask() {
+
+			public void run() {
+
+				progress = true;
+				double current = mediaPlayer.getCurrentTime().toSeconds();
+				double end = media.getDuration().toSeconds();
+				trackProgressBar.setProgress(current / end);
+
+				if (current / end == 1) {
+
+					cancelTimer();
+				}
+			}
+		};
+
+		timer.scheduleAtFixedRate(task, 1000, 1000);
+	}
+
+	public void cancelTimer() {
+
+		progress = false;
+		timer.cancel();
+	}
+
+	@FXML
+	private Button addNewTrackButton;
+
+	@FXML
+	void onAddNewTrackButtonPressed(ActionEvent event) throws IOException {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileFilter(new FileFilter() {
+
+			public String getDescription() {
+				return "mp3 files (*.mp3)";
+			}
+
+			public boolean accept(File f) {
+				if (f.isDirectory()) {
+					return true;
+				} else {
+					String filename = f.getName().toLowerCase();
+					return filename.endsWith(".mp3");
+				}
+			}
+		});
+		int result = fc.showOpenDialog(fc);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File file = new File(fc.getSelectedFile().getAbsolutePath());
+			if (file.getAbsolutePath().endsWith(".mp3")) {
+				MediaPlayerController.getTrackController()
+						.addTrack(new TrackModel(file.getName().replace(".mp3", ""), file.getAbsolutePath()));
+				return;
+			} else {
+				return;
+			}
+		}
+	}
+
 	// Player
 	private int currentTrackIndex = 0;
 	private Media media;
@@ -91,31 +179,33 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	private Button skipButton;
-	
-    @FXML
-    private Button backButton;
+
+	@FXML
+	private Button backButton;
 
 	final int STOPPED = 0;
 	final int PLAYING = 1;
 	final int PAUSED = 2;
 	int playerStatus = STOPPED;
 
-    void playQueue() {
-    	if(playerStatus == STOPPED) {
-			if(queueListView.getItems().size() - 1 < currentTrackIndex) {
+	void playQueue() {
+		if (playerStatus == STOPPED) {
+			if (queueListView.getItems().size() - 1 < currentTrackIndex) {
 				return;
 			}
 			TrackModel currentTrack = queueListView.getItems().get(currentTrackIndex);
 			File file = new File(currentTrack.getDirectory());
-
 			media = new Media(file.toURI().toString());
 			mediaPlayer = new MediaPlayer(media);
+			beginTimer();
+			mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
 			mediaPlayer.play();
 			mediaPlayer.setOnEndOfMedia(this::onTrackEnded);
 			playButton.setText("Pause");
 
 			playerStatus = PLAYING;
 		} else if (playerStatus == PLAYING) {
+			cancelTimer();
 			mediaPlayer.pause();
 			playerStatus = PAUSED;
 			playButton.setText("Play");
@@ -124,36 +214,40 @@ public class MainScreenController implements Initializable {
 			playerStatus = PLAYING;
 			playButton.setText("Pause");
 		}
-    }
-    
+	}
+
 	@FXML
 	void onPlayButtonPressed(ActionEvent event) {
 		playQueue();
 	}
-  
+
 	void onTrackEnded() {
+
 		mediaPlayer.stop();
 		playerStatus = STOPPED;
-		if(queueListView.getItems().size() - 1 <= currentTrackIndex) {
-			//ended queue
+		if (queueListView.getItems().size() - 1 <= currentTrackIndex) {
+			// ended queue
 			currentTrackIndex = 0;
 		} else {
-			//there are remaining tracks
+			// there are remaining tracks
 			currentTrackIndex++;
+		}
+		if (progress) {
+			cancelTimer();
 		}
 		playQueue();
 	}
-	
+
 	@FXML
 	void onSkipButtonPressed(ActionEvent event) {
 		onTrackEnded();
 	}
 
-    @FXML
-    void onBackButtonPressed(ActionEvent event) {
-    	//
-    }
-	
+	@FXML
+	void onBackButtonPressed(ActionEvent event) {
+		//
+	}
+
 	@FXML
 	private Label currentTrackLabel;
 
@@ -204,7 +298,7 @@ public class MainScreenController implements Initializable {
 	@FXML
 	void onAddToQueueButtonPressed(ActionEvent event) {
 		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
-		if(selectedTrack == null) {
+		if (selectedTrack == null) {
 			return;
 		}
 		queueListView.getItems().add(selectedTrack);
