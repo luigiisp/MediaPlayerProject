@@ -3,6 +3,7 @@ package br.ufrn.imd.controller.gui;
 import java.io.IOException;
 
 import br.ufrn.imd.controller.MediaPlayerController;
+import br.ufrn.imd.model.UserVipModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +39,13 @@ public class LoginScreenController {
 			loginReturnLabel.setStyle("-fx-text-fill: green");
 			loginReturnLabel.setText("Success. You are logged in.");
 			try {
-				Parent root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/MainScreen.fxml"));
+				Parent root;
+				if(MediaPlayerController.getUserController().findUserByUsername(username) instanceof UserVipModel) {
+					root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/MainScreen.fxml"));
+				}else {
+					root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/MainScreen2.fxml"));
+				}
+				
 				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				Scene scene = new Scene(root);
 				stage.setScene(scene);
