@@ -1,5 +1,6 @@
 package br.ufrn.imd.controller.gui;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +17,7 @@ import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserVipModel;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -180,6 +182,9 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private Button backButton;
 
+	@FXML
+	private Label currentTrackLabel;
+	
 	final int STOPPED = 0;
 	final int PLAYING = 1;
 	final int PAUSED = 2;
@@ -199,7 +204,8 @@ public class MainScreenController implements Initializable {
 			mediaPlayer.play();
 			mediaPlayer.setOnEndOfMedia(this::onTrackEnded);
 			playButton.setText("Pause");
-
+			currentTrackLabel.setText("Playing " + currentTrack.getName());
+			
 			playerStatus = PLAYING;
 		} else if (playerStatus == PLAYING) {
 			cancelTimer();
@@ -222,6 +228,7 @@ public class MainScreenController implements Initializable {
 
 		mediaPlayer.stop();
 		playerStatus = STOPPED;
+		currentTrackLabel.setText("");
 		if (queueListView.getItems().size() - 1 <= currentTrackIndex) {
 			// ended queue
 			currentTrackIndex = 0;
@@ -244,9 +251,6 @@ public class MainScreenController implements Initializable {
 	void onBackButtonPressed(ActionEvent event) {
 		//
 	}
-
-	@FXML
-	private Label currentTrackLabel;
 
 	// Search bar
 	@FXML
@@ -300,4 +304,19 @@ public class MainScreenController implements Initializable {
 		}
 		queueListView.getItems().add(selectedTrack);
 	}
+	
+    @FXML
+    void closePlayer(ActionEvent event) {
+    	Platform.exit();
+    }
+    
+    @FXML
+    void openGithub(ActionEvent event) {
+    	 try {
+			Desktop.getDesktop().browse(new URL("https://github.com/luigiisp/MediaPlayerProject").toURI());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }
