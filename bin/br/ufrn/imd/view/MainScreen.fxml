@@ -91,12 +91,7 @@
       <MenuButton layoutX="625.0" layoutY="47.0" mnemonicParsing="false" text="Add to">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#addTrackToQueue" text="Queue" />
-            <Menu mnemonicParsing="false" text="Playlist">
-              <items>
-                <MenuItem mnemonicParsing="false" text="playlist top" />
-                  <MenuItem mnemonicParsing="false" text="musicas" />
-              </items>
-            </Menu>
+            <Menu fx:id="playlistMenu" mnemonicParsing="false" text="Playlist" />
         </items>
       </MenuButton>
    </children>

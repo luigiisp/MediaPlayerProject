@@ -29,6 +29,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -47,11 +49,16 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		MediaPlayerController.createPlaylist("TOPS");
 		if (MediaPlayerController.getLoggedUser() instanceof UserVipModel) {
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			playlistsListView.getItems().clear();
 			playlistsListView.getItems().addAll(user.getPlaylists());
+			
+			playlistMenu.getItems().clear();
+			for(int i = 0; i < user.getPlaylists().size(); i++) {
+				MenuItem menuItem = new MenuItem(user.getPlaylists().get(i).toString());
+				playlistMenu.getItems().add(menuItem);
+			}
 		}
 		volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
@@ -302,6 +309,9 @@ public class MainScreenController implements Initializable {
 		}
 		queueListView.getItems().add(selectedTrack);
 	}
+	
+    @FXML
+    private Menu playlistMenu;
 	
     @FXML
     void closePlayer(ActionEvent event) {
