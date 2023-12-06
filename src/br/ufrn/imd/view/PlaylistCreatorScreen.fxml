@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="22.0" layoutY="23.0" text="Playlist Title">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Label>
+      <ListView layoutX="22.0" layoutY="114.0" prefHeight="345.0" prefWidth="287.0" />
+      <Label layoutX="22.0" layoutY="89.0" text="Tracks:" />
+      <Label layoutX="268.0" layoutY="89.0" text="0 tracks" />
+   </children>
 </AnchorPane>
-
