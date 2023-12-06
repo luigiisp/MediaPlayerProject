@@ -11,35 +11,35 @@
 
 <AnchorPane prefHeight="335.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.gui.RegisterScreenController">
    <children>
-      <TextField fx:id="fullNameTextField" layoutX="136.0" layoutY="49.0" promptText="Full name" />
-      <TextField fx:id="usernameTextField" layoutX="136.0" layoutY="99.0" promptText="Username" />
-      <Button fx:id="registerButton" layoutX="128.0" layoutY="242.0" mnemonicParsing="false" onAction="#onRegisterButtonPressed" text="Register" />
+      <TextField fx:id="fullNameTextField" layoutX="136.0" layoutY="54.0" promptText="Full name" />
+      <TextField fx:id="usernameTextField" layoutX="136.0" layoutY="103.0" promptText="Username" />
+      <Button fx:id="registerButton" layoutX="128.0" layoutY="246.0" mnemonicParsing="false" onAction="#onRegisterButtonPressed" text="Register" />
       <Label fx:id="registerReturnLabel" alignment="CENTER" layoutX="4.0" layoutY="35.0" prefHeight="17.0" prefWidth="317.0" />
-      <Button fx:id="returnLoginButton" layoutX="89.0" layoutY="267.0" mnemonicParsing="false" onAction="#onReturnLoginButtonButtonPressed" style="-fx-background-color: transparent;" text=" Return to login screen" textFill="#009bff">
+      <Button fx:id="returnLoginButton" layoutX="89.0" layoutY="271.0" mnemonicParsing="false" onAction="#onReturnLoginButtonButtonPressed" style="-fx-background-color: transparent;" text=" Return to login screen" textFill="#009bff">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <CheckBox fx:id="checkBoxVip" layoutX="138.0" layoutY="199.0" mnemonicParsing="false" text="VIP" />
-      <Label layoutX="57.0" layoutY="54.0" text="FULL NAME">
+      <CheckBox fx:id="checkBoxVip" layoutX="138.0" layoutY="202.0" mnemonicParsing="false" text="VIP" />
+      <Label layoutX="57.0" layoutY="59.0" text="FULL NAME">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="104.0" text="USERNAME">
+      <Label layoutX="56.0" layoutY="108.0" text="USERNAME">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="55.0" layoutY="153.0" text="PASSWORD">
+      <Label layoutX="55.0" layoutY="156.0" text="PASSWORD">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="55.0" layoutY="200.0" text="STATUS">
+      <Label layoutX="55.0" layoutY="203.0" text="STATUS">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </Label>
-      <PasswordField fx:id="passwordTextField" layoutX="136.0" layoutY="148.0" promptText="Password" />
+      <PasswordField fx:id="passwordTextField" layoutX="136.0" layoutY="151.0" promptText="Password" />
    </children>
 </AnchorPane>

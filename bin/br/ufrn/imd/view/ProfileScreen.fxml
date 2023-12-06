@@ -6,44 +6,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.gui.ProfileScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.gui.ProfileScreenController">
    <children>
-      <Label alignment="CENTER" layoutX="77.0" layoutY="32.0" prefHeight="27.0" prefWidth="138.0" text="Your profile">
+      <Label alignment="CENTER" layoutX="100.0" layoutY="29.0" prefHeight="27.0" prefWidth="138.0" text="Your profile">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="19.0" layoutY="87.0" text="Full name: ">
+      <Label layoutX="25.0" layoutY="98.0" text="Full name: ">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="fullNameLabel" alignment="CENTER_RIGHT" layoutX="91.0" layoutY="87.0" prefHeight="21.0" prefWidth="187.0">
+      <Label fx:id="fullNameLabel" alignment="CENTER_RIGHT" layoutX="97.0" layoutY="98.0" prefHeight="21.0" prefWidth="205.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="18.0" layoutY="121.0" text="Username: ">
+      <Label layoutX="24.0" layoutY="155.0" text="Username: ">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" layoutX="91.0" layoutY="121.0" prefHeight="21.0" prefWidth="187.0">
+      <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" layoutX="99.0" layoutY="155.0" prefHeight="21.0" prefWidth="198.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="19.0" layoutY="153.0" text="Account status:">
+      <Label layoutX="24.0" layoutY="207.0" prefHeight="21.0" prefWidth="106.0" text="Account status:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="accountStatusLabel" alignment="CENTER_RIGHT" layoutX="115.0" layoutY="153.0" prefHeight="21.0" prefWidth="157.0">
+      <Label fx:id="accountStatusLabel" alignment="CENTER_RIGHT" layoutX="128.0" layoutY="207.0" prefHeight="21.0" prefWidth="165.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="logoutButton" layoutX="115.0" layoutY="294.0" mnemonicParsing="false" onAction="#onLogoutButtonPressed" text="Logout">
+      <Button fx:id="logoutButton" layoutX="136.0" layoutY="280.0" mnemonicParsing="false" onAction="#onLogoutButtonPressed" text="Logout">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
