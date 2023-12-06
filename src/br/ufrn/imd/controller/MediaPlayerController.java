@@ -123,11 +123,6 @@ public class MediaPlayerController {
 		queueController.removeTrack(track);
 	}
 
-	public void clearQueue() {
-		playerController.getPlayer().getQueueController().clearQueue();
-	}
-	*/
-
 	//Playlist
 	
 	public static void createPlaylist(String title) {
@@ -146,7 +141,6 @@ public class MediaPlayerController {
 
 	public void addTrackToPlaylist(TrackModel track, PlaylistModel playlist) {
 		if (playlist.getTracks().contains(track)) {
-			System.out.println("This playlist already contains this track");
 			return;
 		}
 		playlist.getTracks().add(track);

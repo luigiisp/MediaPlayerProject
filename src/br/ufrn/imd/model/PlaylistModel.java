@@ -40,4 +40,9 @@ public class PlaylistModel {
 	public List<TrackModel> getTracks() {
 		return tracks;
 	}
+	
+	@Override
+	public String toString() {
+		return title;
+	}
 }
