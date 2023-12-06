@@ -17,11 +17,6 @@
       <Button fx:id="AddToQueueButton" layoutX="615.0" layoutY="43.0" mnemonicParsing="false" onAction="#onAddToQueueButtonPressed" text="Add to Queue" />
       <Button fx:id="profileButton" layoutX="882.0" layoutY="48.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="64.0" prefWidth="64.0" text="Profile" />
       <ListView fx:id="queueListView" layoutX="660.0" layoutY="242.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="refreshQueueButton" layoutX="874.0" layoutY="242.0" mnemonicParsing="false" onAction="#onRefreshQueueButtonPressed" text="Refresh Queue">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
       <Button fx:id="removeTrackFromQueue" layoutX="874.0" layoutY="272.0" mnemonicParsing="false" onAction="#onRemoveTrackFromQueuePressed" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
          <font>
             <Font size="10.0" />

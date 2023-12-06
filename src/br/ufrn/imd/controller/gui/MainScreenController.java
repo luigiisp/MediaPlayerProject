@@ -76,15 +76,9 @@ public class MainScreenController implements Initializable {
 	private Button removeTrackFromQueue;
 
 	@FXML
-	void onRefreshQueueButtonPressed(ActionEvent event) {
-		queueListView.getItems().clear();
-		queueListView.getItems().addAll(MediaPlayerController.getTracksInQueue());
-	}
-
-	@FXML
 	void onRemoveTrackFromQueuePressed(ActionEvent event) {
 		TrackModel selectedTrack = queueListView.getSelectionModel().getSelectedItem();
-		MediaPlayerController.removeTrackFromQueue(selectedTrack);
+		queueListView.getItems().remove(selectedTrack);
 	}
 
 	// Player
@@ -98,10 +92,6 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private Button skipButton;
 
-	public TrackModel getTrackByIndex(int trackIndex) {
-		return MediaPlayerController.getQueueController().getQueue().getTracks().get(trackIndex);
-	}
-
 	final int STOPPED = 0;
 	final int PLAYING = 1;
 	final int PAUSED = 2;
@@ -109,10 +99,10 @@ public class MainScreenController implements Initializable {
 
     void playQueue() {
     	if(playerStatus == STOPPED) {
-			if(MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1 < currentTrackIndex) {
+			if(queueListView.getItems().size() - 1 < currentTrackIndex) {
 				return;
 			}
-			TrackModel currentTrack = getTrackByIndex(currentTrackIndex);
+			TrackModel currentTrack = queueListView.getItems().get(currentTrackIndex);
 			File file = new File(currentTrack.getDirectory());
 
 			media = new Media(file.toURI().toString());
@@ -141,7 +131,7 @@ public class MainScreenController implements Initializable {
 	void onTrackEnded() {
 		mediaPlayer.stop();
 		playerStatus = STOPPED;
-		if(MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1 <= currentTrackIndex) {
+		if(queueListView.getItems().size() - 1 <= currentTrackIndex) {
 			//ended queue
 			currentTrackIndex = 0;
 		} else {
@@ -209,6 +199,6 @@ public class MainScreenController implements Initializable {
 		if(selectedTrack == null) {
 			return;
 		}
-		MediaPlayerController.addTrackToQueue(selectedTrack);
+		queueListView.getItems().add(selectedTrack);
 	}
 }

@@ -128,12 +128,10 @@ public class MediaPlayerController {
 	public static void createPlaylist(String title) {
 		PlaylistModel playlist = new PlaylistModel(title, playlistController.getPath());
 		if (!(loggedUser instanceof UserVipModel)) {
-			System.out.println("Only vip users can create playlists");
 			return;
 		}
 
 		if ((playlistController.findByTitle(loggedUser.getUsername(), playlist.getTitle())) != null) {
-			System.out.println("User already has a playlist with this title");
 			return;
 		}
 		playlistController.addPlaylist(loggedUser.getUsername(), playlist);
