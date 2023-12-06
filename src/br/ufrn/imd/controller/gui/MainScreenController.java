@@ -136,9 +136,6 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
-	private Button addNewTrackButton;
-
-	@FXML
 	void onAddNewTrackButtonPressed(ActionEvent event) throws IOException {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileFilter(new FileFilter() {

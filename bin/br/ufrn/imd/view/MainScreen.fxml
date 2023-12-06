@@ -4,6 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
@@ -20,10 +23,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TextField fx:id="searchTextField" layoutX="296.0" layoutY="43.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></TextField>
+      <TextField fx:id="searchTextField" layoutX="296.0" layoutY="43.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
       <Button fx:id="searchButton" layoutX="555.0" layoutY="43.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
@@ -37,8 +37,8 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ListView fx:id="queueListView" layoutX="615.0" layoutY="243.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="removeTrackFromQueue" layoutX="826.0" layoutY="243.0" mnemonicParsing="false" onAction="#onRemoveTrackFromQueuePressed" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
+      <ListView fx:id="queueListView" layoutX="746.0" layoutY="246.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button fx:id="removeTrackFromQueue" layoutX="797.0" layoutY="218.0" mnemonicParsing="false" onAction="#onRemoveTrackFromQueuePressed" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
          <font>
             <Font size="10.0" />
          </font>
@@ -46,7 +46,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="826.0" layoutY="273.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Play Track">
+      <Button layoutX="882.0" layoutY="218.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="64.0" text="Play Track">
          <font>
             <Font size="10.0" />
          </font>
@@ -54,7 +54,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="615.0" layoutY="217.0" text="Queue" />
+      <Label layoutX="746.0" layoutY="220.0" text="Queue" />
       <ListView fx:id="playlistsListView" layoutX="68.0" layoutY="151.0" prefHeight="383.0" prefWidth="168.0" />
       <Label layoutX="68.0" layoutY="126.0" text="Playlists" />
       <ProgressBar fx:id="trackProgressBar" layoutX="274.0" layoutY="612.0" prefHeight="8.0" prefWidth="452.0" progress="0.0" />
@@ -62,12 +62,25 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Slider fx:id="volumeSlider" layoutX="815.0" layoutY="564.0" max="100.0" prefHeight="14.0" prefWidth="149.0" value="50.0">
+      <Slider fx:id="volumeSlider" layoutX="772.0" layoutY="564.0" max="100.0" prefHeight="14.0" prefWidth="149.0" value="50.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Slider>
-      <Label layoutX="862.0" layoutY="539.0" text="Volume" />
-      <Button fx:id="addNewTrackButton" layoutX="68.0" layoutY="43.0" mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Add New Track" />
+      <Label layoutX="826.0" layoutY="545.0" text="Volume" />
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1000.0" AnchorPane.bottomAnchor="625.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Add new track" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="GitHub Repository" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>
