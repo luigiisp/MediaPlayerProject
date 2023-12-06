@@ -2,6 +2,7 @@ package br.ufrn.imd.controller.gui;
 
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -109,10 +110,8 @@ public class MainScreenController implements Initializable {
 	final int PAUSED = 2;
     int playerStatus = STOPPED;
 
-	@FXML
-	public void onPlayButtonPressed(ActionEvent event) {
-
-		if(playerStatus == STOPPED) {
+    void playQueue() {
+    	if(playerStatus == STOPPED) {
 			if(MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1 < currentTrackIndex) {
 				return;
 			}
@@ -122,6 +121,7 @@ public class MainScreenController implements Initializable {
 			media = new Media(file.toURI().toString());
 			mediaPlayer = new MediaPlayer(media);
 			mediaPlayer.play();
+			mediaPlayer.setOnEndOfMedia(this::onTrackEnded);
 			playButton.setText("Pause");
 			
 			playerStatus = PLAYING;
@@ -134,8 +134,26 @@ public class MainScreenController implements Initializable {
 			playerStatus = PLAYING;
 			playButton.setText("Pause");
 		}
+    }
+    
+	@FXML
+	void onPlayButtonPressed(ActionEvent event) {
+		playQueue();
 	}
   
+	void onTrackEnded() {
+		mediaPlayer.stop();
+		playerStatus = STOPPED;
+		if(MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1 <= currentTrackIndex) {
+			//ended queue
+			currentTrackIndex = 0;
+		} else {
+			//there are remaining tracks
+			currentTrackIndex++;
+		}
+		playQueue();
+	}
+	
 	@FXML
 	void onSkipButtonPressed(ActionEvent event) {
 		MediaPlayerController.skip();
