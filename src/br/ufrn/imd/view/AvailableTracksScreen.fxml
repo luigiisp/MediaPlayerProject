@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.gui.AvailableTracksScreenController">
+   <children>
+      <ListView fx:id="availableTracksListView" layoutX="16.0" layoutY="16.0" prefHeight="305.0" prefWidth="293.0" />
+   </children>
+</AnchorPane>

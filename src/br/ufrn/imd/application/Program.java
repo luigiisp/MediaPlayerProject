@@ -36,6 +36,7 @@ public class Program extends Application {
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("MP3 PLAYER");
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
