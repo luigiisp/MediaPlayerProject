@@ -74,8 +74,8 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Add new track" />
-                  <MenuItem mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Create new playlist" />
-                  <MenuItem mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Available tracks" />
+                  <MenuItem mnemonicParsing="false" text="Create new playlist" />
+                  <MenuItem mnemonicParsing="false" onAction="#listAvailableTracks" text="Available tracks" />
                   <MenuItem mnemonicParsing="false" onAction="#closePlayer" text="Close player" />
             </items>
           </Menu>

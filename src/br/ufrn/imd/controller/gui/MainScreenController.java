@@ -311,6 +311,23 @@ public class MainScreenController implements Initializable {
     }
     
     @FXML
+    void listAvailableTracks(ActionEvent event) {
+    	String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(availableTracksScreenFxmlPath));
+			Parent root1;
+
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Available tracks");
+			stage.setScene(new Scene(root1));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
     void openGithub(ActionEvent event) {
     	 try {
 			Desktop.getDesktop().browse(new URL("https://github.com/luigiisp/MediaPlayerProject").toURI());

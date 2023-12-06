@@ -94,6 +94,10 @@ public class MediaPlayerController {
 
 	// Track
 
+	public static List<TrackModel> getAllAvailableTracks() {
+		return trackController.getTracks();
+	}
+	
 	public static List<TrackModel> searchTrackByName(String searched) {
 		List<TrackModel> foundTracks = new ArrayList<TrackModel>();
 		if (searched.isBlank()) {
