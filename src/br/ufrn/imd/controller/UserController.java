@@ -116,6 +116,27 @@ public class UserController {
 		updateUsersFile();
 	}
 
+	public void renameUserFullName(UserModel user, String newName) {
+		if (findUserByUsername(user.getUsername()).getFullName().equals(newName)) {
+			findUserByUsername(user.getUsername()).setFullName(newName);
+			updateUsersFile();
+		}
+	}
+
+	public void renameUsername(UserModel user, String newUsername) {
+		if (findUserByUsername(user.getUsername()).getUsername().equals(newUsername)) {
+			findUserByUsername(user.getUsername()).setUsername(newUsername);
+			updateUsersFile();
+		}
+	}
+
+	public void changePassword(UserModel user, String newPassword) {
+		if (findUserByUsername(user.getUsername()).getPassword().equals(newPassword)) {
+			findUserByUsername(user.getUsername()).setPassword(newPassword);
+			updateUsersFile();
+		}
+	}
+
 	public UserModel findUserCommonByUsername(String username) {
 		for (UserModel user : getUsersCommon()) {
 			if (user.getUsername().equals(username)) {
@@ -138,9 +159,9 @@ public class UserController {
 		return (findUserCommonByUsername(username) != null ? findUserCommonByUsername(username)
 				: findUserVipByUsername(username));
 	}
-	
+
 	public boolean isUserVip(String username) {
-		if(findUserCommonByUsername(username) != null) {
+		if (findUserCommonByUsername(username) != null) {
 			return false;
 		}
 		return true;

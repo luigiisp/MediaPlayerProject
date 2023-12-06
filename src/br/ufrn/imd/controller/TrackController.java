@@ -87,6 +87,13 @@ public class TrackController {
 		}
 	}
 
+	public void renameTrack(TrackModel track, String newName) {
+		if (getTrackByName(track.getName()).equals(track.getName())) {
+			getTrackByName(track.getName()).setName(newName);
+			updateTracksFile();
+		}
+	}
+
 	public TrackModel getTrackByName(String name) {
 		for (TrackModel track : getTracks()) {
 			if (track.getName().equals(name)) {
