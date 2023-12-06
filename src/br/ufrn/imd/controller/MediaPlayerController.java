@@ -122,7 +122,7 @@ public class MediaPlayerController {
 		playlistController.addPlaylist(loggedUser.getUsername(), playlist);
 	}
 
-	public void addTrackToPlaylist(TrackModel track, PlaylistModel playlist) {
+	public static void addTrackToPlaylist(TrackModel track, PlaylistModel playlist) {
 		if (playlist.getTracks().contains(track)) {
 			return;
 		}

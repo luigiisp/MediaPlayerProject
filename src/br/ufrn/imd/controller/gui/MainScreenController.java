@@ -21,6 +21,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,6 +30,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -47,11 +50,27 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		MediaPlayerController.createPlaylist("TOPS");
 		if (MediaPlayerController.getLoggedUser() instanceof UserVipModel) {
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			playlistsListView.getItems().clear();
 			playlistsListView.getItems().addAll(user.getPlaylists());
+			
+			playlistMenu.getItems().clear();
+			for(int i = 0; i < user.getPlaylists().size(); i++) {
+				PlaylistModel playlist = user.getPlaylists().get(i);
+				MenuItem menuItem = new MenuItem(playlist.toString());
+				menuItem.setOnAction((new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0) {
+						TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
+						if (selectedTrack == null) {
+							return;
+						}
+						MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
+					}
+				}));
+				playlistMenu.getItems().add(menuItem);
+			}
 		}
 		volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
@@ -259,8 +278,6 @@ public class MainScreenController implements Initializable {
 	private Button searchButton;
 	@FXML
 	private ListView<TrackModel> searchListView;
-	@FXML
-	private Button AddToQueueButton;
 
 	public void searchTrack() {
 		final int LIST_CELL_HEIGHT = 24;
@@ -297,13 +314,16 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
-	void onAddToQueueButtonPressed(ActionEvent event) {
+	void addTrackToQueue(ActionEvent event) {
 		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
 		if (selectedTrack == null) {
 			return;
 		}
 		queueListView.getItems().add(selectedTrack);
 	}
+	
+    @FXML
+    private Menu playlistMenu;
 	
     @FXML
     void closePlayer(ActionEvent event) {
