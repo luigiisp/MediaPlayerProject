@@ -21,6 +21,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,7 +57,18 @@ public class MainScreenController implements Initializable {
 			
 			playlistMenu.getItems().clear();
 			for(int i = 0; i < user.getPlaylists().size(); i++) {
-				MenuItem menuItem = new MenuItem(user.getPlaylists().get(i).toString());
+				PlaylistModel playlist = user.getPlaylists().get(i);
+				MenuItem menuItem = new MenuItem(playlist.toString());
+				menuItem.setOnAction((new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0) {
+						TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
+						if (selectedTrack == null) {
+							return;
+						}
+						MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
+					}
+				}));
 				playlistMenu.getItems().add(menuItem);
 			}
 		}
