@@ -54,9 +54,9 @@ public class MainScreenController implements Initializable {
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			playlistsListView.getItems().clear();
 			playlistsListView.getItems().addAll(user.getPlaylists());
-			
+
 			playlistMenu.getItems().clear();
-			for(int i = 0; i < user.getPlaylists().size(); i++) {
+			for (int i = 0; i < user.getPlaylists().size(); i++) {
 				PlaylistModel playlist = user.getPlaylists().get(i);
 				MenuItem menuItem = new MenuItem(playlist.toString());
 				menuItem.setOnAction((new EventHandler<ActionEvent>() {
@@ -203,7 +203,7 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	private Label currentTrackLabel;
-	
+
 	final int STOPPED = 0;
 	final int PLAYING = 1;
 	final int PAUSED = 2;
@@ -224,7 +224,7 @@ public class MainScreenController implements Initializable {
 			mediaPlayer.setOnEndOfMedia(this::onTrackEnded);
 			playButton.setText("Pause");
 			currentTrackLabel.setText("Playing " + currentTrack.getName());
-			
+
 			playerStatus = PLAYING;
 		} else if (playerStatus == PLAYING) {
 			cancelTimer();
@@ -321,18 +321,18 @@ public class MainScreenController implements Initializable {
 		}
 		queueListView.getItems().add(selectedTrack);
 	}
-	
-    @FXML
-    private Menu playlistMenu;
-	
-    @FXML
-    void closePlayer(ActionEvent event) {
-    	Platform.exit();
-    }
-    
-    @FXML
-    void listAvailableTracks(ActionEvent event) {
-    	String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
+
+	@FXML
+	private Menu playlistMenu;
+
+	@FXML
+	void closePlayer(ActionEvent event) {
+		Platform.exit();
+	}
+
+	@FXML
+	void listAvailableTracks(ActionEvent event) {
+		String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(availableTracksScreenFxmlPath));
 			Parent root1;
@@ -345,15 +345,15 @@ public class MainScreenController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
-    
-    @FXML
-    void openGithub(ActionEvent event) {
-    	 try {
+	}
+
+	@FXML
+	void openGithub(ActionEvent event) {
+		try {
 			Desktop.getDesktop().browse(new URL("https://github.com/luigiisp/MediaPlayerProject").toURI());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 }

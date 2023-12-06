@@ -30,7 +30,7 @@
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>
-      <ListView fx:id="searchListView" layoutX="272.0" layoutY="71.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
+      <ListView fx:id="searchListView" layoutX="306.0" layoutY="72.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
       <Button fx:id="profileButton" layoutX="18.0" layoutY="42.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="60.0" prefWidth="60.0" text="Profile">
          <cursor>
             <Cursor fx:constant="HAND" />
