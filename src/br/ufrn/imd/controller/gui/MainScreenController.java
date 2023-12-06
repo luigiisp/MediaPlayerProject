@@ -209,6 +209,9 @@ public class MainScreenController implements Initializable {
 	@FXML
 	void onAddToQueueButtonPressed(ActionEvent event) {
 		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
+		if(selectedTrack == null) {
+			return;
+		}
 		MediaPlayerController.addTrackToQueue(selectedTrack);
 	}
 
