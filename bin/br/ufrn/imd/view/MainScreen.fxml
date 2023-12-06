@@ -30,7 +30,7 @@
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>
-      <ListView fx:id="searchListView" layoutX="272.0" layoutY="71.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
+      <ListView fx:id="searchListView" layoutX="306.0" layoutY="72.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
       <Button fx:id="profileButton" layoutX="18.0" layoutY="42.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="60.0" prefWidth="60.0" text="Profile">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -56,7 +56,7 @@
       <ListView fx:id="playlistsListView" layoutX="72.0" layoutY="151.0" prefHeight="350.0" prefWidth="200.0" />
       <Label layoutX="72.0" layoutY="126.0" text="Playlists" />
       <ProgressBar fx:id="trackProgressBar" layoutX="295.0" layoutY="581.0" prefHeight="14.0" prefWidth="411.0" progress="0.0" />
-      <Button fx:id="backButton" layoutX="415.0" layoutY="540.0" mnemonicParsing="false" onAction="#onBackButtonPressed" text="Back">
+      <Button fx:id="backButton" layoutX="415.0" layoutY="540.0" mnemonicParsing="false" onAction="#backTrack" text="Back">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
