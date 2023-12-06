@@ -1,7 +1,7 @@
 package br.ufrn.imd.controller.gui;
 
-
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,7 +26,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-
 public class MainScreenController implements Initializable {
 	@FXML
 	private Button refreshPlaylistsButton;
@@ -42,7 +41,7 @@ public class MainScreenController implements Initializable {
 			playlistsListView.getItems().clear();
 			playlistsListView.getItems().addAll(user.getPlaylists());
 		} else {
-			
+
 		}
 	}
 
@@ -51,21 +50,21 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	void onProfileButtonPressed(ActionEvent event) {
-    String profileScreenFxmlPath = "/br/ufrn/imd/view/ProfileScreen.fxml";
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(profileScreenFxmlPath));
-      Parent root1;
+		String profileScreenFxmlPath = "/br/ufrn/imd/view/ProfileScreen.fxml";
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(profileScreenFxmlPath));
+			Parent root1;
 
-      root1 = (Parent) fxmlLoader.load();
-      Stage stage = new Stage();
-      stage.setTitle("Profile information");
-      stage.setScene(new Scene(root1));
-      stage.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Profile information");
+			stage.setScene(new Scene(root1));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-  }
+	}
 
 	@FXML
 	private Button refreshQueueButton;
@@ -81,39 +80,38 @@ public class MainScreenController implements Initializable {
 		queueListView.getItems().clear();
 		queueListView.getItems().addAll(MediaPlayerController.getTracksInQueue());
 	}
-	
-    @FXML
-    void onRemoveTrackFromQueuePressed(ActionEvent event) {
-    	TrackModel selectedTrack = queueListView.getSelectionModel().getSelectedItem();
-    	MediaPlayerController.removeTrackFromQueue(selectedTrack);
-    }
-	
-	//Player
+
+	@FXML
+	void onRemoveTrackFromQueuePressed(ActionEvent event) {
+		TrackModel selectedTrack = queueListView.getSelectionModel().getSelectedItem();
+		MediaPlayerController.removeTrackFromQueue(selectedTrack);
+	}
+
+	// Player
 	private int currentTrackIndex = 0;
 	private Media media;
 	private MediaPlayer mediaPlayer;
-    
+
 	@FXML
 	private Button playButton;
-	
-    @FXML
-    private Button skipButton;
-    
-    public TrackModel getTrackByIndex(int trackIndex) {
+
+	@FXML
+	private Button skipButton;
+
+	public TrackModel getTrackByIndex(int trackIndex) {
 		return MediaPlayerController.getQueueController().getQueue().getTracks().get(trackIndex);
 	}
-    
-    
-    final int STOPPED = 0;
+
+	final int STOPPED = 0;
 	final int PLAYING = 1;
 	final int PAUSED = 2;
-    int playerStatus = STOPPED;
+	int playerStatus = STOPPED;
 
 	@FXML
 	public void onPlayButtonPressed(ActionEvent event) {
 
-		if(playerStatus == STOPPED) {
-			if(MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1 < currentTrackIndex) {
+		if (playerStatus == STOPPED) {
+			if (MediaPlayerController.getQueueController().getQueue().getTracks().size() - 1 < currentTrackIndex) {
 				return;
 			}
 			TrackModel currentTrack = getTrackByIndex(currentTrackIndex);
@@ -123,19 +121,19 @@ public class MainScreenController implements Initializable {
 			mediaPlayer = new MediaPlayer(media);
 			mediaPlayer.play();
 			playButton.setText("Pause");
-			
+
 			playerStatus = PLAYING;
-		} else if(playerStatus == PLAYING){
+		} else if (playerStatus == PLAYING) {
 			mediaPlayer.pause();
 			playerStatus = PAUSED;
 			playButton.setText("Play");
-		} else if(playerStatus == PAUSED) {
+		} else if (playerStatus == PAUSED) {
 			mediaPlayer.play();
 			playerStatus = PLAYING;
 			playButton.setText("Pause");
 		}
 	}
-  
+
 	@FXML
 	void onSkipButtonPressed(ActionEvent event) {
 		MediaPlayerController.skip();
@@ -193,5 +191,4 @@ public class MainScreenController implements Initializable {
 		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
 		MediaPlayerController.addTrackToQueue(selectedTrack);
 	}
-
 }
