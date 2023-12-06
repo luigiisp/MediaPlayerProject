@@ -42,11 +42,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class MainScreenController implements Initializable {
-	@FXML
-	private Button refreshPlaylistsButton;
 
 	@FXML
 	private ListView<PlaylistModel> playlistsListView;
+	
+    @FXML
+    private Menu playlistMenu;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -187,6 +188,15 @@ public class MainScreenController implements Initializable {
 		}
 	}
 
+	//Playlist
+	
+    @FXML
+    void playPlaylist(ActionEvent event) {
+    	queueListView.getItems().clear();
+    	queueListView.getItems().addAll(playlistsListView.getSelectionModel().getSelectedItem().getTracks());
+    	playQueue();
+    }
+	
 	// Player
 	private int currentTrackIndex = 0;
 	private Media media;
@@ -194,12 +204,6 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	private Button playButton;
-
-	@FXML
-	private Button skipButton;
-
-	@FXML
-	private Button backButton;
 
 	@FXML
 	private Label currentTrackLabel;
@@ -264,7 +268,7 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
-	void onSkipButtonPressed(ActionEvent event) {
+	void skipTrack(ActionEvent event) {
 		onTrackEnded();
 	}
 
@@ -339,9 +343,6 @@ public class MainScreenController implements Initializable {
 		}
 		queueListView.getItems().add(selectedTrack);
 	}
-	
-    @FXML
-    private Menu playlistMenu;
 	
     @FXML
     void closePlayer(ActionEvent event) {
