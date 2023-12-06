@@ -91,6 +91,9 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	private Button skipButton;
+	
+    @FXML
+    private Button backButton;
 
 	final int STOPPED = 0;
 	final int PLAYING = 1;
@@ -146,6 +149,11 @@ public class MainScreenController implements Initializable {
 		onTrackEnded();
 	}
 
+    @FXML
+    void onBackButtonPressed(ActionEvent event) {
+    	//
+    }
+	
 	@FXML
 	private Label currentTrackLabel;
 

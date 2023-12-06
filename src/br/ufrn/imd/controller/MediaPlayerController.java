@@ -10,7 +10,6 @@ import br.ufrn.imd.model.UserVipModel;
 
 public class MediaPlayerController {
 	private static UserModel loggedUser = null;
-	private static QueueController queueController = new QueueController();
 	private static TrackController trackController = null;
 	private static UserController userController = null;
 	private static PlaylistController playlistController = null;
@@ -33,14 +32,6 @@ public class MediaPlayerController {
 
 	public static void setPlaylistController(PlaylistController playlistC) {
 		playlistController = playlistC;
-	}
-
-	public static List<TrackModel> getTracksInQueue() {
-		return queueController.getQueue().getTracks();
-	}
-
-	public static QueueController getQueueController() {
-		return queueController;
 	}
 
 	public static TrackController getTrackController() {
@@ -111,16 +102,6 @@ public class MediaPlayerController {
 
 		foundTracks = trackController.getTracksByNameSubstring(searched);
 		return foundTracks;
-	}
-
-	// Queue
-
-	public static void addTrackToQueue(TrackModel track) {
-		queueController.addTrack(track);
-	}
-
-	public static void removeTrackFromQueue(TrackModel track) {
-		queueController.removeTrack(track);
 	}
 
 	//Playlist
