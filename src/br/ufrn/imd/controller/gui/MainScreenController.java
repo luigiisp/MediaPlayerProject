@@ -259,8 +259,6 @@ public class MainScreenController implements Initializable {
 	private Button searchButton;
 	@FXML
 	private ListView<TrackModel> searchListView;
-	@FXML
-	private Button AddToQueueButton;
 
 	public void searchTrack() {
 		final int LIST_CELL_HEIGHT = 24;
@@ -297,7 +295,7 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
-	void onAddToQueueButtonPressed(ActionEvent event) {
+	void addTrackToQueue(ActionEvent event) {
 		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
 		if (selectedTrack == null) {
 			return;
