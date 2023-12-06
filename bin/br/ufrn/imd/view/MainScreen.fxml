@@ -21,22 +21,22 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="skipButton" layoutX="546.0" layoutY="540.0" mnemonicParsing="false" onAction="#onSkipButtonPressed" text="Skip">
+      <Button layoutX="546.0" layoutY="540.0" mnemonicParsing="false" onAction="#skipTrack" text="Skip">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TextField fx:id="searchTextField" layoutX="306.0" layoutY="47.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
-      <Button fx:id="searchButton" layoutX="565.0" layoutY="47.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search">
+      <TextField fx:id="searchTextField" layoutX="306.0" layoutY="49.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
+      <Button fx:id="searchButton" layoutX="565.0" layoutY="49.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>
-      <ListView fx:id="searchListView" layoutX="306.0" layoutY="72.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
+      <ListView fx:id="searchListView" layoutX="306.0" layoutY="74.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
       <Button fx:id="profileButton" layoutX="18.0" layoutY="42.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="60.0" prefWidth="60.0" text="Profile">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <ListView fx:id="queueListView" layoutX="726.0" layoutY="153.0" prefHeight="350.0" prefWidth="200.0" />
-      <Button fx:id="removeTrackFromQueue" layoutX="771.0" layoutY="128.0" mnemonicParsing="false" onAction="#onRemoveTrackFromQueuePressed" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
+      <Button fx:id="removeTrackFromQueue" layoutX="846.0" layoutY="128.0" mnemonicParsing="false" onAction="#onRemoveTrackFromQueuePressed" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
          <font>
             <Font size="10.0" />
          </font>
@@ -44,7 +44,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="862.0" layoutY="128.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="64.0" text="Play Track">
+      <Button layoutX="766.0" layoutY="128.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="72.0" text="Play Track">
          <font>
             <Font size="10.0" />
          </font>
@@ -56,7 +56,7 @@
       <ListView fx:id="playlistsListView" layoutX="72.0" layoutY="151.0" prefHeight="350.0" prefWidth="200.0" />
       <Label layoutX="72.0" layoutY="126.0" text="Playlists" />
       <ProgressBar fx:id="trackProgressBar" layoutX="295.0" layoutY="581.0" prefHeight="14.0" prefWidth="411.0" progress="0.0" />
-      <Button fx:id="backButton" layoutX="415.0" layoutY="540.0" mnemonicParsing="false" onAction="#onBackButtonPressed" text="Back">
+      <Button layoutX="415.0" layoutY="540.0" mnemonicParsing="false" onAction="#backTrack" text="Back">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -88,12 +88,22 @@
             <Font name="Consolas" size="15.0" />
          </font>
       </Label>
-      <MenuButton layoutX="625.0" layoutY="47.0" mnemonicParsing="false" text="Add to">
+      <MenuButton layoutX="625.0" layoutY="49.0" mnemonicParsing="false" text="Add to">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#addTrackToQueue" text="Queue" />
             <Menu fx:id="playlistMenu" mnemonicParsing="false" text="Playlist" />
         </items>
       </MenuButton>
+      <Button layoutX="120.0" layoutY="124.0" mnemonicParsing="false" onAction="#playPlaylist" prefHeight="21.0" prefWidth="72.0" text="Play playlist">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="200.0" layoutY="124.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="72.0" text="Edit playlist">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
    </children>
    <rotationAxis>
       <Point3D />
