@@ -64,7 +64,12 @@ public class RegisterScreenController {
 			registerReturnLabel.setStyle("-fx-text-fill: green");
 			registerReturnLabel.setText("Sucess! You have been registered and you already logged in");
 			try {
-				Parent root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/MainScreen.fxml"));
+				Parent root;
+				if(vipUser) {
+					root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/MainScreen.fxml"));
+				}else {
+					root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/MainScreen2.fxml"));
+				}
 				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				Scene scene = new Scene(root);
 				stage.setScene(scene);
