@@ -86,33 +86,8 @@ public class MainScreenController implements Initializable {
 		});
 	}
 	
-	void refreshPlaylistMenuItems() {
-		UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
-		playlistMenu.getItems().clear();
-		for (int i = 0; i < user.getPlaylists().size(); i++) {
-			PlaylistModel playlist = user.getPlaylists().get(i);
-			MenuItem menuItem = new MenuItem(playlist.toString());
-			menuItem.setOnAction((new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent arg0) {
-					TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
-					if (selectedTrack == null) {
-						return;
-					}
-					MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
-					openPlaylistEditor(playlist);
-				}
-			}));
-			playlistMenu.getItems().add(menuItem);
-		}
-	}
-
-	@FXML
-	private Label tracksOn;
-
-	@FXML
-	private ListView<TrackModel> availableTracksListView;
-
+	//Profile
+	
 	@FXML
 	private Button profileButton;
 
@@ -134,10 +109,50 @@ public class MainScreenController implements Initializable {
 		}
 
 	}
+	
+	//Playlist
+	
+	void refreshPlaylistMenuItems() {
+		UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
+		playlistMenu.getItems().clear();
+		for (int i = 0; i < user.getPlaylists().size(); i++) {
+			PlaylistModel playlist = user.getPlaylists().get(i);
+			MenuItem menuItem = new MenuItem(playlist.toString());
+			menuItem.setOnAction((new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
+					if (selectedTrack == null) {
+						return;
+					}
+					MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
+					openPlaylistEditor(playlist);
+				}
+			}));
+			playlistMenu.getItems().add(menuItem);
+		}
+	}
+
+	//Queue
+	
+	@FXML
+	private Label tracksOn;
+
+	@FXML
+	private ListView<TrackModel> availableTracksListView;
 
 	@FXML
 	private ListView<TrackModel> queueListView;
 
+	@FXML
+	void addTrackToQueue(ActionEvent event) {
+		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
+		if (selectedTrack == null) {
+			return;
+		}
+		queueListView.getItems().add(selectedTrack);
+	}
+	
 	@FXML
 	void removeTrackFromQueue(ActionEvent event) {
 		TrackModel selectedTrack = queueListView.getSelectionModel().getSelectedItem();
@@ -145,36 +160,17 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
-	private Slider volumeSlider;
-
-	@FXML
-	private ProgressBar trackProgressBar;
-	Timer timer;
-	TimerTask task;
-
-	private boolean progress;
-
-	public void beginTimer() {
-
-		timer = new Timer();
-
-		task = new TimerTask() {
-
-			public void run() {
-
-				progress = true;
-				double current = mediaPlayer.getCurrentTime().toSeconds();
-				double end = media.getDuration().toSeconds();
-				trackProgressBar.setProgress(current / end);
-
-				if (current / end == 1) {
-
-					cancelTimer();
-				}
-			}
-		};
-
-		timer.scheduleAtFixedRate(task, 1000, 1000);
+	void playTrack(ActionEvent event) {
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+		}
+		playerStatus = STOPPED;
+		if (queueListView.getSelectionModel().getSelectedItem() == null) {
+			return;
+		}
+		int selectedTrackIndex = queueListView.getSelectionModel().getSelectedIndex();
+		currentTrackIndex = selectedTrackIndex;
+		playQueue();
 	}
 
 	public void cancelTimer() {
@@ -182,42 +178,7 @@ public class MainScreenController implements Initializable {
 		progress = false;
 		timer.cancel();
 	}
-
-	@FXML
-	void onAddNewTrackButtonPressed(ActionEvent event) throws IOException {
-		JFileChooser fc = new JFileChooser();
-		fc.setFileFilter(new FileFilter() {
-
-			public String getDescription() {
-				return "mp3 files (*.mp3)";
-			}
-
-			public boolean accept(File f) {
-				if (f.isDirectory()) {
-					return true;
-				} else {
-					String filename = f.getName().toLowerCase();
-					return filename.endsWith(".mp3");
-				}
-			}
-		});
-		int result = fc.showOpenDialog(fc);
-		if (result == JFileChooser.APPROVE_OPTION) {
-			File file = new File(fc.getSelectedFile().getAbsolutePath());
-			if (file.getAbsolutePath().endsWith(".mp3")) {
-				MediaPlayerController.getTrackController()
-						.addTrack(new TrackModel(file.getName().replace(".mp3", ""), file.getAbsolutePath()));
-				if (availableTracksListView.isVisible()) {
-					availableTracksListView.getItems().clear();
-					availableTracksListView.getItems().addAll(MediaPlayerController.getAllAvailableTracks());
-				}
-				return;
-			} else {
-				return;
-			}
-		}
-	}
-
+	
 	// Playlist
 
 	@FXML
@@ -226,6 +187,10 @@ public class MainScreenController implements Initializable {
 		if (selectedPlaylist == null) {
 			return;
 		}
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+		}
+		playerStatus = STOPPED;
 		queueListView.getItems().clear();
 		queueListView.getItems().addAll(selectedPlaylist.getTracks());
 		playQueue();
@@ -436,7 +401,6 @@ public class MainScreenController implements Initializable {
 		playerStatus = STOPPED;
 		currentTrackLabel.setText("");
 		if (currentTrackIndex > 0) {
-			// there is a track to go back to
 			currentTrackIndex--;
 		}
 		if (progress) {
@@ -445,21 +409,45 @@ public class MainScreenController implements Initializable {
 		playQueue();
 	}
 
+	//Volume slider
+	
 	@FXML
-	void playTrack(ActionEvent event) {
-		if (mediaPlayer != null) {
-			mediaPlayer.stop();
-		}
-		playerStatus = STOPPED;
-		if (queueListView.getSelectionModel().getSelectedItem() == null) {
-			return;
-		}
-		int selectedTrackIndex = queueListView.getSelectionModel().getSelectedIndex();
-		currentTrackIndex = selectedTrackIndex;
-		playQueue();
-	}
+	private Slider volumeSlider;
 
+	//Progress bar
+	
+	private boolean progress;
+	
+	@FXML
+	private ProgressBar trackProgressBar;
+	Timer timer;
+	TimerTask task;
+
+	public void beginTimer() {
+
+		timer = new Timer();
+
+		task = new TimerTask() {
+
+			public void run() {
+
+				progress = true;
+				double current = mediaPlayer.getCurrentTime().toSeconds();
+				double end = media.getDuration().toSeconds();
+				trackProgressBar.setProgress(current / end);
+
+				if (current / end == 1) {
+
+					cancelTimer();
+				}
+			}
+		};
+
+		timer.scheduleAtFixedRate(task, 1000, 1000);
+	}
+	
 	// Search bar
+	
 	@FXML
 	private TextField searchTextField;
 	@FXML
@@ -500,21 +488,49 @@ public class MainScreenController implements Initializable {
 			searchListView.setOpacity(0);
 		}
 	}
-
-	@FXML
-	void addTrackToQueue(ActionEvent event) {
-		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
-		if (selectedTrack == null) {
-			return;
-		}
-		queueListView.getItems().add(selectedTrack);
-	}
-
+	
+	//Miscellaneous
+	
 	@FXML
 	void closePlayer(ActionEvent event) {
 		Platform.exit();
 	}
+	
+	@FXML
+	void onAddNewTrackButtonPressed(ActionEvent event) throws IOException {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileFilter(new FileFilter() {
 
+			public String getDescription() {
+				return "mp3 files (*.mp3)";
+			}
+
+			public boolean accept(File f) {
+				if (f.isDirectory()) {
+					return true;
+				} else {
+					String filename = f.getName().toLowerCase();
+					return filename.endsWith(".mp3");
+				}
+			}
+		});
+		int result = fc.showOpenDialog(fc);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File file = new File(fc.getSelectedFile().getAbsolutePath());
+			if (file.getAbsolutePath().endsWith(".mp3")) {
+				MediaPlayerController.getTrackController()
+						.addTrack(new TrackModel(file.getName().replace(".mp3", ""), file.getAbsolutePath()));
+				if (availableTracksListView != null && availableTracksListView.isVisible()) {
+					availableTracksListView.getItems().clear();
+					availableTracksListView.getItems().addAll(MediaPlayerController.getAllAvailableTracks());
+				}
+				return;
+			} else {
+				return;
+			}
+		}
+	}
+	
 	@FXML
 	void listAvailableTracks(ActionEvent event) {
 		String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
@@ -533,7 +549,7 @@ public class MainScreenController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@FXML
 	private MenuBar menuBar;
 
