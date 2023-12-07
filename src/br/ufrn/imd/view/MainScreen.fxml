@@ -129,6 +129,11 @@
          </font>
       </Button>
       <TextField fx:id="newTitleTextField" layoutX="565.0" layoutY="178.0" prefHeight="25.0" prefWidth="149.0" promptText="New playlist title" />
+      <Label fx:id="noteToUser" alignment="CENTER" layoutX="295.0" layoutY="495.0" prefHeight="17.0" prefWidth="411.0">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </Label>
    </children>
    <rotationAxis>
       <Point3D />
