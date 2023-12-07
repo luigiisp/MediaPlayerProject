@@ -66,7 +66,7 @@
          </cursor>
       </Slider>
       <Label layoutX="806.0" layoutY="553.0" text="Volume" />
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1000.0" AnchorPane.bottomAnchor="625.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="1000.0" AnchorPane.bottomAnchor="625.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -74,6 +74,7 @@
                   <MenuItem mnemonicParsing="false" text="Create new playlist" />
                   <MenuItem mnemonicParsing="false" onAction="#listAvailableTracks" text="Available tracks" />
                   <MenuItem mnemonicParsing="false" onAction="#closePlayer" text="Close player" />
+                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
