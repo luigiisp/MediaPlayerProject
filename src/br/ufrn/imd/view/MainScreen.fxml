@@ -105,7 +105,6 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Button layoutX="144.0" layoutY="508.0" mnemonicParsing="false" onAction="#refreshPlaylistView" text="Refresh" />
       <ListView fx:id="playlistTracksListView" layoutX="399.0" layoutY="178.0" prefHeight="261.0" prefWidth="157.0" />
       <Button fx:id="renameButton" layoutX="566.0" layoutY="211.0" mnemonicParsing="false" onAction="#rename" prefHeight="21.0" prefWidth="80.0" text="Rename">
          <font>
