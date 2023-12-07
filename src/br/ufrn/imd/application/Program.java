@@ -51,20 +51,26 @@ public class Program extends Application {
 			String line = null;
 
 			// if diretorios.txt has an empty line, generate files and overwrite
+			File file = new File(DIRETORIOSTXTPATH);
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
 			reader = new BufferedReader(new FileReader(DIRETORIOSTXTPATH));
-
-			for (int i = 0; i < 3; i++) {
-				line = reader.readLine();
-
-				if (line == null || line.isBlank()) {
+			line = reader.readLine();
+			
+			if (line == null || line.isBlank()) {
+				generateFilesDir();
+			}else {
+				File check = new File(line);
+				if (!check.exists()) {
+					file.delete();
+					file.createNewFile();
 					generateFilesDir();
-					break;
 				}
 			}
-			// known issue: if diretorios.txt has a line with an nonexisting directory
-
+			
 			readDirFile();
-
 			UserController userController = new UserController(usersFile);
 			userController.updateUsersList();
 			TrackController trackController = new TrackController(tracksFile);

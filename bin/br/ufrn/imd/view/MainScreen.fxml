@@ -44,7 +44,7 @@
       <TextField fx:id="searchTextField" layoutX="306.0" layoutY="49.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
       <Button fx:id="searchButton" layoutX="565.0" layoutY="49.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search">
          <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
+            <Cursor fx:constant="HAND" />
          </cursor></Button>
       <ListView fx:id="searchListView" layoutX="306.0" layoutY="74.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
       <Button fx:id="profileButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: transparent;">
@@ -124,45 +124,70 @@
           <MenuItem mnemonicParsing="false" onAction="#addTrackToQueue" text="Queue" />
             <Menu fx:id="playlistMenu" mnemonicParsing="false" text="Playlist" />
         </items>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </MenuButton>
       <Button layoutX="120.0" layoutY="124.0" mnemonicParsing="false" onAction="#playPlaylist" prefHeight="21.0" prefWidth="72.0" text="Play playlist">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button layoutX="200.0" layoutY="124.0" mnemonicParsing="false" onAction="#openPlaylist" prefHeight="21.0" prefWidth="72.0" text="Open playlist">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <ListView fx:id="playlistTracksListView" layoutX="399.0" layoutY="178.0" prefHeight="261.0" prefWidth="157.0" />
       <Button fx:id="renameButton" layoutX="566.0" layoutY="211.0" mnemonicParsing="false" onAction="#rename" prefHeight="21.0" prefWidth="80.0" text="Rename">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Label fx:id="titleLable" layoutX="399.0" layoutY="153.0" prefHeight="17.0" prefWidth="157.0" />
       <Button fx:id="removeTrackButton" layoutX="566.0" layoutY="240.0" mnemonicParsing="false" onAction="#removeTrack" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button fx:id="deleteButton" layoutX="566.0" layoutY="271.0" mnemonicParsing="false" onAction="#deletePlaylist" prefHeight="21.0" prefWidth="80.0" text="Delete">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button fx:id="closeMenuPlaylist" layoutX="566.0" layoutY="418.0" mnemonicParsing="false" onAction="#closePlaylist" prefHeight="21.0" prefWidth="80.0" text="Close">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <TextField fx:id="newTitleTextField" layoutX="565.0" layoutY="178.0" prefHeight="25.0" prefWidth="149.0" promptText="New playlist title" />
+      <TextField fx:id="newTitleTextField" layoutX="565.0" layoutY="178.0" prefHeight="25.0" prefWidth="149.0" promptText="New playlist title">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
       <Label fx:id="noteToUser" alignment="CENTER" layoutX="295.0" layoutY="495.0" prefHeight="17.0" prefWidth="411.0">
          <font>
             <Font name="Consolas" size="12.0" />
          </font>
       </Label>
+      <Label layoutX="40.0" layoutY="102.0" prefHeight="26.0" prefWidth="48.0" text="Profile" />
    </children>
    <rotationAxis>
       <Point3D />
