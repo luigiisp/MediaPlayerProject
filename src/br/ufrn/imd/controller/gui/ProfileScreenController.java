@@ -2,7 +2,6 @@ package br.ufrn.imd.controller.gui;
 
 import br.ufrn.imd.controller.MediaPlayerController;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -27,12 +26,5 @@ public class ProfileScreenController {
 		} else {
 			accountStatusLabel.setText("COMMON");
 		}
-	}
-
-	@FXML
-	void onLogoutButtonPressed(ActionEvent event) {
-		MediaPlayerController.logout();
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.close();
 	}
 }
