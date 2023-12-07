@@ -46,12 +46,29 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	private ListView<PlaylistModel> playlistsListView;
-	
-    @FXML
-    private Menu playlistMenu;
+
+	@FXML
+	private Menu playlistMenu;
+
+	Stage stage;
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		playlistTracksListView.setVisible(false);
+		deleteButton.setVisible(false);
+		removeTrackButton.setVisible(false);
+		renameButton.setVisible(false);
+		closeMenuPlaylist.setVisible(false);
+		newTitleTextField.setVisible(false);
+
 		if (MediaPlayerController.getLoggedUser() instanceof UserVipModel) {
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			playlistsListView.getItems().clear();
@@ -76,12 +93,10 @@ public class MainScreenController implements Initializable {
 		}
 		volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-				mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-			}
-		});
-	}
+	@Override
+	public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+		mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+	}});}
 
 	@FXML
 	private Button profileButton;
@@ -103,6 +118,23 @@ public class MainScreenController implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void logout(ActionEvent event) {
+		MediaPlayerController.logout();
+		String profileScreenFxmlPath = "/br/ufrn/imd/view/LoginScreen.fxml";
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(profileScreenFxmlPath));
+			Parent root1;
+
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Login Menu");
+			stage.setScene(new Scene(root1));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -190,15 +222,126 @@ public class MainScreenController implements Initializable {
 		}
 	}
 
-	//Playlist
+	// Playlist
+
+	@FXML
+	void playPlaylist(ActionEvent event) {
+		queueListView.getItems().clear();
+		queueListView.getItems().addAll(playlistsListView.getSelectionModel().getSelectedItem().getTracks());
+		playQueue();
+	}
+
+	@FXML
+	ListView<TrackModel> playlistTracksListView;
+
+	@FXML
+	private Button deleteButton;
+
+	@FXML
+	private Button removeTrackButton;
+
+	@FXML
+	private Button renameButton;
+
+	@FXML
+	private Label titleLable;
+
+	@FXML
+	private Button closeMenuPlaylist;
+
+	void openPlaylistEditor(PlaylistModel playlist) {
+		newTitleTextField.setVisible(true);
+		playlistTracksListView.setVisible(true);
+		deleteButton.setVisible(true);
+		removeTrackButton.setVisible(true);
+		renameButton.setVisible(true);
+		closeMenuPlaylist.setVisible(true);
+		titleLable.setText(playlist.getTitle());
+		playlistTracksListView.getItems().clear();
+		playlistTracksListView.getItems().addAll(playlist.getTracks());
+	}
 	
-    @FXML
-    void playPlaylist(ActionEvent event) {
-    	queueListView.getItems().clear();
-    	queueListView.getItems().addAll(playlistsListView.getSelectionModel().getSelectedItem().getTracks());
-    	playQueue();
-    }
+	@FXML
+	void createNewPlaylist(ActionEvent event) {
+		int playlistNumber = 1;
+		String playlistName = "Playlist ";
+		while(MediaPlayerController.getPlaylistController().findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlistName + playlistNumber) != null) {
+			playlistNumber++;
+		}
+		playlistName += playlistNumber;
+		MediaPlayerController.createPlaylist(playlistName);
+		PlaylistModel createdPlaylist = MediaPlayerController.getPlaylistController().findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlistName);
+		openPlaylistEditor(createdPlaylist);
+		refreshPlaylistView();
+	}
 	
+	@FXML
+	void openPlaylist(ActionEvent event) {
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		if (playlistSelected == null) {
+			return;
+		}
+		openPlaylistEditor(playlistSelected);
+	}
+
+	@FXML
+	void closePlaylist(ActionEvent event) {
+		newTitleTextField.setVisible(false);
+		playlistTracksListView.setVisible(false);
+		deleteButton.setVisible(false);
+		removeTrackButton.setVisible(false);
+		renameButton.setVisible(false);
+		closeMenuPlaylist.setVisible(false);
+		playlistTracksListView.getItems().clear();
+		titleLable.setText(null); 
+	}
+
+	@FXML
+	public void removeTrack(ActionEvent event) {
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		TrackModel track = playlistTracksListView.getSelectionModel().getSelectedItem();
+		MediaPlayerController.removeTrackOnPlaylist(track, playlistSelected);
+		playlistTracksListView.getItems().clear();
+		playlistTracksListView.getItems().addAll(playlistSelected.getTracks());
+	}
+
+	@FXML
+	public void deletePlaylist(ActionEvent event) {
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		MediaPlayerController.getPlaylistController().removePlaylist(playlistSelected);
+		playlistTracksListView.setVisible(false);
+		deleteButton.setVisible(false);
+		removeTrackButton.setVisible(false);
+		renameButton.setVisible(false);
+		closeMenuPlaylist.setVisible(false);
+		playlistTracksListView.getItems().clear();
+		titleLable.setText(null);
+		refreshPlaylistView();
+	}
+
+	@FXML
+	private TextField newTitleTextField;
+
+	@FXML
+	public void rename(ActionEvent event) {
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		if(newTitleTextField == null) {
+			return;
+		}
+		String newTitle = newTitleTextField.getText();
+		MediaPlayerController.getPlaylistController().renamePlaylist(playlistSelected, newTitle);
+		titleLable.setText(MediaPlayerController.getPlaylistController()
+				.findByTitle(MediaPlayerController.getLoggedUser().getUsername(), newTitle).getTitle());
+		refreshPlaylistView();
+	}
+
+	@FXML
+	void refreshPlaylistView() {
+		UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
+		playlistsListView.getItems().clear();
+		playlistsListView.getItems().addAll(user.getPlaylists());
+	}
+
 	// Player
 	private int currentTrackIndex = 0;
 	private Media media;
@@ -250,7 +393,7 @@ public class MainScreenController implements Initializable {
 	}
 
 	void onTrackEnded() {
-		if(mediaPlayer == null) {
+		if (mediaPlayer == null) {
 			return;
 		}
 		mediaPlayer.stop();
@@ -276,14 +419,14 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	void backTrack(ActionEvent event) {
-		if(mediaPlayer == null) {
+		if (mediaPlayer == null) {
 			return;
 		}
 		mediaPlayer.stop();
 		playerStatus = STOPPED;
 		currentTrackLabel.setText("");
 		if (currentTrackIndex == 0) {
-			//no track to go back to
+			// no track to go back to
 			currentTrackIndex = 0;
 		} else {
 			// there are remaining tracks
@@ -345,20 +488,16 @@ public class MainScreenController implements Initializable {
 		}
 		queueListView.getItems().add(selectedTrack);
 	}
-	
-	//Menu bar
-	
-    @FXML
-    private MenuBar menuBar;
-	
-    @FXML
-    void closePlayer(ActionEvent event) {
-    	Platform.exit();
-    }
-    
-    @FXML
-    void listAvailableTracks(ActionEvent event) {
-    	String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
+
+	@FXML
+	void closePlayer(ActionEvent event) {
+		Platform.exit();
+	}
+
+	@FXML
+	void listAvailableTracks(ActionEvent event) {
+		String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
+
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(availableTracksScreenFxmlPath));
 			Parent root1;
@@ -373,7 +512,6 @@ public class MainScreenController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
 
     @FXML
     private MenuItem logoutButton;

@@ -71,7 +71,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Add new track" />
-                  <MenuItem mnemonicParsing="false" text="Create new playlist" />
+                  <MenuItem mnemonicParsing="false" onAction="#createNewPlaylist" text="Create new playlist" />
                   <MenuItem mnemonicParsing="false" onAction="#listAvailableTracks" text="Available tracks" />
                   <MenuItem mnemonicParsing="false" onAction="#closePlayer" text="Close player" />
                   <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
@@ -100,11 +100,35 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Button layoutX="200.0" layoutY="124.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="72.0" text="Edit playlist">
+      <Button layoutX="200.0" layoutY="124.0" mnemonicParsing="false" onAction="#openPlaylist" prefHeight="21.0" prefWidth="72.0" text="Open playlist">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
+      <Button layoutX="144.0" layoutY="508.0" mnemonicParsing="false" onAction="#refreshPlaylistView" text="Refresh" />
+      <ListView fx:id="playlistTracksListView" layoutX="399.0" layoutY="178.0" prefHeight="261.0" prefWidth="157.0" />
+      <Button fx:id="renameButton" layoutX="566.0" layoutY="211.0" mnemonicParsing="false" onAction="#rename" prefHeight="21.0" prefWidth="80.0" text="Rename">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Label fx:id="titleLable" layoutX="399.0" layoutY="153.0" prefHeight="17.0" prefWidth="157.0" />
+      <Button fx:id="removeTrackButton" layoutX="566.0" layoutY="240.0" mnemonicParsing="false" onAction="#removeTrack" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteButton" layoutX="566.0" layoutY="271.0" mnemonicParsing="false" onAction="#deletePlaylist" prefHeight="21.0" prefWidth="80.0" text="Delete">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="closeMenuPlaylist" layoutX="566.0" layoutY="418.0" mnemonicParsing="false" onAction="#closePlaylist" prefHeight="21.0" prefWidth="80.0" text="Close">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <TextField fx:id="newTitleTextField" layoutX="565.0" layoutY="178.0" prefHeight="25.0" prefWidth="149.0" promptText="New playlist title" />
    </children>
    <rotationAxis>
       <Point3D />
