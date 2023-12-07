@@ -104,7 +104,30 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Button layoutX="280.0" layoutY="122.0" mnemonicParsing="false" onAction="#refreshPlaylistView" text="Refresh" />
+      <Button layoutX="144.0" layoutY="508.0" mnemonicParsing="false" onAction="#refreshPlaylistView" text="Refresh" />
+      <ListView fx:id="tracksListViewPlaylist" layoutX="357.0" layoutY="218.0" prefHeight="261.0" prefWidth="157.0" />
+      <Button fx:id="renameButton" layoutX="514.0" layoutY="218.0" mnemonicParsing="false" onAction="#rename" prefHeight="21.0" prefWidth="80.0" text="Rename">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Label fx:id="titleLable" layoutX="357.0" layoutY="193.0" />
+      <Button fx:id="removeTrackButton" layoutX="514.0" layoutY="247.0" mnemonicParsing="false" onAction="#removeTrack" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteButton" layoutX="514.0" layoutY="278.0" mnemonicParsing="false" onAction="#deletePlaylist" prefHeight="21.0" prefWidth="80.0" text="Delete">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="closeMenuPlaylist" layoutX="516.0" layoutY="338.0" mnemonicParsing="false" onAction="#closePlaylist" prefHeight="21.0" prefWidth="80.0" text="Close">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <TextField fx:id="newTitleTextField" layoutX="516.0" layoutY="189.0" prefHeight="0.0" prefWidth="178.0" promptText="New Title" />
    </children>
    <rotationAxis>
       <Point3D />

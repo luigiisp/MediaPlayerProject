@@ -114,11 +114,10 @@ public class PlaylistController {
 		}
 	}
 
-	public void renamePlaylist(String username, String newTitle, String oldTitle) {
-		if (findByTitle(username, oldTitle) != null && findByTitle(username, newTitle) == null) {
-			findByTitle(username, oldTitle).setTitle(newTitle);
+	public void renamePlaylist(PlaylistModel playlist, String newTitle) {
+		if (findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlist.getTitle()) != null) {
+			findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlist.getTitle()).setTitle(newTitle);
 			updatePlaylistsFolder();
-			updatePlaylistsList();
 		}
 	}
 
@@ -144,9 +143,11 @@ public class PlaylistController {
 		}
 	}
 
-	public void removePlaylist(String username, String title) {
-		if (findByTitle(username, title) != null) {
-			playlists.remove(findByTitle(username, title));
+	public void removePlaylist(PlaylistModel playlist) {
+		if (findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlist.getTitle()) != null) {
+			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
+			user.getPlaylists().remove(playlist);
+			playlists.remove(playlist);
 			updatePlaylistsFolder();
 		}
 	}

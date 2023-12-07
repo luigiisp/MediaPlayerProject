@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import br.ufrn.imd.controller.MediaPlayerController;
+import br.ufrn.imd.controller.PlaylistController;
 import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
 import br.ufrn.imd.model.UserVipModel;
@@ -62,6 +63,13 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		tracksListViewPlaylist.setVisible(false);
+		deleteButton.setVisible(false);
+		removeTrackButton.setVisible(false);
+		renameButton.setVisible(false);
+		closeMenuPlaylist.setVisible(false);
+		newTitleTextField.setVisible(false);
+
 		if (MediaPlayerController.getLoggedUser() instanceof UserVipModel) {
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			playlistsListView.getItems().clear();
@@ -244,21 +252,81 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
+	ListView<TrackModel> tracksListViewPlaylist;
+
+	@FXML
+	private Button deleteButton;
+
+	@FXML
+	private Button removeTrackButton;
+
+	@FXML
+	private Button renameButton;
+
+	@FXML
+	private Label titleLable;
+
+	@FXML
+	private Button closeMenuPlaylist;
+
+	@FXML
 	void openPlaylist(ActionEvent event) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/ufrn/imd/view/PlaylistScreen.fxml"));
+		tracksListViewPlaylist.setVisible(true);
+		deleteButton.setVisible(true);
+		removeTrackButton.setVisible(true);
+		renameButton.setVisible(true);
+		closeMenuPlaylist.setVisible(true);
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		titleLable.setText(playlistSelected.getTitle());
+		tracksListViewPlaylist.getItems().clear();
+		tracksListViewPlaylist.getItems().addAll(playlistSelected.getTracks());
+	}
 
-		try {
-			Parent root = (Parent) loader.load();
-			PlaylistScreenController controller = (PlaylistScreenController) loader.getController();
-			controller.setPlaylist(playlistsListView.getSelectionModel().getSelectedItem());
+	@FXML
+	void closePlaylist(ActionEvent event) {
+		tracksListViewPlaylist.setVisible(false);
+		deleteButton.setVisible(false);
+		removeTrackButton.setVisible(false);
+		renameButton.setVisible(false);
+		closeMenuPlaylist.setVisible(false);
+		tracksListViewPlaylist.getItems().clear();
+		titleLable.setText(null);
+	}
 
-			Stage stage = new Stage();
-			stage.setTitle("Playlist Menu");
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	@FXML
+	public void removeTrack(ActionEvent event) {
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		TrackModel track = tracksListViewPlaylist.getSelectionModel().getSelectedItem();
+		MediaPlayerController.removeTrackOnPlaylist(track, playlistSelected);
+		tracksListViewPlaylist.getItems().clear();
+		tracksListViewPlaylist.getItems().addAll(playlistSelected.getTracks());
+	}
+
+	@FXML
+	public void deletePlaylist(ActionEvent event) {
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		MediaPlayerController.getPlaylistController().removePlaylist(playlistSelected);
+		tracksListViewPlaylist.setVisible(false);
+		deleteButton.setVisible(false);
+		removeTrackButton.setVisible(false);
+		renameButton.setVisible(false);
+		closeMenuPlaylist.setVisible(false);
+		tracksListViewPlaylist.getItems().clear();
+		titleLable.setText(null);
+		refreshPlaylistView();
+	}
+
+	@FXML
+	private TextField newTitleTextField;
+
+	@FXML
+	public void rename(ActionEvent event) {
+		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
+		String newTitle = "LEGAIS";
+		MediaPlayerController.getPlaylistController().renamePlaylist(playlistSelected, newTitle);
+		titleLable.setText(MediaPlayerController.getPlaylistController()
+				.findByTitle(MediaPlayerController.getLoggedUser().getUsername(), newTitle).getTitle());
+		refreshPlaylistView();
 	}
 
 	@FXML
