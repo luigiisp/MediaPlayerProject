@@ -50,8 +50,8 @@ public class PlaylistController {
 			for (File file : playlistsFiles) {
 				if (file.isFile() && file.getName().endsWith(".txt")) {
 					try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-						String playlistOwnerFullname = reader.readLine();
 						String playlistOwnerUsername = reader.readLine();
+						playlistOwnerUsername = reader.readLine();
 						String playlistTitle = reader.readLine();
 						String line = reader.readLine();
 						PlaylistModel playlistTemp = new PlaylistModel(playlistTitle, file.getPath());

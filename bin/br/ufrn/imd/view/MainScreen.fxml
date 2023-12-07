@@ -12,29 +12,52 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.gui.MainScreenController">
    <children>
-      <Button fx:id="playButton" layoutX="477.0" layoutY="520.0" mnemonicParsing="false" onAction="#onPlayButtonPressed" prefHeight="47.0" prefWidth="46.0" text="Play" textAlignment="CENTER">
+      <Button fx:id="playButton" layoutX="470.0" layoutY="526.0" mnemonicParsing="false" onAction="#onPlayButtonPressed" prefHeight="47.0" prefWidth="46.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button layoutX="546.0" layoutY="540.0" mnemonicParsing="false" onAction="#skipTrack" text="Skip">
+         </cursor>
+         <graphic>
+            <ImageView fx:id="playImageView" fitHeight="55.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/PlayIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="542.0" layoutY="540.0" mnemonicParsing="false" onAction="#skipTrack" style="-fx-background-color: transparent;">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/SkipIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <TextField fx:id="searchTextField" layoutX="306.0" layoutY="49.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
       <Button fx:id="searchButton" layoutX="565.0" layoutY="49.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></Button>
       <ListView fx:id="searchListView" layoutX="306.0" layoutY="74.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
-      <Button fx:id="profileButton" layoutX="18.0" layoutY="42.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="60.0" prefWidth="60.0" text="Profile">
+      <Button fx:id="profileButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: transparent;">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="73.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/ProfileIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <ListView fx:id="queueListView" layoutX="726.0" layoutY="153.0" prefHeight="350.0" prefWidth="200.0" />
       <Button fx:id="removeTrackFromQueue" layoutX="846.0" layoutY="128.0" mnemonicParsing="false" onAction="#removeTrackFromQueue" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
          <font>
@@ -56,10 +79,17 @@
       <ListView fx:id="playlistsListView" layoutX="72.0" layoutY="151.0" prefHeight="350.0" prefWidth="200.0" />
       <Label layoutX="72.0" layoutY="126.0" text="Playlists" />
       <ProgressBar fx:id="trackProgressBar" layoutX="295.0" layoutY="581.0" prefHeight="14.0" prefWidth="411.0" progress="0.0" />
-      <Button layoutX="415.0" layoutY="540.0" mnemonicParsing="false" onAction="#backTrack" text="Back">
+      <Button layoutX="415.0" layoutY="540.0" mnemonicParsing="false" onAction="#backTrack" style="-fx-background-color: transparent;">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/BackIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Slider fx:id="volumeSlider" layoutX="752.0" layoutY="572.0" max="100.0" prefHeight="14.0" prefWidth="149.0" value="50.0">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -105,7 +135,6 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Button layoutX="144.0" layoutY="508.0" mnemonicParsing="false" onAction="#refreshPlaylistView" text="Refresh" />
       <ListView fx:id="playlistTracksListView" layoutX="399.0" layoutY="178.0" prefHeight="261.0" prefWidth="157.0" />
       <Button fx:id="renameButton" layoutX="566.0" layoutY="211.0" mnemonicParsing="false" onAction="#rename" prefHeight="21.0" prefWidth="80.0" text="Rename">
          <font>
