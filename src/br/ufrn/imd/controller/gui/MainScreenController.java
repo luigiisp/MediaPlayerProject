@@ -62,7 +62,6 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		updateNoteToUser("ajhewq weriqwehr");
 		playlistTracksListView.setVisible(false);
 		deleteButton.setVisible(false);
 		removeTrackButton.setVisible(false);
@@ -84,7 +83,6 @@ public class MainScreenController implements Initializable {
 					public void handle(ActionEvent arg0) {
 						TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
 						if (selectedTrack == null) {
-							updateNoteToUser("You have to select a track");
 							return;
 						}
 						MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
@@ -99,7 +97,6 @@ public class MainScreenController implements Initializable {
 	@Override
 	public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 		if(mediaPlayer == null) {
-			updateNoteToUser("There's no track currently playing");
 			return;
 		}
 		mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
@@ -218,7 +215,6 @@ public class MainScreenController implements Initializable {
 	void playPlaylist(ActionEvent event) {
 		PlaylistModel selectedPlaylist = playlistsListView.getSelectionModel().getSelectedItem(); 
 		if(selectedPlaylist == null) {
-			updateNoteToUser("You have to select a playlist");
 			return;
 		}
 		queueListView.getItems().clear();
@@ -277,7 +273,6 @@ public class MainScreenController implements Initializable {
 	void openPlaylist(ActionEvent event) {
 		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
 		if (playlistSelected == null) {
-			updateNoteToUser("You have to select a playlist");
 			return;
 		}
 		openPlaylistEditor(playlistSelected);
@@ -322,7 +317,6 @@ public class MainScreenController implements Initializable {
 	public void rename(ActionEvent event) {
 		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
 		if(newTitleTextField == null) {
-			updateNoteToUser("You have to write the new playlist title");
 			return;
 		}
 		String newTitle = newTitleTextField.getText();
@@ -434,7 +428,6 @@ public class MainScreenController implements Initializable {
     @FXML
     void playTrack(ActionEvent event) {
     	if(queueListView.getSelectionModel().getSelectedItem() == null) {
-    		updateNoteToUser("You have to select a track");
     		return;
     	}
     	int selectedTrackIndex = queueListView.getSelectionModel().getSelectedIndex();
@@ -488,7 +481,6 @@ public class MainScreenController implements Initializable {
 	void addTrackToQueue(ActionEvent event) {
 		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
 		if (selectedTrack == null) {
-			updateNoteToUser("You have to select a track");
 			return;
 		}
 		queueListView.getItems().add(selectedTrack);
@@ -548,16 +540,6 @@ public class MainScreenController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-    @FXML
-    private Label noteToUser;
-    
-    void updateNoteToUser(String note) {
-    	if(note == null) {
-    		return;
-    	}
-    	noteToUser.setText(note);
-    }
 }
 
 
