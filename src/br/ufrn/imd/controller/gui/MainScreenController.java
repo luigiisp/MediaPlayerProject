@@ -16,7 +16,6 @@ import javax.swing.filechooser.FileFilter;
 import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
-import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -68,22 +67,7 @@ public class MainScreenController implements Initializable {
 			playlistsListView.getItems().addAll(user.getPlaylists());
 
 			playlistMenu.getItems().clear();
-			for (int i = 0; i < user.getPlaylists().size(); i++) {
-				PlaylistModel playlist = user.getPlaylists().get(i);
-				MenuItem menuItem = new MenuItem(playlist.toString());
-				menuItem.setOnAction((new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent arg0) {
-						TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
-						if (selectedTrack == null) {
-							return;
-						}
-						MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
-						openPlaylistEditor(playlist);
-					}
-				}));
-				playlistMenu.getItems().add(menuItem);
-			}
+			refreshPlaylistView();
 		} else {
 			availableTracksListView.getItems().clear();
 			availableTracksListView.getItems().addAll(MediaPlayerController.getAllAvailableTracks());
@@ -100,6 +84,27 @@ public class MainScreenController implements Initializable {
 				mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
 			}
 		});
+	}
+	
+	void refreshPlaylistMenuItems() {
+		UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
+		playlistMenu.getItems().clear();
+		for (int i = 0; i < user.getPlaylists().size(); i++) {
+			PlaylistModel playlist = user.getPlaylists().get(i);
+			MenuItem menuItem = new MenuItem(playlist.toString());
+			menuItem.setOnAction((new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
+					if (selectedTrack == null) {
+						return;
+					}
+					MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
+					openPlaylistEditor(playlist);
+				}
+			}));
+			playlistMenu.getItems().add(menuItem);
+		}
 	}
 
 	@FXML
@@ -340,6 +345,7 @@ public class MainScreenController implements Initializable {
 		UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 		playlistsListView.getItems().clear();
 		playlistsListView.getItems().addAll(user.getPlaylists());
+		refreshPlaylistMenuItems();
 	}
 
 	// Player
