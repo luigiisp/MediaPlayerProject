@@ -1,32 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controller.gui.MainScreenController">
    <children>
-      <Button fx:id="playButton" layoutX="472.0" layoutY="505.0" mnemonicParsing="false" onAction="#onPlayButtonPressed" prefHeight="57.0" prefWidth="57.0" text="Play" textAlignment="CENTER" />
-      <Button fx:id="skipButton" layoutX="561.0" layoutY="521.0" mnemonicParsing="false" onAction="#onSkipButtonPressed" text="Skip" />
-      <TextField fx:id="searchTextField" layoutX="296.0" layoutY="43.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
-      <Button fx:id="searchButton" layoutX="555.0" layoutY="43.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search" />
-      <ListView fx:id="searchListView" layoutX="296.0" layoutY="68.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
-      <Button fx:id="AddToQueueButton" layoutX="615.0" layoutY="43.0" mnemonicParsing="false" onAction="#onAddToQueueButtonPressed" text="Add to Queue" />
-      <Button fx:id="profileButton" layoutX="882.0" layoutY="48.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="64.0" prefWidth="64.0" text="Profile" />
-      <ListView fx:id="queueListView" layoutX="660.0" layoutY="242.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="removeTrackFromQueue" layoutX="874.0" layoutY="272.0" mnemonicParsing="false" onAction="#onRemoveTrackFromQueuePressed" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
+      <Button fx:id="playButton" layoutX="470.0" layoutY="526.0" mnemonicParsing="false" onAction="#onPlayButtonPressed" prefHeight="47.0" prefWidth="46.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fx:id="playImageView" fitHeight="55.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/PlayIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="542.0" layoutY="540.0" mnemonicParsing="false" onAction="#skipTrack" style="-fx-background-color: transparent;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/SkipIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <TextField fx:id="searchTextField" layoutX="306.0" layoutY="49.0" onKeyPressed="#onSearchBarKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="What do you wanna hear?" />
+      <Button fx:id="searchButton" layoutX="565.0" layoutY="49.0" mnemonicParsing="false" onAction="#onSearchButtonPressed" text="Search">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <ListView fx:id="searchListView" layoutX="306.0" layoutY="74.0" opacity="0.0" prefHeight="82.0" prefWidth="250.0" />
+      <Button fx:id="profileButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#onProfileButtonPressed" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="73.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/ProfileIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <ListView fx:id="queueListView" layoutX="726.0" layoutY="153.0" prefHeight="350.0" prefWidth="200.0" />
+      <Button fx:id="removeTrackFromQueue" layoutX="846.0" layoutY="128.0" mnemonicParsing="false" onAction="#removeTrackFromQueue" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button layoutX="874.0" layoutY="304.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Play Track">
+      <Button layoutX="766.0" layoutY="128.0" mnemonicParsing="false" onAction="#playTrack" prefHeight="21.0" prefWidth="72.0" text="Play Track">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Label layoutX="660.0" layoutY="225.0" text="Queue" />
+      <Label layoutX="726.0" layoutY="130.0" text="Queue" />
+      <ProgressBar fx:id="trackProgressBar" layoutX="295.0" layoutY="581.0" prefHeight="14.0" prefWidth="411.0" progress="0.0" />
+      <Button layoutX="415.0" layoutY="540.0" mnemonicParsing="false" onAction="#backTrack" style="-fx-background-color: transparent;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/BackIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Slider fx:id="volumeSlider" layoutX="752.0" layoutY="572.0" max="100.0" prefHeight="14.0" prefWidth="149.0" value="50.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Slider>
+      <Label layoutX="806.0" layoutY="553.0" text="Volume" />
+      <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="1000.0" AnchorPane.bottomAnchor="625.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Add new track" />
+                  <MenuItem mnemonicParsing="false" onAction="#listAvailableTracks" text="Available tracks" />
+                  <MenuItem mnemonicParsing="false" onAction="#closePlayer" text="Close player" />
+                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#openGithub" text="GitHub Repository" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label fx:id="currentTrackLabel" alignment="CENTER" layoutX="295.0" layoutY="600.0" prefHeight="18.0" prefWidth="411.0">
+         <font>
+            <Font name="Consolas" size="15.0" />
+         </font>
+      </Label>
+      <MenuButton layoutX="625.0" layoutY="49.0" mnemonicParsing="false" text="Add to">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#addTrackToQueue" text="Queue" />
+        </items>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </MenuButton>
+      <Label fx:id="tracksOn" layoutX="64.0" layoutY="126.0" prefHeight="26.0" prefWidth="48.0" text="Tracks:" />
+      <Label fx:id="noteToUser" alignment="CENTER" layoutX="295.0" layoutY="495.0" prefHeight="17.0" prefWidth="411.0">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </Label>
+      <ListView fx:id="availableTracksListView" layoutX="64.0" layoutY="153.0" prefHeight="350.0" prefWidth="200.0" />
+      <Label layoutX="40.0" layoutY="102.0" prefHeight="26.0" prefWidth="48.0" text="Profile" />
    </children>
+   <rotationAxis>
+      <Point3D />
+   </rotationAxis>
 </AnchorPane>

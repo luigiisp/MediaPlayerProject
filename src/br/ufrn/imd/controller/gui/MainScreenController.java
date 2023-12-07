@@ -16,6 +16,7 @@ import javax.swing.filechooser.FileFilter;
 import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
+import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -52,27 +53,16 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private Menu playlistMenu;
 
-	Stage stage;
-
-	public Stage getStage() {
-		return stage;
-	}
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		playlistTracksListView.setVisible(false);
-		deleteButton.setVisible(false);
-		removeTrackButton.setVisible(false);
-		renameButton.setVisible(false);
-		closeMenuPlaylist.setVisible(false);
-		newTitleTextField.setVisible(false);
 
 		if (MediaPlayerController.getLoggedUser() instanceof UserVipModel) {
+			playlistTracksListView.setVisible(false);
+			deleteButton.setVisible(false);
+			removeTrackButton.setVisible(false);
+			renameButton.setVisible(false);
+			closeMenuPlaylist.setVisible(false);
+			newTitleTextField.setVisible(false);
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			playlistsListView.getItems().clear();
 			playlistsListView.getItems().addAll(user.getPlaylists());
@@ -94,16 +84,29 @@ public class MainScreenController implements Initializable {
 				}));
 				playlistMenu.getItems().add(menuItem);
 			}
+		} else {
+			availableTracksListView.getItems().clear();
+			availableTracksListView.getItems().addAll(MediaPlayerController.getAllAvailableTracks());
+			tracksOn.setVisible(true);
+
 		}
 		volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
-	@Override
-	public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-		if(mediaPlayer == null) {
-			return;
-		}
-		mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-	}});}
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				if (mediaPlayer == null) {
+					return;
+				}
+				mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+			}
+		});
+	}
+
+	@FXML
+	private Label tracksOn;
+
+	@FXML
+	private ListView<TrackModel> availableTracksListView;
 
 	@FXML
 	private Button profileButton;
@@ -127,14 +130,11 @@ public class MainScreenController implements Initializable {
 
 	}
 
-
-
 	@FXML
 	private Button refreshQueueButton;
 
 	@FXML
 	private ListView<TrackModel> queueListView;
-
 
 	@FXML
 	void removeTrackFromQueue(ActionEvent event) {
@@ -205,6 +205,10 @@ public class MainScreenController implements Initializable {
 			if (file.getAbsolutePath().endsWith(".mp3")) {
 				MediaPlayerController.getTrackController()
 						.addTrack(new TrackModel(file.getName().replace(".mp3", ""), file.getAbsolutePath()));
+				if (availableTracksListView.isVisible()) {
+					availableTracksListView.getItems().clear();
+					availableTracksListView.getItems().addAll(MediaPlayerController.getAllAvailableTracks());
+				}
 				return;
 			} else {
 				return;
@@ -216,8 +220,8 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	void playPlaylist(ActionEvent event) {
-		PlaylistModel selectedPlaylist = playlistsListView.getSelectionModel().getSelectedItem(); 
-		if(selectedPlaylist == null) {
+		PlaylistModel selectedPlaylist = playlistsListView.getSelectionModel().getSelectedItem();
+		if (selectedPlaylist == null) {
 			return;
 		}
 		queueListView.getItems().clear();
@@ -244,7 +248,7 @@ public class MainScreenController implements Initializable {
 	private Button closeMenuPlaylist;
 
 	PlaylistModel openPlaylist = null;
-	
+
 	void openPlaylistEditor(PlaylistModel playlist) {
 		newTitleTextField.setVisible(true);
 		playlistTracksListView.setVisible(true);
@@ -257,21 +261,23 @@ public class MainScreenController implements Initializable {
 		playlistTracksListView.getItems().addAll(playlist.getTracks());
 		openPlaylist = playlist;
 	}
-	
+
 	@FXML
 	void createNewPlaylist(ActionEvent event) {
 		int playlistNumber = 1;
 		String playlistName = "Playlist ";
-		while(MediaPlayerController.getPlaylistController().findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlistName + playlistNumber) != null) {
+		while (MediaPlayerController.getPlaylistController().findByTitle(
+				MediaPlayerController.getLoggedUser().getUsername(), playlistName + playlistNumber) != null) {
 			playlistNumber++;
 		}
 		playlistName += playlistNumber;
 		MediaPlayerController.createPlaylist(playlistName);
-		PlaylistModel createdPlaylist = MediaPlayerController.getPlaylistController().findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlistName);
+		PlaylistModel createdPlaylist = MediaPlayerController.getPlaylistController()
+				.findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlistName);
 		openPlaylistEditor(createdPlaylist);
 		refreshPlaylistView();
 	}
-	
+
 	@FXML
 	void openPlaylist(ActionEvent event) {
 		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
@@ -289,10 +295,10 @@ public class MainScreenController implements Initializable {
 		renameButton.setVisible(false);
 		closeMenuPlaylist.setVisible(false);
 		playlistTracksListView.getItems().clear();
-		titleLable.setText(null); 
+		titleLable.setText(null);
 		openPlaylist = null;
 	}
-	
+
 	@FXML
 	void closePlaylist(ActionEvent event) {
 		closePlaylistEditor();
@@ -319,7 +325,7 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	public void rename(ActionEvent event) {
-		if(newTitleTextField.getText() == null) {
+		if (newTitleTextField.getText() == null) {
 			return;
 		}
 		String newTitle = newTitleTextField.getText();
@@ -337,13 +343,13 @@ public class MainScreenController implements Initializable {
 	}
 
 	// Player
-    @FXML
-    private ImageView playImageView;
-    
+	@FXML
+	private ImageView playImageView;
+
 	private int currentTrackIndex = 0;
 	private Media media;
 	private MediaPlayer mediaPlayer;
-	
+
 	@FXML
 	private Button playButton;
 
@@ -368,7 +374,7 @@ public class MainScreenController implements Initializable {
 			mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
 			mediaPlayer.play();
 			mediaPlayer.setOnEndOfMedia(this::onTrackEnded);
-			
+
 			Image pauseIcon = new Image("/br/ufrn/imd/view/icons/PauseIcon.png");
 			playImageView.setImage(pauseIcon);
 
@@ -389,9 +395,6 @@ public class MainScreenController implements Initializable {
 		}
 	}
 
-
-
-	
 	@FXML
 	void onPlayButtonPressed(ActionEvent event) {
 		playQueue();
@@ -438,20 +441,20 @@ public class MainScreenController implements Initializable {
 		}
 		playQueue();
 	}
-	
-    @FXML
-    void playTrack(ActionEvent event) {
-    	if (mediaPlayer != null) {
+
+	@FXML
+	void playTrack(ActionEvent event) {
+		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 		}
-    	playerStatus = STOPPED;
-    	if(queueListView.getSelectionModel().getSelectedItem() == null) {
-    		return;
-    	}
-    	int selectedTrackIndex = queueListView.getSelectionModel().getSelectedIndex();
-    	currentTrackIndex = selectedTrackIndex;
-    	playQueue();
-    }
+		playerStatus = STOPPED;
+		if (queueListView.getSelectionModel().getSelectedItem() == null) {
+			return;
+		}
+		int selectedTrackIndex = queueListView.getSelectionModel().getSelectedIndex();
+		currentTrackIndex = selectedTrackIndex;
+		playQueue();
+	}
 
 	// Search bar
 	@FXML
@@ -528,15 +531,15 @@ public class MainScreenController implements Initializable {
 		}
 	}
 
-    @FXML
-    private MenuBar menuBar;
-	
-    @FXML
-    private MenuItem logoutButton;
-    
-    @FXML
-    void logout(ActionEvent event) {
-    	MediaPlayerController.logout();
+	@FXML
+	private MenuBar menuBar;
+
+	@FXML
+	private MenuItem logoutButton;
+
+	@FXML
+	void logout(ActionEvent event) {
+		MediaPlayerController.logout();
 		try {
 			Parent root;
 			root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/LoginScreen.fxml"));
@@ -547,8 +550,8 @@ public class MainScreenController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
-    
+	}
+
 	@SuppressWarnings("deprecation")
 	@FXML
 	void openGithub(ActionEvent event) {
@@ -560,5 +563,3 @@ public class MainScreenController implements Initializable {
 		}
 	}
 }
-
-
