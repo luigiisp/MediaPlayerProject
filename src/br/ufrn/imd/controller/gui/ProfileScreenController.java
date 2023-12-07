@@ -1,15 +1,12 @@
 package br.ufrn.imd.controller.gui;
 
 import br.ufrn.imd.controller.MediaPlayerController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 public class ProfileScreenController {
-
 	@FXML
 	private Label accountStatusLabel;
 

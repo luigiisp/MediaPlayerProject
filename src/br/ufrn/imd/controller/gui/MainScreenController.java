@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
@@ -111,6 +112,7 @@ public class MainScreenController implements Initializable {
 			Stage stage = new Stage();
 			stage.setTitle("Profile information");
 			stage.setScene(new Scene(root1));
+			stage.setResizable(false);
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -495,6 +497,7 @@ public class MainScreenController implements Initializable {
 	@FXML
 	void listAvailableTracks(ActionEvent event) {
 		String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
+
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(availableTracksScreenFxmlPath));
 			Parent root1;
@@ -503,12 +506,31 @@ public class MainScreenController implements Initializable {
 			Stage stage = new Stage();
 			stage.setTitle("Available tracks");
 			stage.setScene(new Scene(root1));
+			stage.setResizable(false);
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+    @FXML
+    private MenuItem logoutButton;
+    
+    @FXML
+    void logout(ActionEvent event) {
+    	MediaPlayerController.logout();
+		try {
+			Parent root;
+			root = FXMLLoader.load(getClass().getResource("/br/ufrn/imd/view/LoginScreen.fxml"));
+			Stage stage = (Stage) menuBar.getScene().getWindow();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
 	@FXML
 	void openGithub(ActionEvent event) {
 		try {
