@@ -83,6 +83,7 @@ public class MainScreenController implements Initializable {
 					public void handle(ActionEvent arg0) {
 						TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
 						if (selectedTrack == null) {
+							
 							return;
 						}
 						MediaPlayerController.addTrackToPlaylist(selectedTrack, playlist);
@@ -96,6 +97,10 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+		if(mediaPlayer == null) {
+			
+			return;
+		}
 		mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
 	}});}
 
@@ -210,8 +215,12 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	void playPlaylist(ActionEvent event) {
+		PlaylistModel selectedPlaylist = playlistsListView.getSelectionModel().getSelectedItem(); 
+		if(selectedPlaylist == null) {
+			return;
+		}
 		queueListView.getItems().clear();
-		queueListView.getItems().addAll(playlistsListView.getSelectionModel().getSelectedItem().getTracks());
+		queueListView.getItems().addAll(selectedPlaylist.getTracks());
 		playQueue();
 	}
 
@@ -424,7 +433,11 @@ public class MainScreenController implements Initializable {
 	
     @FXML
     void playTrack(ActionEvent event) {
-    	currentTrackIndex = queueListView.getSelectionModel().getSelectedIndex();
+    	if(queueListView.getSelectionModel().getSelectedItem() == null) {
+    		return;
+    	}
+    	int selectedTrackIndex = queueListView.getSelectionModel().getSelectedIndex();
+    	currentTrackIndex = selectedTrackIndex;
     	playQueue();
     }
 
@@ -474,6 +487,7 @@ public class MainScreenController implements Initializable {
 	void addTrackToQueue(ActionEvent event) {
 		TrackModel selectedTrack = searchListView.getSelectionModel().getSelectedItem();
 		if (selectedTrack == null) {
+			updateNoteToUser("You have to select a track");
 			return;
 		}
 		queueListView.getItems().add(selectedTrack);
@@ -533,4 +547,25 @@ public class MainScreenController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	
+    @FXML
+    private Label noteToUser;
+    
+    void updateNoteToUser(String note) {
+    	if(note == null) {
+    		return;
+    	}
+    	noteToUser.setText(note);
+    	while(!note.isEmpty() && note != null) {
+    		note = note.substring(0, note.length() - 1);
+    		try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    }
 }
+
+

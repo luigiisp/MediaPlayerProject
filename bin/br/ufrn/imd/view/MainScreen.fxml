@@ -36,7 +36,7 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <ListView fx:id="queueListView" layoutX="726.0" layoutY="153.0" prefHeight="350.0" prefWidth="200.0" />
-      <Button fx:id="removeTrackFromQueue" layoutX="846.0" layoutY="128.0" mnemonicParsing="false" onAction="#onRemoveTrackFromQueuePressed" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
+      <Button fx:id="removeTrackFromQueue" layoutX="846.0" layoutY="128.0" mnemonicParsing="false" onAction="#removeTrackFromQueue" prefHeight="21.0" prefWidth="80.0" text="Remove Track">
          <font>
             <Font size="10.0" />
          </font>
@@ -44,7 +44,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="766.0" layoutY="128.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="72.0" text="Play Track">
+      <Button layoutX="766.0" layoutY="128.0" mnemonicParsing="false" onAction="#playTrack" prefHeight="21.0" prefWidth="72.0" text="Play Track">
          <font>
             <Font size="10.0" />
          </font>
