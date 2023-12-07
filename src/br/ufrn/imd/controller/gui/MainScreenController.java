@@ -36,6 +36,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
@@ -59,9 +61,10 @@ public class MainScreenController implements Initializable {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 		playlistTracksListView.setVisible(false);
 		deleteButton.setVisible(false);
 		removeTrackButton.setVisible(false);
@@ -287,6 +290,7 @@ public class MainScreenController implements Initializable {
 		closeMenuPlaylist.setVisible(false);
 		playlistTracksListView.getItems().clear();
 		titleLable.setText(null); 
+		openPlaylist = null;
 	}
 	
 	@FXML
@@ -315,12 +319,11 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	public void rename(ActionEvent event) {
-		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
-		if(newTitleTextField == null) {
+		if(newTitleTextField.getText() == null) {
 			return;
 		}
 		String newTitle = newTitleTextField.getText();
-		MediaPlayerController.getPlaylistController().renamePlaylist(playlistSelected, newTitle);
+		MediaPlayerController.getPlaylistController().renamePlaylist(openPlaylist, newTitle);
 		titleLable.setText(MediaPlayerController.getPlaylistController()
 				.findByTitle(MediaPlayerController.getLoggedUser().getUsername(), newTitle).getTitle());
 		refreshPlaylistView();
@@ -334,10 +337,13 @@ public class MainScreenController implements Initializable {
 	}
 
 	// Player
+    @FXML
+    private ImageView playImageView;
+    
 	private int currentTrackIndex = 0;
 	private Media media;
 	private MediaPlayer mediaPlayer;
-
+	
 	@FXML
 	private Button playButton;
 
@@ -362,7 +368,10 @@ public class MainScreenController implements Initializable {
 			mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
 			mediaPlayer.play();
 			mediaPlayer.setOnEndOfMedia(this::onTrackEnded);
-			playButton.setText("Pause");
+			
+			Image pauseIcon = new Image("/br/ufrn/imd/view/icons/PauseIcon.png");
+			playImageView.setImage(pauseIcon);
+
 			currentTrackLabel.setText("Playing " + currentTrack.getName());
 
 			playerStatus = PLAYING;
@@ -370,14 +379,19 @@ public class MainScreenController implements Initializable {
 			cancelTimer();
 			mediaPlayer.pause();
 			playerStatus = PAUSED;
-			playButton.setText("Play");
+			Image pauseIcon = new Image("/br/ufrn/imd/view/icons/PlayIcon.png");
+			playImageView.setImage(pauseIcon);
 		} else if (playerStatus == PAUSED) {
 			mediaPlayer.play();
 			playerStatus = PLAYING;
-			playButton.setText("Pause");
+			Image pauseIcon = new Image("/br/ufrn/imd/view/icons/PauseIcon.png");
+			playImageView.setImage(pauseIcon);
 		}
 	}
 
+
+
+	
 	@FXML
 	void onPlayButtonPressed(ActionEvent event) {
 		playQueue();
@@ -427,6 +441,10 @@ public class MainScreenController implements Initializable {
 	
     @FXML
     void playTrack(ActionEvent event) {
+    	if (mediaPlayer != null) {
+			mediaPlayer.stop();
+		}
+    	playerStatus = STOPPED;
     	if(queueListView.getSelectionModel().getSelectedItem() == null) {
     		return;
     	}
@@ -531,6 +549,7 @@ public class MainScreenController implements Initializable {
 		}
     }
     
+	@SuppressWarnings("deprecation")
 	@FXML
 	void openGithub(ActionEvent event) {
 		try {
