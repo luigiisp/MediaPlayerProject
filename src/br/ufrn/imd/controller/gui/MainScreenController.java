@@ -136,9 +136,6 @@ public class MainScreenController implements Initializable {
 	}
 
 	@FXML
-	private Button refreshQueueButton;
-
-	@FXML
 	private ListView<TrackModel> queueListView;
 
 	@FXML
