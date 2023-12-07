@@ -115,9 +115,10 @@ public class PlaylistController {
 	}
 
 	public void renamePlaylist(String username, String newTitle, String oldTitle) {
-		if (findByTitle(username, oldTitle) != null) {
+		if (findByTitle(username, oldTitle) != null && findByTitle(username, newTitle) == null) {
 			findByTitle(username, oldTitle).setTitle(newTitle);
 			updatePlaylistsFolder();
+			updatePlaylistsList();
 		}
 	}
 

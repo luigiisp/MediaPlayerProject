@@ -97,7 +97,7 @@ public class MediaPlayerController {
 	public static List<TrackModel> getAllAvailableTracks() {
 		return trackController.getTracks();
 	}
-	
+
 	public static List<TrackModel> searchTrackByName(String searched) {
 		List<TrackModel> foundTracks = new ArrayList<TrackModel>();
 		if (searched.isBlank()) {
@@ -108,18 +108,19 @@ public class MediaPlayerController {
 		return foundTracks;
 	}
 
-	//Playlist
-	
-	public static void createPlaylist(String title) {
+	// Playlist
+
+	public static int createPlaylist(String title) {
 		PlaylistModel playlist = new PlaylistModel(title, playlistController.getPath());
 		if (!(loggedUser instanceof UserVipModel)) {
-			return;
+			return 2;
 		}
 
 		if ((playlistController.findByTitle(loggedUser.getUsername(), playlist.getTitle())) != null) {
-			return;
+			return 1;
 		}
 		playlistController.addPlaylist(loggedUser.getUsername(), playlist);
+		return 0;
 	}
 
 	public static void addTrackToPlaylist(TrackModel track, PlaylistModel playlist) {
@@ -127,6 +128,14 @@ public class MediaPlayerController {
 			return;
 		}
 		playlist.getTracks().add(track);
+		playlistController.updatePlaylistsFolder();
+	}
+
+	public static void removeTrackOnPlaylist(TrackModel track, PlaylistModel playlist) {
+		if (!playlist.getTracks().contains(track)) {
+			return;
+		}
+		playlist.getTracks().remove(track);
 		playlistController.updatePlaylistsFolder();
 	}
 }

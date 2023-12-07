@@ -71,7 +71,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onAddNewTrackButtonPressed" text="Add new track" />
-                  <MenuItem mnemonicParsing="false" text="Create new playlist" />
+                  <MenuItem mnemonicParsing="false" onAction="#createNewPlaylist" text="Create new playlist" />
                   <MenuItem mnemonicParsing="false" onAction="#listAvailableTracks" text="Available tracks" />
                   <MenuItem mnemonicParsing="false" onAction="#closePlayer" text="Close player" />
             </items>
@@ -99,11 +99,12 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Button layoutX="200.0" layoutY="124.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="72.0" text="Edit playlist">
+      <Button layoutX="200.0" layoutY="124.0" mnemonicParsing="false" onAction="#openPlaylist" prefHeight="21.0" prefWidth="72.0" text="Open playlist">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
+      <Button layoutX="280.0" layoutY="122.0" mnemonicParsing="false" onAction="#refreshPlaylistView" text="Refresh" />
    </children>
    <rotationAxis>
       <Point3D />

@@ -25,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -45,9 +46,19 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	private ListView<PlaylistModel> playlistsListView;
-	
-    @FXML
-    private Menu playlistMenu;
+
+	@FXML
+	private Menu playlistMenu;
+
+	Stage stage;
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -101,6 +112,23 @@ public class MainScreenController implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void logout(ActionEvent event) {
+		MediaPlayerController.logout();
+		String profileScreenFxmlPath = "/br/ufrn/imd/view/LoginScreen.fxml";
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(profileScreenFxmlPath));
+			Parent root1;
+
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Login Menu");
+			stage.setScene(new Scene(root1));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -188,15 +216,58 @@ public class MainScreenController implements Initializable {
 		}
 	}
 
-	//Playlist
-	
-    @FXML
-    void playPlaylist(ActionEvent event) {
-    	queueListView.getItems().clear();
-    	queueListView.getItems().addAll(playlistsListView.getSelectionModel().getSelectedItem().getTracks());
-    	playQueue();
-    }
-	
+	@FXML
+	void createNewPlaylist(ActionEvent event) {
+		String playlistCreatorFxmlPath = "/br/ufrn/imd/view/PlaylistCreatorScreen.fxml";
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(playlistCreatorFxmlPath));
+			Parent root1;
+
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.setTitle("NEW PLAYLIST");
+			stage.setScene(new Scene(root1));
+			stage.show();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Playlist
+
+	@FXML
+	void playPlaylist(ActionEvent event) {
+		queueListView.getItems().clear();
+		queueListView.getItems().addAll(playlistsListView.getSelectionModel().getSelectedItem().getTracks());
+		playQueue();
+	}
+
+	@FXML
+	void openPlaylist(ActionEvent event) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/ufrn/imd/view/PlaylistScreen.fxml"));
+
+		try {
+			Parent root = (Parent) loader.load();
+			PlaylistScreenController controller = (PlaylistScreenController) loader.getController();
+			controller.setPlaylist(playlistsListView.getSelectionModel().getSelectedItem());
+
+			Stage stage = new Stage();
+			stage.setTitle("Playlist Menu");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	void refreshPlaylistView() {
+		UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
+		playlistsListView.getItems().clear();
+		playlistsListView.getItems().addAll(user.getPlaylists());
+	}
+
 	// Player
 	private int currentTrackIndex = 0;
 	private Media media;
@@ -248,7 +319,7 @@ public class MainScreenController implements Initializable {
 	}
 
 	void onTrackEnded() {
-		if(mediaPlayer == null) {
+		if (mediaPlayer == null) {
 			return;
 		}
 		mediaPlayer.stop();
@@ -274,14 +345,14 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	void backTrack(ActionEvent event) {
-		if(mediaPlayer == null) {
+		if (mediaPlayer == null) {
 			return;
 		}
 		mediaPlayer.stop();
 		playerStatus = STOPPED;
 		currentTrackLabel.setText("");
 		if (currentTrackIndex == 0) {
-			//no track to go back to
+			// no track to go back to
 			currentTrackIndex = 0;
 		} else {
 			// there are remaining tracks
@@ -343,14 +414,15 @@ public class MainScreenController implements Initializable {
 		}
 		queueListView.getItems().add(selectedTrack);
 	}
-    @FXML
-    void closePlayer(ActionEvent event) {
-    	Platform.exit();
-    }
-    
-    @FXML
-    void listAvailableTracks(ActionEvent event) {
-    	String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
+
+	@FXML
+	void closePlayer(ActionEvent event) {
+		Platform.exit();
+	}
+
+	@FXML
+	void listAvailableTracks(ActionEvent event) {
+		String availableTracksScreenFxmlPath = "/br/ufrn/imd/view/AvailableTracksScreen.fxml";
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(availableTracksScreenFxmlPath));
 			Parent root1;
