@@ -16,7 +16,6 @@ import javax.swing.filechooser.FileFilter;
 import br.ufrn.imd.controller.MediaPlayerController;
 import br.ufrn.imd.model.PlaylistModel;
 import br.ufrn.imd.model.TrackModel;
-import br.ufrn.imd.model.UserModel;
 import br.ufrn.imd.model.UserVipModel;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -129,9 +128,6 @@ public class MainScreenController implements Initializable {
 		}
 
 	}
-
-	@FXML
-	private Button refreshQueueButton;
 
 	@FXML
 	private ListView<TrackModel> queueListView;

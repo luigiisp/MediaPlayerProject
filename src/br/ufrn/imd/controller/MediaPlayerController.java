@@ -46,9 +46,10 @@ public class MediaPlayerController {
 		return playlistController;
 	}
 
+	// User
+	
 	public static int register(String fullName, String username, String password, boolean vipUser) {
 		if (userController.findUserByUsername(username) != null) {
-			// Username already registered
 			return 1;
 		}
 
@@ -67,16 +68,13 @@ public class MediaPlayerController {
 
 	public static int login(String username, String password) {
 		if (loggedUser != null) {
-			// You are already logged in. Logoff to change user
 			return 1;
 		}
 		if (userController.findUserByUsername(username) == null) {
-			// No user registered with this username
 			return 2;
 		}
 		UserModel user = userController.findUserByUsername(username);
 		if (!user.getPassword().equals(password)) {
-			// Wrong password for this username
 			return 3;
 		}
 

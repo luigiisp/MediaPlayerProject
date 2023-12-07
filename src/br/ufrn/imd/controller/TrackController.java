@@ -33,7 +33,6 @@ public class TrackController {
 		this.path = path;
 	}
 
-	// Updates tracks list
 	public void updateTracksList() {
 		BufferedReader br = null;
 
@@ -56,7 +55,6 @@ public class TrackController {
 		}
 	}
 
-	// Updates tracks file content
 	public void updateTracksFile() {
 		BufferedWriter bw = null;
 		try {
@@ -88,7 +86,7 @@ public class TrackController {
 	}
 
 	public void renameTrack(TrackModel track, String newName) {
-		if (getTrackByName(track.getName()).equals(track.getName())) {
+		if (getTrackByName(track.getName()).equals(track)) {
 			getTrackByName(track.getName()).setName(newName);
 			updateTracksFile();
 		}

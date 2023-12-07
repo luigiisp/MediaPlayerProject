@@ -42,7 +42,6 @@ public class PlaylistController {
 		this.path = path;
 	}
 
-	// consider removing fullname from playlist.txt
 	public void updatePlaylistsList() {
 		File folder = new File(path);
 		File[] playlistsFiles = folder.listFiles();
@@ -114,13 +113,6 @@ public class PlaylistController {
 		}
 	}
 
-	public void renamePlaylist(PlaylistModel playlist, String newTitle) {
-		if (findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlist.getTitle()) != null) {
-			findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlist.getTitle()).setTitle(newTitle);
-			updatePlaylistsFolder();
-		}
-	}
-
 	public void addTrackToPlaylist(String username, String trackName, String playlistName) {
 		if (findByTitle(username, playlistName) != null && trackController.getTrackByName(trackName) != null) {
 			findByTitle(username, playlistName).getTracks().add(trackController.getTrackByName(trackName));
@@ -148,6 +140,13 @@ public class PlaylistController {
 			UserVipModel user = (UserVipModel) MediaPlayerController.getLoggedUser();
 			user.getPlaylists().remove(playlist);
 			playlists.remove(playlist);
+			updatePlaylistsFolder();
+		}
+	}
+
+	public void renamePlaylist(PlaylistModel playlist, String newTitle) {
+		if (findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlist.getTitle()) != null) {
+			findByTitle(MediaPlayerController.getLoggedUser().getUsername(), playlist.getTitle()).setTitle(newTitle);
 			updatePlaylistsFolder();
 		}
 	}
