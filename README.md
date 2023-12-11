@@ -5,7 +5,7 @@
 Project related to the Programming Language 2 discipline, aiming to build a fully functional MP3 player with features such as user system and playlist management.
 
 # How to use
-First, you need have the JavaFx installed in your system and in your IDE. 
+First, make sure you have JavaFx installed in your system and IDE. 
 
 In the first execution, the file "diretorios.txt" and the folder "files" will be created. The folder "files" will have "tracks.txt", "users.txt" and "Playlists" folder. 
 
