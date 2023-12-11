@@ -247,11 +247,11 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	void openPlaylist(ActionEvent event) {
-		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
-		if (playlistSelected == null) {
+		openPlaylist = playlistsListView.getSelectionModel().getSelectedItem();
+		if (openPlaylist == null) {
 			return;
 		}
-		openPlaylistEditor(playlistSelected);
+		openPlaylistEditor(openPlaylist);
 	}
 
 	void closePlaylistEditor() {
@@ -273,11 +273,10 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	public void removeTrack(ActionEvent event) {
-		PlaylistModel playlistSelected = playlistsListView.getSelectionModel().getSelectedItem();
 		TrackModel track = playlistTracksListView.getSelectionModel().getSelectedItem();
-		MediaPlayerController.removeTrackOnPlaylist(track, playlistSelected);
+		MediaPlayerController.removeTrackOnPlaylist(track, openPlaylist);
 		playlistTracksListView.getItems().clear();
-		playlistTracksListView.getItems().addAll(playlistSelected.getTracks());
+		playlistTracksListView.getItems().addAll(openPlaylist.getTracks());
 	}
 
 	@FXML
