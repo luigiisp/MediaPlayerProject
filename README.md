@@ -18,9 +18,13 @@ The folder "files" will also be generated on the first execution. Inside it will
 
 •"users.txt"  will be contained the user registred in the program.
  
-Everytime you open the application, you will be redirected to login screen. If you already have an account, you can login, otherwise you can register by clicking the register button. After the login/register screen, you will be redirected to the Main Screen. The Main Screen is where you can reproduce tracks, create and edit playlists, check your profile info, etc. Only VIP accounts can use playlists.
+Everytime you open the application, you will be redirected to login screen. If you already have an account, you can login, otherwise you can register by clicking the register button.
+
+After the login/register screen, you will be redirected to the Main Screen. The Main Screen is where you can reproduce tracks, create and edit playlists, check your profile info, etc. Obs.: Only VIP accounts can use playlists.
+
 The application will have no tracks registered by default, therefore you have to add your own mp3 files from your desktop (File -> Add new track).
-To play tracks, you have to add them to the queue and press the play button. You can do this by finding the track using the search bar at the top, and adding it to the queue (or to a playlist and then playing the playlist).
+
+To play a track, you have to add it to the queue and press the play button. You can do this by finding the track using the search bar at the top, and pressing Add to -> Queue (or to a playlist and then playing the playlist).
 
 # Used technologies
 - Java
